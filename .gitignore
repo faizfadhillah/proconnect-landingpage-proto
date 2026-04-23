@@ -1,4 +1,15 @@
+# Real Firebase config — keep local, check firebase-config.example.js instead
+assets/auth/firebase-config.js
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Node (if anything builds locally later)
 node_modules/
-.env
-.netlify/
+npm-debug.log
+yarn-error.log
