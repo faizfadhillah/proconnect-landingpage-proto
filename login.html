@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Log In — ProConnect</title>
+<meta name="description" content="Log in to your ProConnect account — the hospitality hiring platform for ASEAN." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = { theme: { extend: {
+    colors: {
+      brand:  { 50:'#EFF4FF', 100:'#DCE6FF', 500:'#3A66D1', 600:'#1E4BA8', 700:'#1E3A8A', 800:'#172F6E', 900:'#0F2352' },
+      accent: { 500:'#F97316', 600:'#EA580C' },
+      mint:   { 500:'#22C55E', 600:'#16A34A' }
+    },
+    fontFamily: { sans: ['Inter','system-ui','sans-serif'] }
+  } } }
+</script>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body class="bg-white antialiased">
+
+<!-- ==================== NAVBAR ==================== -->
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-100">
+  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center" aria-label="ProConnect home">
+      <img src="assets/logo.png" alt="ProConnect" class="h-8 w-auto" />
+    </a>
+    <nav class="hidden lg:flex items-center gap-8 text-[14px] font-medium">
+      <a href="index.html"   class="nav-link">Home</a>
+      <a href="features.html"  class="nav-link">Features</a>
+      <a href="pricing.html"  class="nav-link">Pricing</a>
+      <a href="jobs.html"     class="nav-link">Browse Jobs</a>
+      <a href="about.html"    class="nav-link">About Us</a>
+      <a href="contact.html"  class="nav-link">Contact</a>
+    </nav>
+    <div class="flex items-center gap-2">
+      <a href="signup.html" class="inline-flex btn-primary text-sm">Sign Up</a>
+    </div>
+  </div>
+</header>
+
+<!-- ==================== LOGIN SPLIT ==================== -->
+<section class="min-h-[calc(100vh-4rem)] grid lg:grid-cols-2">
+
+  <!-- Left: Form -->
+  <div class="flex items-center justify-center px-6 py-16">
+    <div class="w-full max-w-md">
+      <h1 class="text-[32px] md:text-[38px] font-extrabold text-brand-900 leading-tight">Welcome back.</h1>
+      <p class="mt-2 text-slate-500">Log in to your ProConnect account to continue where you left off.</p>
+
+      <!-- Google SSO -->
+      <button type="button" class="mt-8 w-full h-12 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold flex items-center justify-center gap-3">
+        <svg class="w-5 h-5" viewBox="0 0 48 48" aria-hidden="true">
+          <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.9 32.1 29.4 35 24 35c-6.1 0-11-4.9-11-11s4.9-11 11-11c2.8 0 5.3 1 7.3 2.8l5.7-5.7C33.6 6.9 29.1 5 24 5 13.5 5 5 13.5 5 24s8.5 19 19 19 19-8.5 19-19c0-1.2-.1-2.3-.4-3.5z"/>
+          <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16.2 19 13 24 13c2.8 0 5.3 1 7.3 2.8l5.7-5.7C33.6 6.9 29.1 5 24 5 16.3 5 9.7 9.3 6.3 14.7z"/>
+          <path fill="#4CAF50" d="M24 43c5.1 0 9.5-1.9 12.9-5l-6-4.9C29 34.6 26.6 35 24 35c-5.4 0-9.9-2.9-11.3-7L6.1 33C9.4 38.8 16.2 43 24 43z"/>
+          <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.7 2-2.1 3.8-3.9 5.1l6 4.9C41 34 43 29.4 43 24c0-1.2-.1-2.3-.4-3.5z"/>
+        </svg>
+        Continue with Google
+      </button>
+
+      <!-- Divider -->
+      <div class="flex items-center my-6">
+        <div class="flex-1 h-px bg-slate-200"></div>
+        <span class="px-3 text-xs text-slate-400 font-medium">OR</span>
+        <div class="flex-1 h-px bg-slate-200"></div>
+      </div>
+
+      <!-- Email/password form -->
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label for="email" class="block text-xs font-semibold text-slate-600 mb-1.5">Email</label>
+          <input id="email" name="email" type="email" required autocomplete="email"
+                 class="w-full h-11 px-3.5 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none text-sm"
+                 placeholder="you@company.com" />
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label for="password" class="block text-xs font-semibold text-slate-600">Password</label>
+            <a href="#" class="text-xs font-semibold text-brand-600 hover:text-brand-700">Forgot password?</a>
+          </div>
+          <div class="relative">
+            <input id="password" name="password" type="password" required autocomplete="current-password"
+                   class="w-full h-11 px-3.5 pr-10 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none text-sm"
+                   placeholder="Enter your password" />
+            <button type="button" id="togglePw" class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-slate-400 hover:text-slate-600" aria-label="Show password">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </button>
+          </div>
+        </div>
+        <label class="flex items-center gap-2 select-none cursor-pointer">
+          <input type="checkbox" class="w-4 h-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500" />
+          <span class="text-sm text-slate-600">Keep me signed in for 30 days</span>
+        </label>
+        <button type="submit" class="w-full h-11 btn-primary text-sm">Log In</button>
+      </form>
+
+      <p class="mt-6 text-center text-sm text-slate-500">
+        Don't have an account?
+        <a href="signup.html" class="font-semibold text-brand-600 hover:text-brand-700">Sign up free →</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Right: Hero -->
+  <div class="hidden lg:block relative overflow-hidden bg-gradient-to-br from-brand-700 to-brand-900">
+    <div class="absolute inset-0 dotted-map opacity-40"></div>
+    <div class="relative h-full flex items-center justify-center p-16">
+      <div class="max-w-md text-white">
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white/90 text-xs font-semibold">
+          <span class="w-2 h-2 bg-accent-500 rounded-full"></span>
+          Hospitality hiring, built for ASEAN
+        </span>
+        <h2 class="mt-6 text-[32px] font-extrabold leading-tight">Verified talent.<br/>Trusted employers.<br/><span class="text-accent-500">Ten countries.</span></h2>
+        <p class="mt-5 text-brand-100 text-[15px] leading-relaxed">Over 12,000 hospitality professionals and 250+ schools already trust ProConnect's Skill Passport as their regional career platform.</p>
+
+        <div class="mt-10 space-y-4">
+          <div class="flex items-center gap-3 bg-white/10 backdrop-blur rounded-xl p-4">
+            <div class="w-10 h-10 rounded-full bg-accent-500 flex items-center justify-center font-bold">SC</div>
+            <div class="flex-1">
+              <div class="font-semibold text-sm">Sarah Chen</div>
+              <div class="text-xs text-brand-100/80">Front Office Manager · Bali</div>
+            </div>
+            <div class="text-xs font-bold bg-mint-500/25 text-mint-500 px-2.5 py-1 rounded">95% MATCH</div>
+          </div>
+          <div class="flex items-center gap-3 bg-white/10 backdrop-blur rounded-xl p-4">
+            <div class="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
+              <svg class="w-5 h-5 text-accent-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2L3 5v6c0 4 3 7 7 8 4-1 7-4 7-8V5l-7-3z"/></svg>
+            </div>
+            <div class="text-sm"><span class="font-semibold">Skill Passport</span> verified · ASEAN-MRA-TP</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<script>
+  document.getElementById('togglePw')?.addEventListener('click', () => {
+    const pw = document.getElementById('password');
+    pw.type = pw.type === 'password' ? 'text' : 'password';
+  });
+  document.getElementById('loginForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Demo login form — auth backend to be wired up to the CMS in /cms.');
+  });
+</script>
+</body>
+</html>
