@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For Employers | ProConnect</title>
+<meta name="description" content="Replace recruiting agents and save $26,700+ per year. ProConnect is the hospitality hiring platform built for hotels, resorts and F&B businesses across ASEAN." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = { theme: { extend: {
+    colors: {
+      brand:  { 50:'#EFF4FF', 100:'#DCE6FF', 500:'#3A66D1', 600:'#1E4BA8', 700:'#1E3A8A', 800:'#172F6E', 900:'#0F2352' },
+      accent: { 500:'#F97316', 600:'#EA580C' },
+      mint:   { 500:'#22C55E', 600:'#16A34A' }
+    },
+    fontFamily: { sans: ['Inter','system-ui','sans-serif'] }
+  } } }
+</script>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body class="bg-white antialiased">
+
+<!-- ==================== NAVBAR ==================== -->
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-100">
+  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center" aria-label="ProConnect home">
+      <img src="assets/logo.png" alt="ProConnect" class="h-8 w-auto" />
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-8 text-[14px] font-medium">
+      <a href="index.html"   class="nav-link" data-nav-link="index.html">Home</a>
+
+      <!-- Features dropdown -->
+      <div class="nav-dropdown" tabindex="0">
+        <span class="nav-link nav-dropdown-trigger" data-nav-link="features.html">
+          Features
+          <svg class="nav-dd-caret w-3 h-3" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+        </span>
+        <div class="nav-dropdown-menu" role="menu">
+          <a href="features-employers.html" class="nav-dropdown-item" role="menuitem">
+            <span class="nav-dd-icon" style="background:#EFF4FF;color:#1E4BA8;">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M5 21V7l7-4 7 4v14M9 9h.01M9 13h.01M9 17h.01M15 9h.01M15 13h.01M15 17h.01"/></svg>
+            </span>
+            <span>
+              <span class="nav-dd-title">For Employers</span>
+              <span class="nav-dd-sub">Replace recruiting agents. Hire direct.</span>
+            </span>
+          </a>
+          <a href="features-schools.html" class="nav-dropdown-item" role="menuitem">
+            <span class="nav-dd-icon" style="background:#ECFDF5;color:#16A34A;">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422A12 12 0 0112 21.056a12 12 0 01-6.16-10.478L12 14z"/></svg>
+            </span>
+            <span>
+              <span class="nav-dd-title">For Schools</span>
+              <span class="nav-dd-sub">Earn revenue from graduate placements.</span>
+            </span>
+          </a>
+          <a href="features-jobseekers.html" class="nav-dropdown-item" role="menuitem">
+            <span class="nav-dd-icon" style="background:#FFF7ED;color:#EA580C;">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </span>
+            <span>
+              <span class="nav-dd-title">For Job Seekers</span>
+              <span class="nav-dd-sub">Verified Skill Passport across ASEAN.</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <a href="pricing.html"  class="nav-link" data-nav-link="pricing.html">Pricing</a>
+      <a href="jobs.html"     class="nav-link" data-nav-link="jobs.html">Browse Jobs</a>
+      <a href="about.html"    class="nav-link" data-nav-link="about.html">About Us</a>
+      <a href="contact.html"  class="nav-link" data-nav-link="contact.html">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href="contact.html" class="inline-flex btn-primary text-sm">Get in Touch</a>
+
+      <!-- Hamburger (mobile only) -->
+      <button id="navToggle" class="lg:hidden ml-1 p-2 rounded-md text-brand-700 hover:bg-brand-50" aria-label="Open menu" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile drawer -->
+<div id="mobileBackdrop" class="mobile-backdrop fixed inset-0 bg-black/40 z-40 lg:hidden"></div>
+<aside id="mobileDrawer" class="mobile-drawer fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white shadow-2xl z-50 lg:hidden flex flex-col">
+  <div class="flex items-center justify-between px-5 h-16 border-b border-slate-100">
+    <img src="assets/logo.png" alt="ProConnect" class="h-7 w-auto" />
+    <button id="navClose" class="p-2 rounded-md text-slate-500 hover:bg-slate-100" aria-label="Close menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+  <nav class="flex flex-col p-4 gap-1 text-[15px]">
+    <a href="index.html"    class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Home</a>
+
+    <!-- Features accordion -->
+    <button type="button" class="mobile-sub-toggle w-full flex items-center justify-between px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">
+      <span>Features</span>
+      <svg class="mobile-sub-chevron w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="mobile-sub pl-3">
+      <a href="features-employers.html"  class="block px-3 py-2.5 rounded-lg hover:bg-brand-50 text-slate-700 text-sm">For Employers</a>
+      <a href="features-schools.html"    class="block px-3 py-2.5 rounded-lg hover:bg-brand-50 text-slate-700 text-sm">For Schools</a>
+      <a href="features-jobseekers.html" class="block px-3 py-2.5 rounded-lg hover:bg-brand-50 text-slate-700 text-sm">For Job Seekers</a>
+    </div>
+
+    <a href="pricing.html"  class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Pricing</a>
+    <a href="jobs.html"     class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Browse Jobs</a>
+    <a href="about.html"    class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">About Us</a>
+    <a href="contact.html"  class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Contact</a>
+  </nav>
+  <div class="mt-auto p-4 border-t border-slate-100 flex flex-col gap-2">
+    <a href="contact.html" class="btn-primary w-full">Get in Touch</a>
+  </div>
+</aside>
+
+<!-- ==================== HERO ==================== -->
+<section class="relative overflow-hidden wave-bg">
+  <div class="max-w-7xl mx-auto px-6 pt-16 md:pt-24 pb-20 grid lg:grid-cols-2 gap-12 items-center page-fade">
+    <div>
+      <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 text-brand-700 text-xs font-semibold">
+        <span class="w-2 h-2 bg-brand-600 rounded-full"></span>
+        For Employers
+      </span>
+      <h1 class="mt-4 text-[40px] md:text-[56px] leading-[1.05] font-extrabold tracking-tight text-brand-900">
+        Replace Recruiting Agents.<br/><span class="text-brand-600">Keep $7,000+ Per Hire.</span>
+      </h1>
+      <p class="mt-5 text-slate-600 text-base md:text-lg max-w-xl">
+        ProConnect gives hotels, resorts, and F&amp;B businesses a complete hiring platform with verified candidates, built-in ATS, and AI matching — all for less than one agent placement fee per year.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="contact.html" class="btn-primary">Request a Demo</a>
+        <a href="pricing.html" class="btn-secondary">See Pricing</a>
+      </div>
+      <div class="mt-6 inline-flex items-center gap-2 bg-mint-500/10 text-mint-600 rounded-full px-4 py-1.5 text-sm font-semibold">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3l-4 4a1 1 0 01-1.4 0l-2-2a1 1 0 111.4-1.4L9 10.6l3.3-3.3a1 1 0 011.4 1.4z" clip-rule="evenodd"/></svg>
+        Save $26,700+ per year vs. agents
+      </div>
+    </div>
+
+    <!-- Cost comparison card -->
+    <div class="bg-brand-50 rounded-2xl p-6 md:p-8 shadow-soft">
+      <h3 class="font-bold text-brand-900 text-lg">Annual Cost Comparison (2 recruiter seats)</h3>
+      <p class="text-xs text-slate-500 mt-1 mb-5">Based on 3 hires per year across 2 recruiter seats</p>
+
+      <div class="space-y-4">
+        <div>
+          <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-700">Recruiting Agents (3 hires)</span><strong class="text-red-500">$28,000</strong></div>
+          <div class="h-6 bg-white rounded overflow-hidden"><div class="h-full bg-red-500 rounded" style="width:100%"></div></div>
+        </div>
+        <div>
+          <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-700">LinkedIn Recruiter (2 seats)</span><strong class="text-accent-600">$33,230</strong></div>
+          <div class="h-6 bg-white rounded overflow-hidden"><div class="h-full bg-accent-500 rounded" style="width:95%"></div></div>
+        </div>
+        <div>
+          <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-700">Hosco (Professional)</span><strong class="text-accent-600">$7,400</strong></div>
+          <div class="h-6 bg-white rounded overflow-hidden"><div class="h-full bg-accent-500 rounded" style="width:26%"></div></div>
+        </div>
+        <div>
+          <div class="flex justify-between text-sm mb-1.5"><span class="font-bold text-brand-900">ProConnect (2 seats)</span><strong class="text-mint-600">$1,298</strong></div>
+          <div class="h-6 bg-white rounded overflow-hidden"><div class="h-full bg-mint-500 rounded" style="width:4.6%;min-width:16px"></div></div>
+        </div>
+      </div>
+      <p class="mt-5 text-center text-xs font-semibold text-brand-900">Save $26,700+ per year vs. recruiting agents</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== STATS BAR ==================== -->
+<section class="bg-brand-600 py-8">
+  <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-white">
+    <div><div class="text-3xl font-extrabold">85K+</div><div class="text-sm text-white/80">SMEs reached</div></div>
+    <div><div class="text-3xl font-extrabold">250+</div><div class="text-sm text-white/80">Partner schools</div></div>
+    <div><div class="text-3xl font-extrabold">10</div><div class="text-sm text-white/80">ASEAN countries</div></div>
+    <div><div class="text-3xl font-extrabold">95%</div><div class="text-sm text-white/80">AI match accuracy</div></div>
+  </div>
+</section>
+
+<!-- ==================== WHY ==================== -->
+<section class="py-20 bg-slate-50">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center max-w-2xl mx-auto">
+      <h2 class="text-[32px] md:text-[40px] font-extrabold tracking-tight text-brand-900">Why employers choose ProConnect</h2>
+      <p class="mt-4 text-slate-600">Purpose-built for hospitality hiring in Southeast Asia — fair pricing, real verification, unlimited usage.</p>
+    </div>
+    <div class="mt-12 grid md:grid-cols-2 gap-6">
+      <div class="bg-white rounded-2xl p-6 shadow-soft border border-slate-100">
+        <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+        </div>
+        <h3 class="font-bold text-brand-900">Transparent, Published Pricing</h3>
+        <p class="mt-2 text-sm text-slate-600">No "contact us for pricing" games. See exactly what you pay from day one. From $23/month depending on your country.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-soft border border-slate-100">
+        <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        </div>
+        <h3 class="font-bold text-brand-900">Built-in ATS Included</h3>
+        <p class="mt-2 text-sm text-slate-600">Stop paying separately for Workable or Greenhouse. Our ATS is built into every recruiter seat at no extra charge.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-soft border border-slate-100">
+        <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <h3 class="font-bold text-brand-900">Unlimited Job Postings</h3>
+        <p class="mt-2 text-sm text-slate-600">Post as many jobs as you need. No per-post fees, no credit packs, no upsell traps. Unlimited means unlimited.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-soft border border-slate-100">
+        <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <h3 class="font-bold text-brand-900">Verified Candidates</h3>
+        <p class="mt-2 text-sm text-slate-600">ASEAN-MRA-TP Skill Passports verified by accredited schools. Know your candidate's credentials are real before the first interview.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== HOW IT WORKS ==================== -->
+<section class="py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="text-center text-[32px] md:text-[40px] font-extrabold tracking-tight text-brand-900">Start hiring in 4 steps</h2>
+    <div class="mt-12 grid md:grid-cols-4 gap-6">
+      <div class="text-center">
+        <div class="w-14 h-14 mx-auto rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-xl">1</div>
+        <h4 class="mt-4 font-bold text-brand-900">Post a Job</h4>
+        <p class="mt-2 text-sm text-slate-500">Unlimited postings across your regional properties. No per-post fees.</p>
+      </div>
+      <div class="text-center">
+        <div class="w-14 h-14 mx-auto rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-xl">2</div>
+        <h4 class="mt-4 font-bold text-brand-900">AI Match Candidates</h4>
+        <p class="mt-2 text-sm text-slate-500">Our AI surfaces verified candidates who match 90%+ of your requirements.</p>
+      </div>
+      <div class="text-center">
+        <div class="w-14 h-14 mx-auto rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-xl">3</div>
+        <h4 class="mt-4 font-bold text-brand-900">Interview &amp; Assess</h4>
+        <p class="mt-2 text-sm text-slate-500">Built-in ATS with pipelines, scheduling, scorecards, and team collaboration.</p>
+      </div>
+      <div class="text-center">
+        <div class="w-14 h-14 mx-auto rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-xl">4</div>
+        <h4 class="mt-4 font-bold text-brand-900">Hire &amp; Onboard</h4>
+        <p class="mt-2 text-sm text-slate-500">Offer letters, e-signing, and compliance-ready exports for local labor laws.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== COMPARISON TABLE ==================== -->
+<section class="py-20 bg-slate-50">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="text-center text-[32px] md:text-[40px] font-extrabold tracking-tight text-brand-900">Head to head with the alternatives</h2>
+    <p class="text-center mt-4 text-slate-600 max-w-2xl mx-auto">ProConnect vs. recruiting agents, LinkedIn Recruiter, and Hosco — for 3 hires per year.</p>
+
+    <div class="mt-10 overflow-x-auto rounded-2xl shadow-soft border border-slate-100">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="bg-brand-900 text-white">
+            <th class="text-left px-5 py-4 font-semibold">Feature</th>
+            <th class="text-left px-5 py-4 font-semibold">Agents</th>
+            <th class="text-left px-5 py-4 font-semibold">LinkedIn</th>
+            <th class="text-left px-5 py-4 font-semibold">Hosco</th>
+            <th class="text-left px-5 py-4 font-semibold bg-brand-600">ProConnect</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white">
+          <tr class="border-b border-slate-100">
+            <td class="px-5 py-4 font-medium">Annual cost (2 seats)</td>
+            <td class="px-5 py-4 text-slate-600">$28,000</td>
+            <td class="px-5 py-4 text-slate-600">$33,230</td>
+            <td class="px-5 py-4 text-slate-600">$7,400</td>
+            <td class="px-5 py-4 font-bold text-mint-600 bg-brand-50">$1,298</td>
+          </tr>
+          <tr class="border-b border-slate-100">
+            <td class="px-5 py-4 font-medium">Unlimited job postings</td>
+            <td class="px-5 py-4 text-slate-400">—</td>
+            <td class="px-5 py-4 text-slate-400">—</td>
+            <td class="px-5 py-4 text-slate-400">Limited</td>
+            <td class="px-5 py-4 font-bold text-mint-600 bg-brand-50">Yes</td>
+          </tr>
+          <tr class="border-b border-slate-100">
+            <td class="px-5 py-4 font-medium">ATS included</td>
+            <td class="px-5 py-4 text-slate-400">—</td>
+            <td class="px-5 py-4 text-slate-400">Add-on</td>
+            <td class="px-5 py-4 text-slate-400">Basic</td>
+            <td class="px-5 py-4 font-bold text-mint-600 bg-brand-50">Yes</td>
+          </tr>
+          <tr class="border-b border-slate-100">
+            <td class="px-5 py-4 font-medium">Verified Skill Passport</td>
+            <td class="px-5 py-4 text-slate-400">—</td>
+            <td class="px-5 py-4 text-slate-400">—</td>
+            <td class="px-5 py-4 text-slate-400">—</td>
+            <td class="px-5 py-4 font-bold text-mint-600 bg-brand-50">Yes</td>
+          </tr>
+          <tr>
+            <td class="px-5 py-4 font-medium">ASEAN-focused candidate pool</td>
+            <td class="px-5 py-4 text-slate-400">Country only</td>
+            <td class="px-5 py-4 text-slate-400">Global, not hospitality</td>
+            <td class="px-5 py-4 text-slate-400">Europe-heavy</td>
+            <td class="px-5 py-4 font-bold text-mint-600 bg-brand-50">ASEAN native</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CTA ==================== -->
+<section class="py-20">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <h2 class="text-[32px] md:text-[44px] font-extrabold tracking-tight text-brand-900">Start hiring smarter today.</h2>
+    <p class="mt-4 text-slate-600">Get a personalized demo and see how much you could save.</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a href="contact.html" class="btn-primary">Request a Demo</a>
+      <a href="pricing.html" class="btn-secondary">See Pricing</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="bg-brand-900 text-brand-100 pt-16 pb-8">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-10">
+    <div>
+      <div class="bg-white/95 px-3 py-2 rounded-lg inline-flex w-fit">
+        <img src="assets/logo.png" alt="ProConnect" class="h-7 w-auto" />
+      </div>
+      <p class="mt-4 text-sm text-brand-100/80 max-w-xs">Hospitality hiring, built for ASEAN. A Mereka initiative.</p>
+    </div>
+    <div>
+      <div class="text-sm font-bold text-white mb-4">Product</div>
+      <ul class="space-y-2 text-sm">
+        <li><a href="features.html" class="hover:text-white">Features</a></li>
+        <li><a href="pricing.html" class="hover:text-white">Pricing</a></li>
+        <li><a href="jobs.html" class="hover:text-white">Browse Jobs</a></li>
+        <li><a href="contact.html" class="hover:text-white">Get in Touch</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="text-sm font-bold text-white mb-4">Company</div>
+      <ul class="space-y-2 text-sm">
+        <li><a href="about.html" class="hover:text-white">About Us</a></li>
+        <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+        <li><a href="#" class="hover:text-white">Privacy</a></li>
+        <li><a href="#" class="hover:text-white">Terms</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="text-sm font-bold text-white mb-4">Get in touch</div>
+      <ul class="space-y-2 text-sm">
+        <li>partnership@proconnectcareer.com</li>
+        <li>Kuala Lumpur · Jakarta · Singapore</li>
+      </ul>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-6 mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-brand-100/70">
+    <div>© 2026 ProConnect — a Mereka initiative. All rights reserved.</div>
+    <div class="flex gap-4"><a href="#" class="hover:text-white">Privacy Policy</a><a href="#" class="hover:text-white">Terms of Service</a></div>
+  </div>
+</footer>
+
+<script src="assets/script.js"></script>
+</body>
+</html>

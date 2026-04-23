@@ -33,6 +33,20 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
   }
 
+  // ===== Mobile submenu (Features accordion) =====
+  function initMobileSubmenu() {
+    document.querySelectorAll('.mobile-sub-toggle').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const target = btn.nextElementSibling;
+        if (!target || !target.classList.contains('mobile-sub')) return;
+        btn.classList.toggle('open');
+        target.classList.toggle('open');
+      });
+    });
+  }
+
   // ===== Highlight active nav link based on current page =====
   function initActiveNav() {
     const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
@@ -87,12 +101,14 @@
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       initMobileNav();
+      initMobileSubmenu();
       initActiveNav();
       initPricingCalc();
       initDemoForm();
     });
   } else {
     initMobileNav();
+    initMobileSubmenu();
     initActiveNav();
     initPricingCalc();
     initDemoForm();

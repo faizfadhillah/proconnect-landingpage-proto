@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For Schools | ProConnect</title>
+<meta name="description" content="Stop paying agents. Start earning from graduate placements. ProConnect's education partnership program — 74-84% cheaper than agents with profit sharing built-in." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = { theme: { extend: {
+    colors: {
+      brand:  { 50:'#EFF4FF', 100:'#DCE6FF', 500:'#3A66D1', 600:'#1E4BA8', 700:'#1E3A8A', 800:'#172F6E', 900:'#0F2352' },
+      accent: { 500:'#F97316', 600:'#EA580C' },
+      mint:   { 500:'#22C55E', 600:'#16A34A' }
+    },
+    fontFamily: { sans: ['Inter','system-ui','sans-serif'] }
+  } } }
+</script>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body class="bg-white antialiased">
+
+<!-- ==================== NAVBAR ==================== -->
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-100">
+  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center" aria-label="ProConnect home">
+      <img src="assets/logo.png" alt="ProConnect" class="h-8 w-auto" />
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-8 text-[14px] font-medium">
+      <a href="index.html"   class="nav-link" data-nav-link="index.html">Home</a>
+
+      <!-- Features dropdown -->
+      <div class="nav-dropdown" tabindex="0">
+        <span class="nav-link nav-dropdown-trigger" data-nav-link="features.html">
+          Features
+          <svg class="nav-dd-caret w-3 h-3" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+        </span>
+        <div class="nav-dropdown-menu" role="menu">
+          <a href="features-employers.html" class="nav-dropdown-item" role="menuitem">
+            <span class="nav-dd-icon" style="background:#EFF4FF;color:#1E4BA8;">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M5 21V7l7-4 7 4v14M9 9h.01M9 13h.01M9 17h.01M15 9h.01M15 13h.01M15 17h.01"/></svg>
+            </span>
+            <span>
+              <span class="nav-dd-title">For Employers</span>
+              <span class="nav-dd-sub">Replace recruiting agents. Hire direct.</span>
+            </span>
+          </a>
+          <a href="features-schools.html" class="nav-dropdown-item" role="menuitem">
+            <span class="nav-dd-icon" style="background:#ECFDF5;color:#16A34A;">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422A12 12 0 0112 21.056a12 12 0 01-6.16-10.478L12 14z"/></svg>
+            </span>
+            <span>
+              <span class="nav-dd-title">For Schools</span>
+              <span class="nav-dd-sub">Earn revenue from graduate placements.</span>
+            </span>
+          </a>
+          <a href="features-jobseekers.html" class="nav-dropdown-item" role="menuitem">
+            <span class="nav-dd-icon" style="background:#FFF7ED;color:#EA580C;">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </span>
+            <span>
+              <span class="nav-dd-title">For Job Seekers</span>
+              <span class="nav-dd-sub">Verified Skill Passport across ASEAN.</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <a href="pricing.html"  class="nav-link" data-nav-link="pricing.html">Pricing</a>
+      <a href="jobs.html"     class="nav-link" data-nav-link="jobs.html">Browse Jobs</a>
+      <a href="about.html"    class="nav-link" data-nav-link="about.html">About Us</a>
+      <a href="contact.html"  class="nav-link" data-nav-link="contact.html">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href="contact.html" class="inline-flex btn-primary text-sm">Get in Touch</a>
+
+      <!-- Hamburger (mobile only) -->
+      <button id="navToggle" class="lg:hidden ml-1 p-2 rounded-md text-brand-700 hover:bg-brand-50" aria-label="Open menu" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile drawer -->
+<div id="mobileBackdrop" class="mobile-backdrop fixed inset-0 bg-black/40 z-40 lg:hidden"></div>
+<aside id="mobileDrawer" class="mobile-drawer fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white shadow-2xl z-50 lg:hidden flex flex-col">
+  <div class="flex items-center justify-between px-5 h-16 border-b border-slate-100">
+    <img src="assets/logo.png" alt="ProConnect" class="h-7 w-auto" />
+    <button id="navClose" class="p-2 rounded-md text-slate-500 hover:bg-slate-100" aria-label="Close menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+  <nav class="flex flex-col p-4 gap-1 text-[15px]">
+    <a href="index.html"    class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Home</a>
+
+    <!-- Features accordion -->
+    <button type="button" class="mobile-sub-toggle w-full flex items-center justify-between px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">
+      <span>Features</span>
+      <svg class="mobile-sub-chevron w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="mobile-sub pl-3">
+      <a href="features-employers.html"  class="block px-3 py-2.5 rounded-lg hover:bg-brand-50 text-slate-700 text-sm">For Employers</a>
+      <a href="features-schools.html"    class="block px-3 py-2.5 rounded-lg hover:bg-brand-50 text-slate-700 text-sm">For Schools</a>
+      <a href="features-jobseekers.html" class="block px-3 py-2.5 rounded-lg hover:bg-brand-50 text-slate-700 text-sm">For Job Seekers</a>
+    </div>
+
+    <a href="pricing.html"  class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Pricing</a>
+    <a href="jobs.html"     class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Browse Jobs</a>
+    <a href="about.html"    class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">About Us</a>
+    <a href="contact.html"  class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Contact</a>
+  </nav>
+  <div class="mt-auto p-4 border-t border-slate-100 flex flex-col gap-2">
+    <a href="contact.html" class="btn-primary w-full">Get in Touch</a>
+  </div>
+</aside>
+
+<!-- ==================== HERO ==================== -->
+<section class="relative overflow-hidden" style="background:linear-gradient(135deg,#F0FDF4 0%,#FFFFFF 40%,#ECFDF5 100%);">
+  <div class="max-w-7xl mx-auto px-6 pt-16 md:pt-24 pb-20 grid lg:grid-cols-2 gap-12 items-center page-fade">
+    <div>
+      <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mint-500/10 text-mint-600 text-xs font-semibold">
+        <span class="w-2 h-2 bg-mint-500 rounded-full"></span>
+        For Education Partners
+      </span>
+      <h1 class="mt-4 text-[40px] md:text-[56px] leading-[1.05] font-extrabold tracking-tight text-brand-900">
+        Stop Paying Agents. <br/><span class="text-mint-600">Start Earning</span> From Graduate Placements.
+      </h1>
+      <p class="mt-5 text-slate-600 text-base md:text-lg max-w-xl">
+        Replace $250K–$2.5M in annual agent fees with a platform that costs 74–84% less — and actually pays you back through profit sharing.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="contact.html" class="inline-flex items-center justify-center gap-2 bg-mint-500 text-white font-semibold px-6 py-3 rounded-[10px] hover:bg-mint-600 transition">Become a Partner</a>
+        <a href="#roi" class="btn-secondary">See ROI Calculator</a>
+      </div>
+    </div>
+
+    <!-- ROI card -->
+    <div class="bg-mint-500/10 rounded-2xl p-6 md:p-8 shadow-soft">
+      <h3 class="font-bold text-brand-900 text-lg">Example: medium school (150 graduates/year)</h3>
+      <div class="mt-5 space-y-3">
+        <div class="bg-white rounded-xl p-4 flex items-center justify-between"><span class="text-sm">Current agent cost (75 placements)</span><strong class="text-red-500 text-lg">-$520,000</strong></div>
+        <div class="bg-white rounded-xl p-4 flex items-center justify-between"><span class="text-sm">ProConnect subscription</span><strong class="text-lg">-$3,600</strong></div>
+        <div class="bg-white rounded-xl p-4 flex items-center justify-between"><span class="text-sm">Profit share earned (38 placements)</span><strong class="text-mint-600 text-lg">+$4,940</strong></div>
+        <div class="bg-brand-900 text-white rounded-xl p-4 flex items-center justify-between"><span class="text-sm font-semibold">Net position with ProConnect</span><strong class="text-xl" style="color:#34D399">+$715 PROFIT</strong></div>
+      </div>
+      <p class="mt-4 text-xs text-center text-slate-600">Total savings vs agents: <strong>$264,665 AUD per year</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== HOW IT WORKS ==================== -->
+<section class="py-20 bg-slate-50">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="text-center text-[32px] md:text-[40px] font-extrabold tracking-tight text-brand-900">How the partnership works</h2>
+    <div class="mt-12 grid md:grid-cols-4 gap-6">
+      <div class="text-center">
+        <div class="w-14 h-14 mx-auto rounded-full bg-mint-500 text-white flex items-center justify-center font-bold text-xl">1</div>
+        <h4 class="mt-4 font-bold text-brand-900">Verify Graduates</h4>
+        <p class="mt-2 text-sm text-slate-500">5 minutes per student. Confirm enrollment, diplomas, skills assessments, and references.</p>
+      </div>
+      <div class="text-center">
+        <div class="w-14 h-14 mx-auto rounded-full bg-mint-500 text-white flex items-center justify-center font-bold text-xl">2</div>
+        <h4 class="mt-4 font-bold text-brand-900">Graduates Get Hired</h4>
+        <p class="mt-2 text-sm text-slate-500">Employers trust "Verified by [Your School]" badges. Verified candidates get 3-5× more interest.</p>
+      </div>
+      <div class="text-center">
+        <div class="w-14 h-14 mx-auto rounded-full bg-mint-500 text-white flex items-center justify-center font-bold text-xl">3</div>
+        <h4 class="mt-4 font-bold text-brand-900">You Earn Revenue</h4>
+        <p class="mt-2 text-sm text-slate-500">Receive 15-25% of the hiring employer's subscription fee. Automatic monthly or quarterly payments.</p>
+      </div>
+      <div class="text-center">
+        <div class="w-14 h-14 mx-auto rounded-full bg-mint-500 text-white flex items-center justify-center font-bold text-xl">4</div>
+        <h4 class="mt-4 font-bold text-brand-900">Track Everything</h4>
+        <p class="mt-2 text-sm text-slate-500">Real-time placement dashboards, employer relationships, and accreditation-ready reports.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PRICING TIERS ==================== -->
+<section id="roi" class="py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="text-center text-[32px] md:text-[40px] font-extrabold tracking-tight text-brand-900">Education partner pricing</h2>
+    <p class="text-center mt-4 text-slate-600 max-w-xl mx-auto">Every tier includes profit sharing. The more graduates you place, the more you earn.</p>
+
+    <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="bg-white border-2 border-slate-200 rounded-2xl p-6 text-center">
+        <h4 class="font-bold text-brand-900">Starter</h4>
+        <p class="text-xs text-slate-500 mt-1">&lt;200 students</p>
+        <div class="mt-4"><span class="text-4xl font-extrabold text-brand-900">$1,200</span><span class="text-slate-500">/yr</span></div>
+        <p class="mt-3 text-sm font-semibold text-mint-600">25% profit share</p>
+        <p class="mt-2 text-xs text-slate-500">84% cheaper than agents</p>
+      </div>
+      <div class="bg-white border-2 border-mint-500 rounded-2xl p-6 text-center relative">
+        <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-mint-500 text-white text-[11px] font-bold px-3 py-1 rounded-full">MOST POPULAR</span>
+        <h4 class="font-bold text-brand-900">Professional</h4>
+        <p class="text-xs text-slate-500 mt-1">200–1,000 students</p>
+        <div class="mt-4"><span class="text-4xl font-extrabold text-brand-900">$3,600</span><span class="text-slate-500">/yr</span></div>
+        <p class="mt-3 text-sm font-semibold text-mint-600">20% profit share</p>
+        <p class="mt-2 text-xs text-slate-500">76% cheaper than agents</p>
+      </div>
+      <div class="bg-white border-2 border-slate-200 rounded-2xl p-6 text-center">
+        <h4 class="font-bold text-brand-900">Enterprise</h4>
+        <p class="text-xs text-slate-500 mt-1">1,000–3,000 students</p>
+        <div class="mt-4"><span class="text-4xl font-extrabold text-brand-900">$7,200</span><span class="text-slate-500">/yr</span></div>
+        <p class="mt-3 text-sm font-semibold text-mint-600">18% profit share</p>
+        <p class="mt-2 text-xs text-slate-500">74% cheaper than agents</p>
+      </div>
+      <div class="bg-white border-2 border-slate-200 rounded-2xl p-6 text-center">
+        <h4 class="font-bold text-brand-900">Flagship</h4>
+        <p class="text-xs text-slate-500 mt-1">3,000+ students</p>
+        <div class="mt-4"><span class="text-4xl font-extrabold text-brand-900">$9,600</span><span class="text-slate-500">/yr</span></div>
+        <p class="mt-3 text-sm font-semibold text-mint-600">15% profit share + extras</p>
+        <p class="mt-2 text-xs text-slate-500">83% cheaper than agents</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== BENEFITS ==================== -->
+<section class="py-20 bg-slate-50">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center max-w-2xl mx-auto">
+      <h2 class="text-[32px] md:text-[40px] font-extrabold tracking-tight text-brand-900">Why 250+ schools partner with us</h2>
+    </div>
+    <div class="mt-12 grid md:grid-cols-3 gap-6">
+      <div class="bg-white rounded-2xl p-6 shadow-soft border border-slate-100">
+        <div class="w-12 h-12 rounded-xl bg-mint-500/10 text-mint-600 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <h3 class="font-bold text-brand-900">Turn cost centers into revenue</h3>
+        <p class="mt-2 text-sm text-slate-600">Placement services move from an OPEX line item to a margin-positive program.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-soft border border-slate-100">
+        <div class="w-12 h-12 rounded-xl bg-mint-500/10 text-mint-600 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        </div>
+        <h3 class="font-bold text-brand-900">Accreditation-ready reports</h3>
+        <p class="mt-2 text-sm text-slate-600">Exportable placement outcomes, graduate destination data, and employer relationship records.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-soft border border-slate-100">
+        <div class="w-12 h-12 rounded-xl bg-mint-500/10 text-mint-600 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <h3 class="font-bold text-brand-900">Trusted verifier badge</h3>
+        <p class="mt-2 text-sm text-slate-600">"Verified by [Your School]" badges on every graduate's Skill Passport — boosts your brand everywhere they apply.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CTA ==================== -->
+<section class="py-20" style="background:linear-gradient(135deg,#16A34A,#047857);">
+  <div class="max-w-4xl mx-auto px-6 text-center text-white">
+    <h2 class="text-[32px] md:text-[44px] font-extrabold tracking-tight">Join 250+ hospitality schools across ASEAN</h2>
+    <p class="mt-4 text-white/85">Schedule a call to see how the partnership works for your institution.</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a href="contact.html" class="inline-flex items-center justify-center gap-2 bg-white text-mint-600 font-semibold px-6 py-3 rounded-[10px] hover:bg-slate-100 transition">Become a Partner</a>
+      <a href="about.html" class="inline-flex items-center justify-center gap-2 bg-white/10 text-white font-semibold px-6 py-3 rounded-[10px] border border-white/30 hover:bg-white/20 transition">About ProConnect</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="bg-brand-900 text-brand-100 pt-16 pb-8">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-10">
+    <div>
+      <div class="bg-white/95 px-3 py-2 rounded-lg inline-flex w-fit">
+        <img src="assets/logo.png" alt="ProConnect" class="h-7 w-auto" />
+      </div>
+      <p class="mt-4 text-sm text-brand-100/80 max-w-xs">Hospitality hiring, built for ASEAN. A Mereka initiative.</p>
+    </div>
+    <div>
+      <div class="text-sm font-bold text-white mb-4">Product</div>
+      <ul class="space-y-2 text-sm">
+        <li><a href="features.html" class="hover:text-white">Features</a></li>
+        <li><a href="pricing.html" class="hover:text-white">Pricing</a></li>
+        <li><a href="jobs.html" class="hover:text-white">Browse Jobs</a></li>
+        <li><a href="contact.html" class="hover:text-white">Get in Touch</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="text-sm font-bold text-white mb-4">Company</div>
+      <ul class="space-y-2 text-sm">
+        <li><a href="about.html" class="hover:text-white">About Us</a></li>
+        <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+        <li><a href="#" class="hover:text-white">Privacy</a></li>
+        <li><a href="#" class="hover:text-white">Terms</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="text-sm font-bold text-white mb-4">Get in touch</div>
+      <ul class="space-y-2 text-sm">
+        <li>partnership@proconnectcareer.com</li>
+        <li>Kuala Lumpur · Jakarta · Singapore</li>
+      </ul>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-6 mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-brand-100/70">
+    <div>© 2026 ProConnect — a Mereka initiative. All rights reserved.</div>
+    <div class="flex gap-4"><a href="#" class="hover:text-white">Privacy Policy</a><a href="#" class="hover:text-white">Terms of Service</a></div>
+  </div>
+</footer>
+
+<script src="assets/script.js"></script>
+</body>
+</html>

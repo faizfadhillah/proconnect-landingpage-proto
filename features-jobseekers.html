@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For Job Seekers | ProConnect</title>
+<meta name="description" content="Build a verified Skill Passport that's portable across all 10 ASEAN countries. Get matched to the best hospitality jobs — free for job seekers." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = { theme: { extend: {
+    colors: {
+      brand:  { 50:'#EFF4FF', 100:'#DCE6FF', 500:'#3A66D1', 600:'#1E4BA8', 700:'#1E3A8A', 800:'#172F6E', 900:'#0F2352' },
+      accent: { 500:'#F97316', 600:'#EA580C' },
+      mint:   { 500:'#22C55E', 600:'#16A34A' }
+    },
+    fontFamily: { sans: ['Inter','system-ui','sans-serif'] }
+  } } }
+</script>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body class="bg-white antialiased">
+
+<!-- ==================== NAVBAR ==================== -->
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-100">
+  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center" aria-label="ProConnect home">
+      <img src="assets/logo.png" alt="ProConnect" class="h-8 w-auto" />
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-8 text-[14px] font-medium">
+      <a href="index.html"   class="nav-link" data-nav-link="index.html">Home</a>
+
+      <!-- Features dropdown -->
+      <div class="nav-dropdown" tabindex="0">
+        <span class="nav-link nav-dropdown-trigger" data-nav-link="features.html">
+          Features
+          <svg class="nav-dd-caret w-3 h-3" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+        </span>
+        <div class="nav-dropdown-menu" role="menu">
+          <a href="features-employers.html" class="nav-dropdown-item" role="menuitem">
+            <span class="nav-dd-icon" style="background:#EFF4FF;color:#1E4BA8;">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M5 21V7l7-4 7 4v14M9 9h.01M9 13h.01M9 17h.01M15 9h.01M15 13h.01M15 17h.01"/></svg>
+            </span>
+            <span>
+              <span class="nav-dd-title">For Employers</span>
+              <span class="nav-dd-sub">Replace recruiting agents. Hire direct.</span>
+            </span>
+          </a>
+          <a href="features-schools.html" class="nav-dropdown-item" role="menuitem">
+            <span class="nav-dd-icon" style="background:#ECFDF5;color:#16A34A;">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422A12 12 0 0112 21.056a12 12 0 01-6.16-10.478L12 14z"/></svg>
+            </span>
+            <span>
+              <span class="nav-dd-title">For Schools</span>
+              <span class="nav-dd-sub">Earn revenue from graduate placements.</span>
+            </span>
+          </a>
+          <a href="features-jobseekers.html" class="nav-dropdown-item" role="menuitem">
+            <span class="nav-dd-icon" style="background:#FFF7ED;color:#EA580C;">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </span>
+            <span>
+              <span class="nav-dd-title">For Job Seekers</span>
+              <span class="nav-dd-sub">Verified Skill Passport across ASEAN.</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <a href="pricing.html"  class="nav-link" data-nav-link="pricing.html">Pricing</a>
+      <a href="jobs.html"     class="nav-link" data-nav-link="jobs.html">Browse Jobs</a>
+      <a href="about.html"    class="nav-link" data-nav-link="about.html">About Us</a>
+      <a href="contact.html"  class="nav-link" data-nav-link="contact.html">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href="contact.html" class="inline-flex btn-primary text-sm">Get in Touch</a>
+
+      <!-- Hamburger (mobile only) -->
+      <button id="navToggle" class="lg:hidden ml-1 p-2 rounded-md text-brand-700 hover:bg-brand-50" aria-label="Open menu" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile drawer -->
+<div id="mobileBackdrop" class="mobile-backdrop fixed inset-0 bg-black/40 z-40 lg:hidden"></div>
+<aside id="mobileDrawer" class="mobile-drawer fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white shadow-2xl z-50 lg:hidden flex flex-col">
+  <div class="flex items-center justify-between px-5 h-16 border-b border-slate-100">
+    <img src="assets/logo.png" alt="ProConnect" class="h-7 w-auto" />
+    <button id="navClose" class="p-2 rounded-md text-slate-500 hover:bg-slate-100" aria-label="Close menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+  <nav class="flex flex-col p-4 gap-1 text-[15px]">
+    <a href="index.html"    class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Home</a>
+
+    <!-- Features accordion -->
+    <button type="button" class="mobile-sub-toggle w-full flex items-center justify-between px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">
+      <span>Features</span>
+      <svg class="mobile-sub-chevron w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="mobile-sub pl-3">
+      <a href="features-employers.html"  class="block px-3 py-2.5 rounded-lg hover:bg-brand-50 text-slate-700 text-sm">For Employers</a>
+      <a href="features-schools.html"    class="block px-3 py-2.5 rounded-lg hover:bg-brand-50 text-slate-700 text-sm">For Schools</a>
+      <a href="features-jobseekers.html" class="block px-3 py-2.5 rounded-lg hover:bg-brand-50 text-slate-700 text-sm">For Job Seekers</a>
+    </div>
+
+    <a href="pricing.html"  class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Pricing</a>
+    <a href="jobs.html"     class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Browse Jobs</a>
+    <a href="about.html"    class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">About Us</a>
+    <a href="contact.html"  class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Contact</a>
+  </nav>
+  <div class="mt-auto p-4 border-t border-slate-100 flex flex-col gap-2">
+    <a href="contact.html" class="btn-primary w-full">Get in Touch</a>
+  </div>
+</aside>
+
+<!-- ==================== HERO ==================== -->
+<section class="relative overflow-hidden" style="background:linear-gradient(135deg,#FFF7ED 0%,#FFFFFF 40%,#FFFBEB 100%);">
+  <div class="max-w-7xl mx-auto px-6 pt-16 md:pt-24 pb-20 grid lg:grid-cols-2 gap-12 items-center page-fade">
+    <div>
+      <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-500/10 text-accent-600 text-xs font-semibold">
+        <span class="w-2 h-2 bg-accent-500 rounded-full"></span>
+        For Job Seekers
+      </span>
+      <h1 class="mt-4 text-[40px] md:text-[56px] leading-[1.05] font-extrabold tracking-tight text-brand-900">
+        Your Skills. Verified.<br/><span class="text-accent-600">Portable Across ASEAN.</span>
+      </h1>
+      <p class="mt-5 text-slate-600 text-base md:text-lg max-w-xl">
+        Build a Skill Passport that proves your qualifications to employers in all 10 ASEAN countries. Get matched to the best hospitality jobs — for free.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="contact.html" class="inline-flex items-center justify-center gap-2 bg-accent-500 text-white font-semibold px-6 py-3 rounded-[10px] hover:bg-accent-600 transition">Create Free Profile</a>
+        <a href="jobs.html" class="btn-secondary">Browse Jobs</a>
+      </div>
+      <p class="mt-3 text-xs text-slate-500">Free for all job seekers. No premium required to apply.</p>
+    </div>
+
+    <!-- Skill Passport card -->
+    <div class="bg-accent-500/10 rounded-2xl p-6 md:p-8 shadow-soft">
+      <h3 class="font-bold text-brand-900 text-center">Your Skill Passport</h3>
+      <div class="mt-5 bg-white rounded-2xl p-6 text-center shadow-soft">
+        <div class="w-16 h-16 mx-auto rounded-full bg-brand-50 flex items-center justify-center mb-3">
+          <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        </div>
+        <h4 class="font-bold text-brand-900">Maria Santos</h4>
+        <p class="text-xs text-slate-500 mt-1">Executive Chef · Manila, Philippines</p>
+        <div class="mt-3 flex flex-wrap gap-1.5 justify-center">
+          <span class="text-[11px] font-semibold bg-mint-500/10 text-mint-600 px-2 py-1 rounded">✓ School Verified</span>
+          <span class="text-[11px] font-semibold bg-brand-50 text-brand-600 px-2 py-1 rounded">MRA-TP Certified</span>
+        </div>
+        <div class="mt-4 text-left">
+          <div class="text-xs text-slate-500 mb-2">Skills verified:</div>
+          <div class="flex flex-wrap gap-1">
+            <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-1 rounded">Kitchen Management</span>
+            <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-1 rounded">Menu Planning</span>
+            <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-1 rounded">Food Safety</span>
+            <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-1 rounded">Team Leadership</span>
+            <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-1 rounded">+12 more</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WHY ==================== -->
+<section class="py-20 bg-slate-50">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center max-w-2xl mx-auto">
+      <h2 class="text-[32px] md:text-[40px] font-extrabold tracking-tight text-brand-900">Why hospitality pros love ProConnect</h2>
+      <p class="mt-4 text-slate-600">Built for you — portable credentials, transparent matches, real feedback.</p>
+    </div>
+
+    <div class="mt-12 grid md:grid-cols-3 gap-6">
+      <div class="bg-white rounded-2xl p-6 shadow-soft border border-slate-100">
+        <div class="w-12 h-12 rounded-xl bg-mint-500/10 text-mint-600 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <h3 class="font-bold text-brand-900">Work Anywhere in ASEAN</h3>
+        <p class="mt-2 text-sm text-slate-600">Your Skill Passport is recognized by employers in all 10 ASEAN countries. No more re-proving your qualifications at every border.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-soft border border-slate-100">
+        <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        </div>
+        <h3 class="font-bold text-brand-900">Get Matched, Not Lost</h3>
+        <p class="mt-2 text-sm text-slate-600">Our AI matches you to relevant hospitality jobs based on your actual skills, not just keywords. Stop scrolling, start interviewing.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-soft border border-slate-100">
+        <div class="w-12 h-12 rounded-xl bg-accent-500/10 text-accent-600 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2a4 4 0 014-4h3m-3-3l3 3-3 3M3 7l3-3 3 3M6 4v16"/></svg>
+        </div>
+        <h3 class="font-bold text-brand-900">Track Your Applications</h3>
+        <p class="mt-2 text-sm text-slate-600">See the status of every application in real-time. No more "application black holes" — know exactly where you stand.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== TOP JOBS ==================== -->
+<section class="py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <h2 class="text-[28px] md:text-[36px] font-extrabold tracking-tight text-brand-900">Top hospitality roles right now</h2>
+        <p class="mt-2 text-slate-600">Live opportunities from hotels, resorts, and F&amp;B groups across ASEAN.</p>
+      </div>
+      <a href="jobs.html" class="text-brand-600 font-semibold text-sm">Browse all jobs →</a>
+    </div>
+
+    <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div class="bg-white border border-slate-100 rounded-2xl p-5 shadow-soft hover:shadow-soft-lg transition">
+        <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-lg bg-brand-50 text-brand-600 font-bold flex items-center justify-center">MO</div><div><div class="font-bold text-brand-900">Front Office Manager</div><div class="text-xs text-slate-500">Mandarin Oriental · Jakarta</div></div></div>
+        <div class="mt-4 flex flex-wrap gap-1.5"><span class="text-[11px] bg-mint-500/10 text-mint-600 font-semibold px-2 py-0.5 rounded">✓ Verified</span><span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded">Full-time</span><span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded">Rp 22-28M</span></div>
+      </div>
+      <div class="bg-white border border-slate-100 rounded-2xl p-5 shadow-soft hover:shadow-soft-lg transition">
+        <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-lg bg-brand-50 text-brand-600 font-bold flex items-center justify-center">SH</div><div><div class="font-bold text-brand-900">Sous Chef</div><div class="text-xs text-slate-500">Shangri-La · Kuala Lumpur</div></div></div>
+        <div class="mt-4 flex flex-wrap gap-1.5"><span class="text-[11px] bg-mint-500/10 text-mint-600 font-semibold px-2 py-0.5 rounded">✓ Verified</span><span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded">Full-time</span><span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded">RM 8-11K</span></div>
+      </div>
+      <div class="bg-white border border-slate-100 rounded-2xl p-5 shadow-soft hover:shadow-soft-lg transition">
+        <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-lg bg-brand-50 text-brand-600 font-bold flex items-center justify-center">FS</div><div><div class="font-bold text-brand-900">Guest Relations Officer</div><div class="text-xs text-slate-500">Four Seasons · Bali</div></div></div>
+        <div class="mt-4 flex flex-wrap gap-1.5"><span class="text-[11px] bg-mint-500/10 text-mint-600 font-semibold px-2 py-0.5 rounded">✓ Verified</span><span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded">Full-time</span><span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded">Rp 12-15M</span></div>
+      </div>
+      <div class="bg-white border border-slate-100 rounded-2xl p-5 shadow-soft hover:shadow-soft-lg transition">
+        <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-lg bg-brand-50 text-brand-600 font-bold flex items-center justify-center">MA</div><div><div class="font-bold text-brand-900">Marketing Manager</div><div class="text-xs text-slate-500">Marriott · Bangkok</div></div></div>
+        <div class="mt-4 flex flex-wrap gap-1.5"><span class="text-[11px] bg-mint-500/10 text-mint-600 font-semibold px-2 py-0.5 rounded">✓ Verified</span><span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded">Full-time</span><span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded">฿ 90-120K</span></div>
+      </div>
+      <div class="bg-white border border-slate-100 rounded-2xl p-5 shadow-soft hover:shadow-soft-lg transition">
+        <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-lg bg-brand-50 text-brand-600 font-bold flex items-center justify-center">AN</div><div><div class="font-bold text-brand-900">Housekeeping Supervisor</div><div class="text-xs text-slate-500">Anantara · Hoi An</div></div></div>
+        <div class="mt-4 flex flex-wrap gap-1.5"><span class="text-[11px] bg-mint-500/10 text-mint-600 font-semibold px-2 py-0.5 rounded">✓ Verified</span><span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded">Contract</span><span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded">VND 28-34M</span></div>
+      </div>
+      <div class="bg-white border border-slate-100 rounded-2xl p-5 shadow-soft hover:shadow-soft-lg transition">
+        <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-lg bg-brand-50 text-brand-600 font-bold flex items-center justify-center">PN</div><div><div class="font-bold text-brand-900">F&amp;B Captain</div><div class="text-xs text-slate-500">Peninsula · Manila</div></div></div>
+        <div class="mt-4 flex flex-wrap gap-1.5"><span class="text-[11px] bg-mint-500/10 text-mint-600 font-semibold px-2 py-0.5 rounded">✓ Verified</span><span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded">Full-time</span><span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded">₱ 30-38K</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ASEAN COUNTRIES ==================== -->
+<section class="py-16 bg-slate-50">
+  <div class="max-w-7xl mx-auto px-6 text-center">
+    <h3 class="text-xl md:text-2xl font-bold text-brand-900">Jobs across 10 ASEAN countries</h3>
+    <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+      <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-full text-sm border border-slate-200">🇮🇩 Indonesia</span>
+      <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-full text-sm border border-slate-200">🇲🇾 Malaysia</span>
+      <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-full text-sm border border-slate-200">🇸🇬 Singapore</span>
+      <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-full text-sm border border-slate-200">🇹🇭 Thailand</span>
+      <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-full text-sm border border-slate-200">🇵🇭 Philippines</span>
+      <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-full text-sm border border-slate-200">🇻🇳 Vietnam</span>
+      <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-full text-sm border border-slate-200">🇲🇲 Myanmar</span>
+      <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-full text-sm border border-slate-200">🇰🇭 Cambodia</span>
+      <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-full text-sm border border-slate-200">🇱🇦 Laos</span>
+      <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-full text-sm border border-slate-200">🇧🇳 Brunei</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CTA ==================== -->
+<section class="py-20" style="background:linear-gradient(135deg,#EA580C,#B45309);">
+  <div class="max-w-4xl mx-auto px-6 text-center text-white">
+    <h2 class="text-[32px] md:text-[44px] font-extrabold tracking-tight">Your next hospitality career starts here.</h2>
+    <p class="mt-4 text-white/85">Create your free Skill Passport in under 10 minutes.</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a href="contact.html" class="inline-flex items-center justify-center gap-2 bg-white text-accent-600 font-semibold px-6 py-3 rounded-[10px] hover:bg-slate-100 transition">Create Free Profile</a>
+      <a href="jobs.html" class="inline-flex items-center justify-center gap-2 bg-white/15 text-white font-semibold px-6 py-3 rounded-[10px] border border-white/30 hover:bg-white/25 transition">Browse Jobs First</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="bg-brand-900 text-brand-100 pt-16 pb-8">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-10">
+    <div>
+      <div class="bg-white/95 px-3 py-2 rounded-lg inline-flex w-fit">
+        <img src="assets/logo.png" alt="ProConnect" class="h-7 w-auto" />
+      </div>
+      <p class="mt-4 text-sm text-brand-100/80 max-w-xs">Hospitality hiring, built for ASEAN. A Mereka initiative.</p>
+    </div>
+    <div>
+      <div class="text-sm font-bold text-white mb-4">Product</div>
+      <ul class="space-y-2 text-sm">
+        <li><a href="features.html" class="hover:text-white">Features</a></li>
+        <li><a href="pricing.html" class="hover:text-white">Pricing</a></li>
+        <li><a href="jobs.html" class="hover:text-white">Browse Jobs</a></li>
+        <li><a href="contact.html" class="hover:text-white">Get in Touch</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="text-sm font-bold text-white mb-4">Company</div>
+      <ul class="space-y-2 text-sm">
+        <li><a href="about.html" class="hover:text-white">About Us</a></li>
+        <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+        <li><a href="#" class="hover:text-white">Privacy</a></li>
+        <li><a href="#" class="hover:text-white">Terms</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="text-sm font-bold text-white mb-4">Get in touch</div>
+      <ul class="space-y-2 text-sm">
+        <li>partnership@proconnectcareer.com</li>
+        <li>Kuala Lumpur · Jakarta · Singapore</li>
+      </ul>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-6 mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-brand-100/70">
+    <div>© 2026 ProConnect — a Mereka initiative. All rights reserved.</div>
+    <div class="flex gap-4"><a href="#" class="hover:text-white">Privacy Policy</a><a href="#" class="hover:text-white">Terms of Service</a></div>
+  </div>
+</footer>
+
+<script src="assets/script.js"></script>
+</body>
+</html>
