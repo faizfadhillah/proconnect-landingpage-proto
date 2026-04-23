@@ -1,0 +1,188 @@
+/* Base font family for all elements */
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+div {
+    font-family: 'Montserrat', sans-serif;
+}
+
+a {
+    font-family: 'Montserrat', sans-serif;
+    color: #1560BD
+}
+
+.v-btn {
+    text-transform: none !important;
+    font-weight: 700 !important;
+}
+
+.v-list-item__prepend>.v-badge~.v-list-item__spacer,
+.v-list-item__prepend>.v-icon~.v-list-item__spacer,
+.v-list-item__prepend>.v-tooltip~.v-list-item__spacer {
+    width: 10px !important;
+}
+
+.v-list-group__items {
+    margin-left: -24px !important;
+}
+
+.v-list-group__items .v-list-group__items .v-list-item {
+    padding-left: 96px !important;
+}
+
+.v-breadcrumbs-divider {
+    padding: 0 1px !important;
+}
+
+.v-json-field .v-expansion-panel-text__wrapper {
+    padding: 8px 0px 16px !important;
+    flex: 1 1 auto;
+    max-width: 100%;
+}
+
+.v-chip-profile .v-chip--variant-tonal .v-chip__underlay {
+    background: #fff !important;
+}
+
+.v-data-table__thead {
+    background: #ddeffc !important;
+}
+
+.v-data-table__thead th {
+    font-weight: 700 !important;
+    font-size: 14px;
+}
+
+.v-data-table__tbody td {
+    font-size: 13px;
+    font-weight: 500;
+    color: #636567;
+}
+
+/* Typography - Ensure all Vuetify typography classes use Montserrat */
+.text-h1,
+.text-h2,
+.text-h3,
+.text-h4,
+.text-h5,
+.text-h6,
+.text-subtitle-1,
+.text-subtitle-2,
+.text-body-1,
+.text-body-2,
+.text-button,
+.text-caption,
+.text-overline {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+/* Responsive Typography - Ensure all responsive typography classes use Montserrat */
+.text-h1-xs,
+.text-h1-sm,
+.text-h1-md,
+.text-h1-lg,
+.text-h1-xl,
+.text-h2-xs,
+.text-h2-sm,
+.text-h2-md,
+.text-h2-lg,
+.text-h2-xl,
+.text-h3-xs,
+.text-h3-sm,
+.text-h3-md,
+.text-h3-lg,
+.text-h3-xl,
+.text-h4-xs,
+.text-h4-sm,
+.text-h4-md,
+.text-h4-lg,
+.text-h4-xl,
+.text-h5-xs,
+.text-h5-sm,
+.text-h5-md,
+.text-h5-lg,
+.text-h5-xl,
+.text-h6-xs,
+.text-h6-sm,
+.text-h6-md,
+.text-h6-lg,
+.text-h6-xl,
+.text-subtitle-1-xs,
+.text-subtitle-1-sm,
+.text-subtitle-1-md,
+.text-subtitle-1-lg,
+.text-subtitle-1-xl,
+.text-subtitle-2-xs,
+.text-subtitle-2-sm,
+.text-subtitle-2-md,
+.text-subtitle-2-lg,
+.text-subtitle-2-xl,
+.text-body-1-xs,
+.text-body-1-sm,
+.text-body-1-md,
+.text-body-1-lg,
+.text-body-1-xl,
+.text-body-2-xs,
+.text-body-2-sm,
+.text-body-2-md,
+.text-body-2-lg,
+.text-body-2-xl,
+.text-button-xs,
+.text-button-sm,
+.text-button-md,
+.text-button-lg,
+.text-button-xl,
+.text-caption-xs,
+.text-caption-sm,
+.text-caption-md,
+.text-caption-lg,
+.text-caption-xl,
+.text-overline-xs,
+.text-overline-sm,
+.text-overline-md,
+.text-overline-lg,
+.text-overline-xl {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+.text-caption {
+    font-weight: 400;
+}
+
+.gap-1 {
+    gap: 4px;
+}
+
+.gap-2 {
+    gap: 8px;
+}
+
+.gap-3 {
+    gap: 12px;
+}
+
+.gap-4 {
+    gap: 16px;
+}
+
+.v-navigation-drawer__content .v-list-item__append {
+    width: 24px !important;
+}
+
+/* Remove padding from v-main for job detail page to eliminate white space before hero */
+.job-detail-page {
+    margin-top: calc(-1 * var(--v-layout-top, 64px));
+}

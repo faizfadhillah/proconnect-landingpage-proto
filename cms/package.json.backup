@@ -1,0 +1,36 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "build-max": "NODE_OPTIONS='--max-old-space-size=2048' nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@mdi/font": "^7.4.47",
+    "@nuxtjs/google-fonts": "^3.2.0",
+    "@pinia/nuxt": "^0.11.3",
+    "@vueup/vue-quill": "^1.2.0",
+    "crypto-js": "^4.2.0",
+    "echarts": "^5.5.1",
+    "firebase": "^11.1.0",
+    "js-cookie": "^3.0.5",
+    "nuxt": "^4.3.0",
+    "pinia": "^2.2.5",
+    "vue": "^3.5.27",
+    "vue-echarts": "^7.0.3",
+    "vue-router": "^5.0.2",
+    "vuedraggable": "^4.1.0"
+  },
+  "devDependencies": {
+    "vite-plugin-vuetify": "^2.0.4",
+    "vuetify": "^3.7.2"
+  },
+  "optionalDependencies": {
+    "@oxc-parser/binding-darwin-arm64": "^0.110.0"
+  }
+}

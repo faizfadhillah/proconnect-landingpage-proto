@@ -1,0 +1,1789 @@
+<template>
+  <v-container fluid class="pa-0">
+    <!-- Header with back arrow and title -->
+    <div class="d-flex align-center pa-4">
+      <v-icon
+        @click="$router.back()"
+        color="grey-darken-2"
+        size="24"
+        class="mr-2"
+        >mdi-chevron-left</v-icon
+      >
+      <h1 class="text-h6 font-weight-medium text-grey-darken-2">Profile</h1>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="px-4">
+      <v-tabs v-model="activeTab" color="primary">
+        <v-tab value="personal" class="text-capitalize">Personal</v-tab>
+        <v-tab value="company" class="text-capitalize">Company Info</v-tab>
+        <v-tab value="members" class="text-capitalize">Members</v-tab>
+      </v-tabs>
+      <v-divider />
+    </div>
+  </v-container>
+  <v-container fluid class="pa-4" style="min-height: 100vh">
+    <form @submit.prevent="onSubmit">
+      <v-row align="center">
+        <v-col cols="12" md="8" class="mx-auto">
+          <v-window v-model="activeTab">
+            <!-- Personal Tab Content -->
+            <v-window-item value="personal">
+              <PersonalTab
+                :form="form"
+                :formPIC="formPIC"
+                :genders="genders"
+                :me="me"
+              />
+            </v-window-item>
+              <!-- Personal Detail Card -->
+              <v-card
+                elevation="0"
+                rounded="lg"
+                class="mb-4"
+                style="background: white"
+              >
+                <v-card-title
+                  class="d-flex justify-space-between align-center pa-4"
+                >
+                  <h4 class="font-weight-bold">Personal Detail</h4>
+                  <v-btn
+                    color="primary"
+                    variant="outlined"
+                    rounded="lg"
+                    height="48"
+                    :to="{
+                      path: '/admin/profile/employer/2',
+                      query: { edit: 1 },
+                    }"
+                  >
+                    Edit
+                  </v-btn>
+                </v-card-title>
+                <v-card-text class="pa-4">
+                  <table style="width: 100%">
+                    <tbody>
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 25%">
+                          <span class="font-weight-medium">Photo</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <v-avatar
+                            rounded="lg"
+                            size="60"
+                            class="bg-grey-lighten-3"
+                          >
+                            <v-img
+                              v-if="formPIC.photo_url"
+                              :src="
+                                formPIC.photo_url.includes('http')
+                                  ? formPIC.photo_url
+                                  : BASE_URL + formPIC.photo_url
+                              "
+                            />
+                            <v-icon color="grey-darken-1" v-else size="40"
+                              >mdi-account</v-icon
+                            >
+                          </v-avatar>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 25%">
+                          <span class="font-weight-medium">Full Name</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span>{{ formPIC.full_name }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 25%">
+                          <span class="font-weight-medium">Date of Birth</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span class="">{{
+                            formPIC.encrypted_date_of_birth
+                          }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 25%">
+                          <span class="font-weight-medium">Phone</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span class="">{{ formPIC.encrypted_phone }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 25%">
+                          <span class="font-weight-medium">Email</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span class="">{{ formPIC.email }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 25%">
+                          <span class="font-weight-medium">Gender</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span class="">{{
+                            genders.find((g) => g.name == formPIC.gender)
+                              ?.label ||
+                            formPIC.gender ||
+                            "-"
+                          }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 25%">
+                          <span class="font-weight-medium">Address</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span class="">{{ formPIC.encrypted_address }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 25%">
+                          <span class="font-weight-medium">Postal Code</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span class="">{{ formPIC.postal_code }}</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </v-card-text>
+              </v-card>
+
+              <!-- Role Card -->
+              <v-card elevation="0" rounded="lg" style="background: white">
+                <v-card-title class="pa-4">
+                  <h4 class="font-weight-bold">Role</h4>
+                </v-card-title>
+                <v-card-text class="pa-4">
+                  <table style="width: 100%">
+                    <tbody>
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 25%">
+                          <span class="font-weight-medium"
+                            >Placement Branch</span
+                          >
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span class="">{{ form.placement_branch }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 25%">
+                          <span class="font-weight-medium">Role</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span class="">{{
+                            me.company_role === "owner"
+                              ? "PIC"
+                              : me.company_role === "hrd"
+                              ? "HRD"
+                              : me.company_role === "member"
+                              ? "Member"
+                              : me.company_role || "PIC"
+                          }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 25%">
+                          <span class="font-weight-medium">Department</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span class="">{{ formPIC.department }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 25%">
+                          <span class="font-weight-medium">Job Title</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span class="">{{ formPIC.job_title }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 25%">
+                          <span class="font-weight-medium"
+                            >Employment Type</span
+                          >
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span class="">{{ formPIC.employment_type }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 25%">
+                          <span class="font-weight-medium">Start Date</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span class="">{{
+                            formPIC.start_date
+                              ? formatDate(formPIC.start_date)
+                              : "6 September 2020"
+                          }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 25%">
+                          <span class="font-weight-medium">End Date</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span class="">{{ formPIC.end_date }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 25%">
+                          <span class="font-weight-medium">Status</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span class="">{{ formPIC.status }}</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </v-card-text>
+              </v-card>
+            </v-window-item>
+
+            <!-- Company Info Tab Content -->
+            <v-window-item value="company">
+              <!-- Company Info Card -->
+              <v-card
+                elevation="0"
+                rounded="lg"
+                class="mb-4"
+                style="background: white"
+              >
+                <v-card-title
+                  class="d-flex justify-space-between align-center pa-4"
+                >
+                  <h4 class="font-weight-bold">Company Info</h4>
+                  <v-btn
+                    color="primary"
+                    variant="outlined"
+                    rounded="lg"
+                    height="48"
+                    :to="{
+                      path: '/admin/profile/employer/3',
+                      query: { edit: 1 },
+                    }"
+                  >
+                    Edit
+                  </v-btn>
+                </v-card-title>
+                <v-card-text class="pa-4">
+                  <table style="width: 100%">
+                    <tbody>
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 30%">
+                          <span class="font-weight-medium">Logo Url</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <v-avatar
+                            rounded="lg"
+                            size="48"
+                            class="bg-grey-lighten-3"
+                          >
+                            <v-img
+                              v-if="form.logo_url"
+                              :src="
+                                form.logo_url.includes('http')
+                                  ? form.logo_url
+                                  : BASE_URL + form.logo_url
+                              "
+                            />
+                          </v-avatar>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 30%">
+                          <span class="font-weight-medium">Brand Name</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span>{{ form.brand_name || "-" }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 30%">
+                          <span class="font-weight-medium">Company Name</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span>{{ form.company_name || "-" }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 30%">
+                          <span class="font-weight-medium">Phone</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span>{{ form.phone || "-" }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 30%">
+                          <span class="font-weight-medium">Email</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span>{{ form.email || "-" }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 30%">
+                          <span class="font-weight-medium">Website</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span>{{ form.website || "-" }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 30%">
+                          <span class="font-weight-medium">Industry</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span>{{ form.industry || "-" }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 30%">
+                          <span class="font-weight-medium"
+                            >Organization Size</span
+                          >
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span>{{ form.company_size || "-" }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 30%">
+                          <span class="font-weight-medium"
+                            >Organization Type</span
+                          >
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span>{{ form.organization_type || "-" }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 30%">
+                          <span class="font-weight-medium">Tagline</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span>{{ form.tagline || "-" }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 30%">
+                          <span class="font-weight-medium">Location</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span>{{ form.location || "-" }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 30%">
+                          <span class="font-weight-medium"
+                            >Tax Identification Number</span
+                          >
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span>{{
+                            form.tax_identification_number || "-"
+                          }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 30%">
+                          <span class="font-weight-medium"
+                            >Tax Identification Url</span
+                          >
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span>{{ form.tax_identification_url || "-" }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 30%">
+                          <span class="font-weight-medium"
+                            >Verification Status</span
+                          >
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span>{{ form.verification_status || "-" }}</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td valign="top" class="py-2 pr-4" style="width: 30%">
+                          <span class="font-weight-medium">Company Status</span>
+                        </td>
+                        <td valign="top" class="pa-1">:</td>
+                        <td valign="top" class="py-2 pl-2">
+                          <span>{{ form.company_status || "-" }}</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </v-card-text>
+              </v-card>
+
+              <!-- Branch Info Card -->
+              <v-card elevation="0" rounded="lg" style="background: white">
+                <v-card-title
+                  class="d-flex justify-space-between align-center pa-4"
+                >
+                  <h4 class="font-weight-bold">Branch Info</h4>
+                  <v-btn
+                    color="primary"
+                    variant="outlined"
+                    rounded="lg"
+                    height="48"
+                    :to="{
+                      path: '/admin/profile/employer/3',
+                      query: { edit: 1 },
+                    }"
+                  >
+                    Edit
+                  </v-btn>
+                </v-card-title>
+                <v-card-text class="pa-4">
+                  <!-- Search and Filter Section -->
+                  <v-row class="mb-4">
+                    <v-col cols="12" md="6">
+                      <div class="text-grey mb-1">Search by</div>
+                      <v-text-field
+                        v-model="branchSearchKeyword"
+                        placeholder="Type your keywords here"
+                        variant="outlined"
+                        density="comfortable"
+                        rounded="lg"
+                        hide-details
+                      >
+                        <template v-slot:prepend>
+                          <v-select
+                            v-model="branchSearchBy"
+                            :items="branchSearchOptions"
+                            item-title="label"
+                            item-value="value"
+                            placeholder="Branch"
+                            hide-details
+                            variant="outlined"
+                            min-width="150"
+                            rounded="lg"
+                            density="comfortable"
+                          >
+                          </v-select>
+                        </template>
+                      </v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                      <div class="text-grey mb-1">Department</div>
+                      <v-row>
+                        <v-col cols="12" md="6">
+                          <v-select
+                            v-model="selectedBranchDepartment"
+                            :items="branchDepartments"
+                            item-title="label"
+                            item-value="value"
+                            variant="outlined"
+                            density="comfortable"
+                            rounded="lg"
+                            placeholder="All"
+                            hide-details
+                          />
+                        </v-col>
+                        <v-col cols="6" md="3">
+                          <v-btn
+                            color="primary"
+                            variant="outlined"
+                            block
+                            rounded="lg"
+                            size="large"
+                            @click="handleBranchSearch"
+                          >
+                            Search
+                          </v-btn>
+                        </v-col>
+                        <v-col cols="6" md="3">
+                          <v-btn
+                            color="grey"
+                            variant="text"
+                            @click="handleBranchReset"
+                            size="large"
+                            rounded="lg"
+                            block
+                          >
+                            Reset
+                          </v-btn>
+                        </v-col>
+                      </v-row>
+                    </v-col>
+                  </v-row>
+
+                  <!-- Branch Information Table -->
+                  <v-data-table-server
+                    class="blue-lighten-5 rounded-lg border"
+                    v-model:items-per-page="branchItemsPerPage"
+                    v-model:page="branchPage"
+                    :headers="branchTableHeaders"
+                    :items="filteredBranches"
+                    :items-length="branchTotalItems"
+                    :loading="loadingBranches"
+                  >
+                    <template v-slot:item.no="{ index }">
+                      {{ (branchPage - 1) * branchItemsPerPage + index + 1 }}
+                    </template>
+                    <template v-slot:item.branch="{ item }">
+                      {{ item.display_name || item.branch || "-" }}
+                    </template>
+                    <template v-slot:item.departments="{ item }">
+                      <template
+                        v-for="(department, index) in item.departments"
+                        :key="department.id"
+                      >
+                        {{ department.dept_name
+                        }}<span v-if="index < item.departments.length - 1"
+                          >,
+                        </span>
+                      </template>
+                    </template>
+                  </v-data-table-server>
+                </v-card-text>
+              </v-card>
+            </v-window-item>
+
+            <!-- Members Tab Content -->
+            <v-window-item value="members">
+              <!-- Statistics Cards -->
+              <v-row class="mb-4">
+                <v-col cols="12" sm="6" md="3">
+                  <v-card
+                    elevation="0"
+                    rounded="lg"
+                    class="pa-4"
+                    style="background: white; border: 1px solid #e0e0e0"
+                  >
+                    <div class="text-caption text-grey mb-1">Total Member</div>
+                    <div class="font-weight-bold">
+                      <h2>{{ memberStats.totalMembers }}</h2>
+                    </div>
+                  </v-card>
+                </v-col>
+                <v-col cols="12" sm="6" md="3">
+                  <v-card
+                    elevation="0"
+                    rounded="lg"
+                    class="pa-4"
+                    style="background: white; border: 1px solid #e0e0e0"
+                  >
+                    <div class="text-caption text-grey-darken-3 mb-1">
+                      Total Brach
+                    </div>
+                    <div class="font-weight-bold">
+                      <h2>{{ memberStats.totalBranches }}</h2>
+                    </div>
+                  </v-card>
+                </v-col>
+                <v-col cols="12" sm="6" md="3">
+                  <v-card
+                    elevation="0"
+                    rounded="lg"
+                    class="pa-4"
+                    style="background: white; border: 1px solid #e0e0e0"
+                  >
+                    <div class="text-caption text-grey-darken-3 mb-1">
+                      Total Departments
+                    </div>
+                    <div class="font-weight-bold">
+                      <h2>{{ memberStats.totalDepartments }}</h2>
+                    </div>
+                  </v-card>
+                </v-col>
+                <v-col cols="12" sm="6" md="3">
+                  <v-card
+                    elevation="0"
+                    rounded="lg"
+                    class="pa-4"
+                    style="background: white; border: 1px solid #e0e0e0"
+                  >
+                    <div class="text-caption text-grey-darken-3 mb-1">
+                      Showing Members
+                    </div>
+                    <div class="font-weight-bold">
+                      <h2>{{ filteredMembers.length }}</h2>
+                    </div>
+                  </v-card>
+                </v-col>
+              </v-row>
+
+              <!-- Members Card -->
+              <v-card elevation="0" rounded="lg" style="background: white">
+                <v-card-title
+                  class="d-flex justify-space-between align-center pa-4"
+                >
+                  <h4 class="font-weight-bold">Members</h4>
+                  <v-btn
+                    color="primary"
+                    variant="outlined"
+                    rounded="lg"
+                    height="48"
+                    :to="{
+                      path: '/admin/profile/employer/4',
+                      query: { edit: 1 },
+                    }"
+                  >
+                    Edit
+                  </v-btn>
+                </v-card-title>
+                <v-card-text class="pa-4">
+                  <!-- Search and Filter Section -->
+                  <v-row class="mb-4">
+                    <v-col cols="12" md="6">
+                      <div class="text-grey mb-1">Search by</div>
+                      <v-text-field
+                        v-model="memberSearchKeyword"
+                        placeholder="Type your keywords here"
+                        variant="outlined"
+                        density="comfortable"
+                        rounded="lg"
+                        hide-details
+                      >
+                        <template v-slot:prepend>
+                          <v-select
+                            v-model="memberSearchBy"
+                            :items="memberSearchOptions"
+                            item-title="label"
+                            item-value="value"
+                            placeholder="Name"
+                            hide-details
+                            variant="outlined"
+                            min-width="120"
+                            rounded="lg"
+                            density="comfortable"
+                          >
+                          </v-select>
+                        </template>
+                      </v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                      <v-row>
+                        <v-col cols="6" md="6">
+                          <div class="text-grey mb-1">Branch</div>
+                          <v-select
+                            v-model="selectedMemberBranch"
+                            :items="memberBranchOptions"
+                            item-title="label"
+                            item-value="value"
+                            variant="outlined"
+                            density="comfortable"
+                            rounded="lg"
+                            placeholder="All"
+                            hide-details
+                            clearable
+                          />
+                        </v-col>
+                        <v-col cols="6" md="6">
+                          <div class="text-grey mb-1">Role</div>
+                          <v-select
+                            v-model="selectedMemberRole"
+                            :items="memberRoleOptions"
+                            item-title="label"
+                            item-value="value"
+                            variant="outlined"
+                            density="comfortable"
+                            rounded="lg"
+                            placeholder="All"
+                            hide-details
+                            clearable
+                          />
+                        </v-col>
+                      </v-row>
+                    </v-col>
+                    <v-col cols="6" md="2">
+                      <v-btn
+                        color="primary"
+                        variant="outlined"
+                        block
+                        rounded="lg"
+                        size="large"
+                        class="mt-6"
+                        @click="handleMemberSearch"
+                      >
+                        Search
+                      </v-btn>
+                    </v-col>
+                    <v-col cols="6" md="2">
+                      <v-btn
+                        color="grey"
+                        variant="text"
+                        @click="handleMemberReset"
+                        size="large"
+                        rounded="lg"
+                        block
+                        class="mt-6"
+                      >
+                        Reset
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+
+                  <!-- Members Table -->
+                  <v-data-table-server
+                    class="blue-lighten-5 rounded-lg border"
+                    v-model:items-per-page="memberItemsPerPage"
+                    v-model:page="memberPage"
+                    :headers="memberTableHeaders"
+                    :items="filteredMembers"
+                    :items-length="memberTotalItems"
+                    :loading="loadingMembers"
+                  >
+                    <template v-slot:item.no="{ index }">
+                      {{ (memberPage - 1) * memberItemsPerPage + index + 1 }}
+                    </template>
+                    <template v-slot:item.name="{ item }">
+                      <div class="d-flex align-center py-2">
+                        <v-avatar size="32" class="mr-3" color="primary">
+                          <v-img
+                            v-if="item.photo_url"
+                            :src="
+                              item.photo_url.includes('http')
+                                ? item.photo_url
+                                : BASE_URL + item.photo_url
+                            "
+                            :alt="item.full_name"
+                          ></v-img>
+                          <span v-else class="text-white text-caption">
+                            {{ getInitials(item.full_name) }}
+                          </span>
+                        </v-avatar>
+                        <div>
+                          <div class="font-weight-medium">
+                            {{ item.full_name }}
+                          </div>
+                          <div class="text-caption text-grey">
+                            {{ item.email || item.encrypted_phone || "-" }}
+                          </div>
+                        </div>
+                      </div>
+                    </template>
+                    <template v-slot:item.role="{ item }">
+                      {{
+                        item.company_role === "owner"
+                          ? "PIC"
+                          : item.company_role === "hrd"
+                          ? "HRD"
+                          : item.company_role === "member"
+                          ? "Member"
+                          : capitalizeFirstLetter(item.company_role)
+                      }}
+                    </template>
+                    <template v-slot:item.branch="{ item }">
+                      {{ item.branch_name || item.placement_branch || "-" }}
+                    </template>
+                    <template v-slot:item.department="{ item }">
+                      {{ item.department || "-" }}
+                    </template>
+                    <template v-slot:item.job_title="{ item }">
+                      {{ item.job_title || "-" }}
+                    </template>
+                  </v-data-table-server>
+                </v-card-text>
+              </v-card>
+            </v-window-item>
+          </v-window>
+        </v-col>
+      </v-row>
+    </form>
+    <v-dialog v-model="loadingInitial" persistent width="auto" max-width="200">
+      <v-card
+        height="130"
+        class="d-flex flex-column align-center justify-center text-center mx-auto pa-3"
+        rounded="xl"
+        style="background-color: rgba(255, 255, 255, 0.9)"
+      >
+        <v-img :src="`/logo-double.svg`" width="100" class="mb-3" />
+        <div class="d-flex align-center justify-center mb-2">
+          <v-progress-circular
+            size="25"
+            width="3"
+            indeterminate
+            color="primary"
+            class="mr-2"
+          >
+          </v-progress-circular>
+          <strong style="font-size: 16px" class="text-primary">
+            Loading...
+          </strong>
+        </div>
+      </v-card>
+    </v-dialog>
+  </v-container>
+</template>
+
+<script setup>
+definePageMeta({ ssr: false, layout: "admin", middleware: ["auth"] });
+const BASE_URL = useRuntimeConfig().public.apiBase + "/";
+// Router for navigation after submission (optional)
+const router = useRouter();
+const route = useRoute();
+const { $apiFetch } = useApi();
+
+const form = ref({}); // Form data object
+const formPIC = ref({}); // Form data object
+const isFormValid = ref(false); // Track form validation status
+const mode = ref("update"); // Mode for the form, can be "create" or "update"
+const entity = ref("mst-companies");
+const isShowFields = ref(false);
+const loading = ref(true);
+const activeTab = ref("personal"); // Active tab for navigation
+
+// Branch Info variables
+const branches = ref([]);
+const loadingBranches = ref(false);
+const branchSearchKeyword = ref("");
+const branchSearchBy = ref("branch");
+const selectedBranchDepartment = ref("All");
+const branchPage = ref(1);
+const branchItemsPerPage = ref(10);
+const branchTotalItems = ref(0);
+
+const branchSearchOptions = ref([
+  { label: "Branch", value: "branch" },
+  { label: "Location", value: "location" },
+  { label: "Email", value: "email" },
+  { label: "Phone Number", value: "phone" },
+]);
+
+const branchDepartments = ref([{ label: "All", value: "All" }]);
+
+const branchTableHeaders = ref([
+  { title: "No", key: "no", sortable: false },
+  { title: "Branch", key: "branch", sortable: false },
+  { title: "Department", key: "departments", sortable: false },
+  { title: "Location", key: "location", sortable: false },
+  { title: "Email", key: "email", sortable: false },
+  { title: "Phone Number", key: "phone", sortable: false },
+]);
+
+// Computed property for filtered branches
+const filteredBranches = computed(() => {
+  let filtered = branches.value;
+  const keyword = branchSearchKeyword.value.toLowerCase().trim();
+  const department = selectedBranchDepartment.value;
+
+  if (!keyword && department === "All") {
+    filtered = [...branches.value];
+  } else {
+    filtered = branches.value.filter((branch) => {
+      let matchesKeyword = true;
+      if (keyword) {
+        const searchField = branchSearchBy.value;
+        let searchValue = "";
+
+        switch (searchField) {
+          case "branch":
+            searchValue = branch.display_name || branch.branch || "";
+            break;
+          case "location":
+            searchValue = branch.location || "";
+            break;
+          case "email":
+            searchValue = branch.email || "";
+            break;
+          case "phone":
+            searchValue = branch.phone || "";
+            break;
+          default:
+            searchValue = branch.display_name || branch.branch || "";
+        }
+
+        matchesKeyword = searchValue.toLowerCase().includes(keyword);
+      }
+
+      let matchesDepartment = true;
+      if (department !== "All") {
+        matchesDepartment = branch.departments?.some(
+          (dept) => dept.dept_name === department
+        );
+      }
+
+      return matchesKeyword && matchesDepartment;
+    });
+  }
+
+  branchTotalItems.value = filtered.length;
+
+  return filtered.map((item, index) => ({
+    ...item,
+    no: index + 1,
+  }));
+});
+
+// Branch functions
+const handleBranchSearch = () => {
+  // Search is handled by computed property
+};
+
+const handleBranchReset = () => {
+  branchSearchKeyword.value = "";
+  selectedBranchDepartment.value = "All";
+  branchSearchBy.value = "branch";
+};
+
+const fetchBranches = async (companyHqID) => {
+  if (!companyHqID) return;
+
+  loadingBranches.value = true;
+  try {
+    const res = await $apiFetch(
+      `/mst-companies/available-branches/${companyHqID}`
+    );
+    const companiesHqRes = await $apiFetch("/mst-companies/search", {
+      params: {
+        filters: { id: companyHqID },
+        limit: 1,
+      },
+    });
+    const companiesBranchRes = await $apiFetch("/mst-companies/search", {
+      params: {
+        filters: { parent_id: companyHqID },
+        limit: res.items.length,
+      },
+    });
+
+    const companiesRes = {
+      items: [...companiesHqRes.items, ...companiesBranchRes.items],
+    };
+
+    branches.value = res.items.map((item) => {
+      const company = companiesRes.items.find((c) => c.id === item.id);
+      return {
+        ...item,
+        ...company,
+        phone: company?.phone,
+        email: company?.email,
+        location: company?.location,
+        departments: company?.departments || [],
+      };
+    });
+
+    // Sort branches
+    branches.value.sort((a, b) => {
+      if (!a.branch && b.branch) return -1;
+      if (a.branch && !b.branch) return 1;
+      return 0;
+    });
+
+    // Populate departments
+    const departmentMap = new Map();
+    departmentMap.set("All", { label: "All", value: "All" });
+
+    branches.value.forEach((branch) => {
+      if (branch.departments) {
+        branch.departments.forEach((dept) => {
+          if (dept.dept_name && dept.dept_code) {
+            const displayName = `${dept.dept_name} (${dept.dept_code})`;
+            departmentMap.set(dept.dept_name, {
+              label: displayName,
+              value: dept.dept_name,
+              code: dept.dept_code,
+            });
+          } else if (dept.dept_name) {
+            departmentMap.set(dept.dept_name, {
+              label: dept.dept_name,
+              value: dept.dept_name,
+            });
+          }
+        });
+      }
+    });
+
+    branchDepartments.value = Array.from(departmentMap.values());
+  } catch (error) {
+    console.error("Error fetching branches:", error);
+  } finally {
+    loadingBranches.value = false;
+  }
+};
+
+// Define fields with configuration
+const fieldsOld = ref([
+  {
+    name: "firebase_uid",
+    label: "Firebase UID",
+    type: "text",
+    rules: [(v) => !!v || "Firebase UID is required"],
+    required: true,
+  },
+  {
+    name: "email",
+    label: "Email",
+    type: "text",
+    inputType: "email",
+    rules: [
+      (v) => !!v || "Email is required",
+      (v) => /.+@.+\..+/.test(v) || "Must be a valid email",
+    ],
+    required: true,
+  },
+  {
+    name: "user_role",
+    label: "User Role",
+    type: "select",
+    options: ["user", "admin", "manager"],
+    rules: [(v) => !!v || "User role is required"],
+    required: true,
+  },
+  {
+    name: "company_id",
+    label: "Company ID",
+    type: "text",
+    rules: [
+      (v) =>
+        v ? /^[0-9a-fA-F-]{36}$/.test(v) || "Must be a valid UUID" : true,
+    ],
+  },
+  {
+    name: "company_role",
+    label: "Company Role",
+    type: "select",
+    options: ["owner", "member", "admin"],
+  },
+  {
+    name: "full_name",
+    label: "Full Name",
+    type: "text",
+    rules: [(v) => !!v || "Full name is required"],
+    required: true,
+  },
+  {
+    name: "gender",
+    label: "Gender",
+    type: "select",
+    options: ["male", "female", "other"],
+  },
+  {
+    name: "personal_summary",
+    label: "Personal Summary",
+    type: "textarea",
+  },
+  {
+    name: "availability",
+    label: "Availability",
+    type: "select",
+    options: ["full-time", "part-time", "contract"],
+  },
+]);
+
+const fields = useState(`${entity.value}fields`, () => []);
+const fieldsPIC = useState(`usersfields`, () => []);
+const genders = useState("genders", () => []);
+const fetchGenders = async () => {
+  const response = await $apiFetch(`/configs/key/gender`);
+  genders.value = response.value;
+};
+
+const errors = ref({});
+const errorsPIC = ref({});
+
+const { regions, debouncedFetchRegions, regionLoading, fetchRegions } =
+  useRegionSearch();
+const handleInputRegion = (event) => {
+  debouncedFetchRegions(event.target.value);
+};
+
+const { users, debouncedFetchUsers, userLoading, fetchUsers } = useUserSearch();
+const handleInputUser = (event) => {
+  debouncedFetchUsers(event.target.value, ["full_name", "email"]);
+};
+
+const { models, debouncedFetch, fetch } = useDynamicSearch([
+  "salary_country",
+  "industry",
+  "company",
+  "profession_parent",
+  "invoice",
+
+  "skill",
+  "group",
+  "paket",
+  "school",
+  "interest",
+  "language",
+  "profession",
+  "right_to_work",
+  "subscription",
+
+  "event",
+  "job",
+]);
+const handleInput = (event, entity, fields, endpoint) => {
+  debouncedFetch(entity, event.target.value, fields, endpoint);
+};
+
+const setAutoComplete = (field) => {
+  if (form.value[field.name]) {
+    if (field.name == "region_id") {
+      fetchRegions(form.value[field.name], "id");
+    }
+    if (["user_id", "following_id"].includes(field.name)) {
+      fetchUsers(form.value[field.name], ["id"]);
+    }
+    if (field.name == "salary_country_id") {
+      fetch(
+        "salary_country",
+        form.value[field.name],
+        ["id"],
+        "mst-salary-country"
+      );
+    }
+    if (
+      [
+        "skill_id",
+        "school_id",
+        "interest_id",
+        "language_id",
+        "profession_id",
+        "right_to_work_id",
+        "subscription_id",
+      ].includes(field.name)
+    ) {
+      fetch(
+        `${field.name.slice(0, -3)}`,
+        form.value[field.name],
+        ["id"],
+        `mst-${field.name.slice(0, -3)}s`
+      );
+    }
+    if (
+      ["interest_ids", "profession_ids", "right_to_work_ids"].includes(
+        field.name
+      )
+    ) {
+      fetch(
+        `${field.name.slice(0, -4)}`,
+        form.value[field.name],
+        ["id"],
+        `mst-${field.name.slice(0, -4)}s`
+      );
+    }
+    if (["job_id", "event_id", "group_id", "invoice_id"].includes(field.name)) {
+      fetch(
+        `${field.name.slice(0, -3)}`,
+        form.value[field.name],
+        ["id"],
+        `${field.name.slice(0, -3)}s`
+      );
+    }
+    if (field.name == "group_id") {
+      fetch("group", form.value[field.name], ["id"], "groups");
+    }
+    if (field.name == "paket_id") {
+      fetch("paket", form.value[field.name], ["id"], "event-pakets");
+    }
+    if (field.name == "invoice_id") {
+      fetch("invoice", form.value[field.name], ["id"], "invoices");
+    }
+    if (field.name == "company_id") {
+      fetch("company", form.value[field.name], ["id"], "mst-companies");
+    }
+    if (field.name == "parent_id" && entity == "mst-professions") {
+      fetch(
+        "parent_profession",
+        form.value[field.name],
+        ["id"],
+        "mst-professions"
+      );
+    }
+  }
+};
+
+const loadFields = async () => {
+  let items = fields.value;
+  if (!items.length) {
+    items = await $apiFetch(`/fields/${entity.value}`);
+    if (Array.isArray(items)) {
+      items.forEach((item) => {
+        fields.value.push(item);
+        errors.value[item.name] = [];
+      });
+    }
+  }
+
+  setTimeout(() => {
+    isShowFields.value = true;
+  }, 100);
+  return fields;
+};
+
+const loadFieldsPIC = async () => {
+  let items = fieldsPIC.value;
+  if (!items.length) {
+    items = await $apiFetch(`/fields/users`);
+    if (Array.isArray(items)) {
+      items.forEach((item) => {
+        fieldsPIC.value.push(item);
+        errorsPIC.value[item.name] = [];
+      });
+    }
+  }
+  setTimeout(() => {
+    isShowFields.value = true;
+  }, 100);
+  return fields;
+};
+
+const loadFieldsPICEncrypted = async () => {
+  let items = fieldsPIC.value;
+  console.log(items);
+  if (!items.find((x) => x.name == "encrypted_phone")) {
+    items = await $apiFetch(`/fields/encrypted-user-data`);
+    if (Array.isArray(items)) {
+      items.forEach((item) => {
+        fieldsPIC.value.push(item);
+        errorsPIC.value[item.name] = [];
+      });
+    }
+  }
+
+  setTimeout(() => {
+    isShowFields.value = true;
+  }, 100);
+  return fields;
+};
+
+// Initialize form data with either empty values (for create) or predefined values (for update)
+const initializeForm = (data = null) => {
+  //Object.assign(form.value, data);
+  fields.value.forEach((field) => {
+    if (field.options && field.options.enum) {
+      field.enums = [];
+      Object.keys(field.options.enum).forEach((key) => {
+        field.enums.push({ key: key, value: field.options.enum[key] });
+      });
+    }
+    field.rules = [];
+    form.value[field.name] = data && data[field.name] ? data[field.name] : ""; // Set existing data or empty
+
+    if (field.options) {
+      switch (field.options.type) {
+        case "boolean":
+          form.value[field.name] = form.value[field.name] || false;
+          break;
+        case "decimal":
+          form.value[field.name] = form.value[field.name]
+            ? parseFloat(form.value[field.name])
+            : null;
+          break;
+      }
+    }
+
+    if (field.name.endsWith("_ids")) {
+      form.value[field.name] = data && data[field.name] ? data[field.name] : []; // Set existing data or empty
+    }
+
+    setAutoComplete(field);
+  });
+
+  if (data["region"]) {
+    form.value["region"] = data["region"];
+  }
+
+  if (data["industri"]) {
+    form.value["industry"] = data["industri"].name;
+  }
+
+  loading.value = false;
+};
+
+const initializeFormPIC = (data = null) => {
+  //Object.assign(form.value, data);
+  fieldsPIC.value.forEach((field) => {
+    if (field.options && field.options.enum) {
+      field.enums = [];
+      Object.keys(field.options.enum).forEach((key) => {
+        field.enums.push({ key: key, value: field.options.enum[key] });
+      });
+    }
+    field.rules = [];
+    formPIC.value[field.name] =
+      data && data[field.name] ? data[field.name] : ""; // Set existing data or empty
+
+    if (field.options) {
+      switch (field.options.type) {
+        case "boolean":
+          formPIC.value[field.name] = formPIC.value[field.name] || false;
+          break;
+        case "decimal":
+          formPIC.value[field.name] = formPIC.value[field.name]
+            ? parseFloat(formPIC.value[field.name])
+            : null;
+          break;
+      }
+    }
+
+    if (field.name.endsWith("_ids")) {
+      formPIC.value[field.name] =
+        data && data[field.name] ? data[field.name] : []; // Set existing data or empty
+    }
+
+    if (data["region"]) {
+      formPIC.value["region"] = data["region"];
+    }
+
+    setAutoComplete(field);
+  });
+
+  // Set additional role-related fields from data
+  if (data) {
+    formPIC.value.department = data.department || "";
+    formPIC.value.job_title = data.job_title || "";
+    formPIC.value.employment_type = data.employment_type || "";
+    formPIC.value.start_date = data.start_date || "";
+    formPIC.value.end_date = data.end_date || "";
+    formPIC.value.status = data.status || "Active";
+  }
+
+  loading.value = false;
+};
+
+const initializeFormPICEncrypted = (data = null) => {
+  //Object.assign(form.value, data);
+  fieldsPIC.value.forEach((field) => {
+    if (field.options && field.options.enum) {
+      field.enums = [];
+      Object.keys(field.options.enum).forEach((key) => {
+        field.enums.push({ key: key, value: field.options.enum[key] });
+      });
+    }
+    field.rules = [];
+    formPIC.value[field.name] =
+      data && data[field.name] ? data[field.name] : formPIC.value[field.name]; // Set existing data or empty
+
+    if (field.options) {
+      switch (field.options.type) {
+        case "boolean":
+          formPIC.value[field.name] = form.value[field.name] || false;
+          break;
+        case "decimal":
+          formPIC.value[field.name] = form.value[field.name]
+            ? parseFloat(form.value[field.name])
+            : null;
+          break;
+      }
+    }
+
+    if (field.name.endsWith("_ids")) {
+      formPIC.value[field.name] =
+        data && data[field.name] ? data[field.name] : []; // Set existing data or empty
+    }
+
+    setAutoComplete(field);
+  });
+  loading.value = false;
+};
+
+const members = ref([]);
+const loadingInitial = ref(true);
+const loadingMembers = ref(false);
+
+// Member search and filter variables
+const memberSearchKeyword = ref("");
+const memberSearchBy = ref("name");
+const selectedMemberBranch = ref(null);
+const selectedMemberRole = ref(null);
+const memberPage = ref(1);
+const memberItemsPerPage = ref(20);
+const memberTotalItems = ref(0);
+
+const memberSearchOptions = ref([
+  { label: "Name", value: "name" },
+  { label: "Email", value: "email" },
+]);
+
+const memberBranchOptions = ref([{ label: "All", value: null }]);
+
+const memberRoleOptions = ref([
+  { label: "All", value: null },
+  { label: "PIC", value: "owner" },
+  { label: "HRD", value: "hrd" },
+  { label: "Member", value: "member" },
+]);
+
+const memberTableHeaders = ref([
+  { title: "No", key: "no", sortable: false, width: "60px" },
+  { title: "Name", key: "name", sortable: false },
+  { title: "Role", key: "role", sortable: false },
+  { title: "Branch", key: "branch", sortable: false },
+  { title: "Department", key: "department", sortable: false },
+  { title: "Job Title", key: "job_title", sortable: false },
+]);
+
+// Member statistics
+const memberStats = computed(() => {
+  const uniqueBranches = new Set();
+  const uniqueDepartments = new Set();
+
+  members.value.forEach((member) => {
+    if (member.placement_branch || member.branch_name) {
+      uniqueBranches.add(member.placement_branch || member.branch_name);
+    }
+    if (member.department) {
+      uniqueDepartments.add(member.department);
+    }
+  });
+
+  return {
+    totalMembers: members.value.length,
+    totalBranches: uniqueBranches.size || branches.value.length || 0,
+    totalDepartments: uniqueDepartments.size || 0,
+  };
+});
+
+// Filtered members computed property
+const filteredMembers = computed(() => {
+  let filtered = members.value;
+  const keyword = memberSearchKeyword.value.toLowerCase().trim();
+
+  if (keyword || selectedMemberBranch.value || selectedMemberRole.value) {
+    filtered = members.value.filter((member) => {
+      let matchesKeyword = true;
+      if (keyword) {
+        const searchField = memberSearchBy.value;
+        let searchValue = "";
+
+        switch (searchField) {
+          case "name":
+            searchValue = member.full_name || "";
+            break;
+          case "email":
+            searchValue = member.email || member.encrypted_phone || "";
+            break;
+          default:
+            searchValue = member.full_name || "";
+        }
+
+        matchesKeyword = searchValue.toLowerCase().includes(keyword);
+      }
+
+      let matchesBranch = true;
+      if (selectedMemberBranch.value) {
+        matchesBranch =
+          member.placement_branch === selectedMemberBranch.value ||
+          member.branch_name === selectedMemberBranch.value;
+      }
+
+      let matchesRole = true;
+      if (selectedMemberRole.value) {
+        matchesRole = member.company_role === selectedMemberRole.value;
+      }
+
+      return matchesKeyword && matchesBranch && matchesRole;
+    });
+  }
+
+  memberTotalItems.value = filtered.length;
+
+  return filtered.map((item, index) => ({
+    ...item,
+    no: index + 1,
+  }));
+});
+
+// Member functions
+const handleMemberSearch = () => {
+  // Search is handled by computed property
+};
+
+const handleMemberReset = () => {
+  memberSearchKeyword.value = "";
+  selectedMemberBranch.value = null;
+  selectedMemberRole.value = null;
+  memberSearchBy.value = "name";
+};
+
+const fetchMembers = async () => {
+  loadingInitial.value = true;
+  loadingMembers.value = true;
+  try {
+    const response = await $apiFetch("/users/search", {
+      params: {
+        filters: {
+          company_id: me.value.company_id,
+          company_role: ["hrd", "member", "owner"],
+        },
+        sortBy: { company_role: "DESC" },
+      },
+    });
+    members.value = response.items;
+
+    // Populate branch options from members
+    const branchSet = new Set();
+    members.value.forEach((member) => {
+      const branch = member.placement_branch || member.branch_name;
+      if (branch) {
+        branchSet.add(branch);
+      }
+    });
+
+    memberBranchOptions.value = [
+      { label: "All", value: null },
+      ...Array.from(branchSet).map((branch) => ({
+        label: branch,
+        value: branch,
+      })),
+    ];
+  } catch (error) {
+    console.error("Error fetching members:", error);
+  } finally {
+    loadingInitial.value = false;
+    loadingMembers.value = false;
+  }
+};
+const capitalizeFirstLetter = (string) => {
+  if (!string) return "";
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+};
+
+// Initialize form based on mode
+const me = useState("me", () => {
+  return {
+    id: null,
+    company_id: null,
+    company_role: null,
+  };
+});
+const fetchMe = async () => {
+  const data = await $apiFetch("/users/me");
+  Object.assign(me.value, data);
+};
+
+onMounted(async () => {
+  if (!me.value.id) {
+    await fetchMe();
+  }
+  fetchGenders();
+  loadFields();
+  loadFieldsPIC();
+  loadFieldsPICEncrypted();
+
+  if (mode.value === "update" && me.value.company_id) {
+    fetchMembers();
+
+    // Fetch branches
+    const companyHqID =
+      me.value.roles?.[0]?.assignment?.company_hq_id || me.value.company_id;
+    if (companyHqID) {
+      fetchBranches(companyHqID);
+    }
+
+    $apiFetch(`/${entity.value}/search`, {
+      params: {
+        filters: {
+          id: me.value.company_id,
+        },
+        expands: "region,industri",
+      },
+    }).then((data) => {
+      if (data.items && data.items[0]) {
+        initializeForm(data.items[0]); // Load existing data if in update mode
+      }
+    });
+    $apiFetch(`/users/search`, {
+      params: {
+        filters: {
+          id: me.value.id,
+          company_id: me.value.company_id,
+          //company_role: "owner",
+        },
+        expands: "region",
+      },
+    }).then((data) => {
+      if (data.items && data.items[0]) {
+        initializeFormPIC(data.items[0]); // Load existing data if in update mode
+        $apiFetch(`/encrypted-user-data/search`, {
+          params: {
+            filters: {
+              user_id: data.items[0].id,
+            },
+          },
+        }).then((data) => {
+          if (data.items && data.items[0]) {
+            initializeFormPICEncrypted(data.items[0]); // Load existing data if in update mode
+          }
+        });
+      }
+    });
+  } else {
+    loadingInitial.value = false;
+  }
+});
+
+// Submit handler
+const submitLoading = ref(false);
+const providerErrors = ref([]);
+const onSubmit = async () => {
+  Object.keys(errors.value).forEach((key) => {
+    errors.value[key] = [];
+  });
+  console.log(form.value);
+  Object.keys(form.value).forEach((key) => {
+    if (
+      !form.value[key] &&
+      form.value[key] !== 0 &&
+      form.value[key] !== false
+    ) {
+      delete form.value[key];
+    }
+  });
+
+  try {
+    submitLoading.value = true;
+    if (mode.value === "create") {
+      await $apiFetch(`/${entity.value}`, {
+        method: "POST",
+        body: form.value,
+      });
+      console.log("Creating entry:", form.value);
+    } else {
+      delete form.value.id;
+      await $apiFetch(`/${entity.value}/${route.query.id}`, {
+        method: "PATCH",
+        body: form.value,
+      });
+      console.log("Updating entry:", form.value);
+    }
+    submitLoading.value = false;
+    // Optionally, redirect after form submission
+    router.back();
+  } catch (error) {
+    submitLoading.value = false;
+    console.log(error.response);
+    if (
+      error.response &&
+      error.response._data &&
+      error.response._data.message
+    ) {
+      const errorMessages = error.response._data.message;
+      if (Array.isArray(errorMessages)) {
+        Object.keys(errors.value).forEach((key) => {
+          errorMessages.forEach((errMsg) => {
+            if (errMsg.includes(key)) {
+              errors.value[key].push(errMsg);
+            }
+          });
+        });
+      } else {
+        providerErrors.value.push(errorMessages);
+      }
+    } else {
+      providerErrors.value.push(
+        "An unexpected error occurred. Please try again."
+      );
+    }
+  }
+};
+
+const getInitials = (name) => {
+  if (!name) return "";
+  return name
+    .split(" ")
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase()
+    .substring(0, 2);
+};
+
+const formatDate = (date) => {
+  if (!date) return "";
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
+
+const formatTimeAgo = (date) => {
+  if (!date) return "";
+  const now = new Date();
+  const past = new Date(date);
+  const diffTime = Math.abs(now - past);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 0) return "Today";
+  if (diffDays === 1) return "Yesterday";
+  if (diffDays < 7) return `${diffDays} days ago`;
+  if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+  if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
+  return `${Math.floor(diffDays / 365)} years ago`;
+};
+</script>
+
+<style scoped>
+.member-item:hover {
+  background-color: rgb(245, 245, 245);
+}
+
+.member-item:last-child .v-divider {
+  display: none;
+}
+</style>
