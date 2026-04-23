@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.proconnectjob",
+      "sha256_cert_fingerprints": [
+        "00:A5:E0:54:A3:BC:36:42:45:F2:32:AC:91:C3:DA:42:E8:14:82:BC:02:94:A1:8F:A3:C9:5F:F4:A1:45:BE:75"
+      ]
+    }
+  }
+]

@@ -1,0 +1,100 @@
+name: CMS PRODUCTION DEPLOYMENT 🚀
+
+on:
+  # Manual trigger (preferred for controlled releases)
+  workflow_dispatch:
+    inputs:
+      forceVersion:
+        description: "Force version (ex: v1.0.0)"
+        required: true
+  # Optional: build and deploy automatically when pushing to production branch
+  push:
+    branches:
+      - production
+
+jobs:
+  build:
+    name: Create Git Tag
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # When triggered via workflow_dispatch, this will be provided.
+          # When triggered via push, this may be empty and the action will
+          # fall back to its default bump behaviour.
+          custom_tag: ${{ github.event.inputs.forceVersion }}
+          tag_prefix: ""
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: "Release for ProConnect-CMS"
+
+    outputs:
+      new_tag: ${{ steps.tag_version.outputs.new_tag }}
+
+  deploy:
+    name: Build & Push CMS Docker Image to Docker Hub
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Build and push CMS Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          # Adjust this if your CMS Dockerfile lives elsewhere
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_HUB_USERNAME }}/proconnect-cms:latest
+            ${{ secrets.DOCKER_HUB_USERNAME }}/proconnect-cms:${{ needs.build.outputs.new_tag }}
+
+  publish-prod:
+    name: Deploy CMS to Production
+    runs-on: ubuntu-latest
+    needs: deploy
+
+    steps:
+      - name: Deploy CMS via SSH (with key)
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PRODUCTION_SERVER_HOST }}
+          username: ${{ secrets.PRODUCTION_SERVER_USER }}
+          key: ${{ secrets.PRODUCTION_SERVER_KEY }}
+          port: ${{ secrets.PRODUCTION_SERVER_PORT }}
+          script: |
+            cd /apps/ProConnect-CMS
+            echo "Logging in to Docker Hub..."
+            echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+            echo "Pulling latest CMS image..."
+            docker compose pull frontend
+            echo "Stopping CMS service..."
+            docker compose stop frontend
+            echo "Removing old CMS container..."
+            docker compose rm -f frontend
+            echo "Starting CMS service with new image..."
+            docker compose up -d frontend
+            echo "Checking CMS service status..."
+            docker compose ps
+            echo "Cleaning up unused images..."
+            docker image prune -f
+            echo "CMS deployment completed successfully!"
+
