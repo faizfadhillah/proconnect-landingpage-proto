@@ -1,5 +1,11 @@
 [build]
   publish = "."
+  # Ignore the /cms Nuxt app — it deploys separately. Netlify will only publish the root HTML.
+  ignore = "false"
+
+# Stop Netlify from trying to auto-install /cms package.json
+[build.environment]
+  NETLIFY_SKIP_CMS_BUILD = "true"
 
 [[headers]]
   for = "/*"
@@ -12,3 +18,9 @@
   from = "/home"
   to = "/"
   status = 301
+
+# Do not serve /cms/* from Netlify — it's a separate app
+[[redirects]]
+  from = "/cms/*"
+  to = "/"
+  status = 404
