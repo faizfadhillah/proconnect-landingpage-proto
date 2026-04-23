@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title id="pageTitle">Job Details — ProConnect</title>
+<meta name="description" content="Verified hospitality job openings across ASEAN on ProConnect." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand:  { 50:'#EFF4FF', 100:'#DCE6FF', 500:'#3A66D1', 600:'#1E4BA8', 700:'#1E3A8A', 800:'#172F6E', 900:'#0F2352' },
+          accent: { 500:'#F97316', 600:'#EA580C' },
+          mint:   { 500:'#22C55E', 600:'#16A34A' }
+        },
+        fontFamily: { sans: ['Inter','system-ui','sans-serif'] }
+      }
+    }
+  }
+</script>
+<link rel="stylesheet" href="assets/styles.css" />
+<style>
+  .job-logo-big { background: linear-gradient(135deg, var(--c1, #1E4BA8), var(--c2, #3A66D1)); }
+  .badge { display:inline-flex; align-items:center; gap:.3rem; padding:.3rem .65rem; border-radius:6px; font-size:12px; font-weight:600; }
+  .badge-new { background:#FEF3C7; color:#B45309; }
+  .badge-verified { background:#DCFCE7; color:#166534; }
+  .badge-urgent { background:#FEE2E2; color:#B91C1C; }
+  .badge-remote { background:#EDE9FE; color:#6D28D9; }
+  .fact-card { background:#fff; border:1px solid #E5E7EB; border-radius:12px; padding:14px 16px; }
+  .fact-card .fact-label { font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:#64748B; font-weight:600; }
+  .fact-card .fact-value { font-size:15px; font-weight:700; color:#0F2352; margin-top:2px; }
+  .section-list li { position:relative; padding-left:1.5rem; margin-bottom:.6rem; color:#334155; line-height:1.55; }
+  .section-list li::before { content:''; position:absolute; left:0; top:9px; width:8px; height:8px; border-radius:50%; background:#1E4BA8; }
+</style>
+</head>
+<body class="bg-slate-50 antialiased">
+
+<!-- ==================== NAVBAR ==================== -->
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-100">
+  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center" aria-label="ProConnect home">
+      <img src="assets/logo.png" alt="ProConnect" class="h-8 w-auto" />
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-8 text-[14px] font-medium">
+      <a href="index.html"   class="nav-link" data-nav-link="index.html">Home</a>
+      <div class="nav-dropdown" tabindex="0">
+        <span class="nav-link nav-dropdown-trigger" data-nav-link="features.html">
+          Features
+          <svg class="nav-dd-caret w-3 h-3" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+        </span>
+        <div class="nav-dropdown-menu" role="menu">
+          <a href="features-employers.html" class="nav-dropdown-item" role="menuitem">
+            <span class="nav-dd-icon" style="background:#EFF4FF;color:#1E4BA8;"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M5 21V7l7-4 7 4v14M9 9h.01M9 13h.01M9 17h.01M15 9h.01M15 13h.01M15 17h.01"/></svg></span>
+            <span><span class="nav-dd-title">For Employers</span><span class="nav-dd-sub">Replace recruiting agents. Hire direct.</span></span>
+          </a>
+          <a href="features-schools.html" class="nav-dropdown-item" role="menuitem">
+            <span class="nav-dd-icon" style="background:#ECFDF5;color:#16A34A;"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422A12 12 0 0112 21.056a12 12 0 01-6.16-10.478L12 14z"/></svg></span>
+            <span><span class="nav-dd-title">For Schools</span><span class="nav-dd-sub">Earn revenue from graduate placements.</span></span>
+          </a>
+          <a href="features-jobseekers.html" class="nav-dropdown-item" role="menuitem">
+            <span class="nav-dd-icon" style="background:#FFF7ED;color:#EA580C;"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+            <span><span class="nav-dd-title">For Job Seekers</span><span class="nav-dd-sub">Verified Skill Passport across ASEAN.</span></span>
+          </a>
+        </div>
+      </div>
+      <a href="pricing.html"  class="nav-link" data-nav-link="pricing.html">Pricing</a>
+      <a href="jobs.html"     class="nav-link active" data-nav-link="jobs.html">Browse Jobs</a>
+      <a href="about.html"    class="nav-link" data-nav-link="about.html">About Us</a>
+      <a href="contact.html"  class="nav-link" data-nav-link="contact.html">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href="contact.html" class="inline-flex btn-primary text-sm">Get in Touch</a>
+      <button id="navToggle" class="lg:hidden ml-1 p-2 rounded-md text-brand-700 hover:bg-brand-50" aria-label="Open menu" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div id="mobileBackdrop" class="mobile-backdrop fixed inset-0 bg-black/40 z-40 lg:hidden"></div>
+<aside id="mobileDrawer" class="mobile-drawer fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white shadow-2xl z-50 lg:hidden flex flex-col">
+  <div class="flex items-center justify-between px-5 h-16 border-b border-slate-100">
+    <img src="assets/logo.png" alt="ProConnect" class="h-7 w-auto" />
+    <button id="navClose" class="p-2 rounded-md text-slate-500 hover:bg-slate-100" aria-label="Close menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+    </button>
+  </div>
+  <nav class="flex flex-col p-4 gap-1 text-[15px]">
+    <a href="index.html"    class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Home</a>
+    <button type="button" class="mobile-sub-toggle w-full flex items-center justify-between px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">
+      <span>Features</span>
+      <svg class="mobile-sub-chevron w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="mobile-sub pl-3">
+      <a href="features-employers.html"  class="block px-3 py-2.5 rounded-lg hover:bg-brand-50 text-slate-700 text-sm">For Employers</a>
+      <a href="features-schools.html"    class="block px-3 py-2.5 rounded-lg hover:bg-brand-50 text-slate-700 text-sm">For Schools</a>
+      <a href="features-jobseekers.html" class="block px-3 py-2.5 rounded-lg hover:bg-brand-50 text-slate-700 text-sm">For Job Seekers</a>
+    </div>
+    <a href="pricing.html"  class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Pricing</a>
+    <a href="jobs.html"     class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Browse Jobs</a>
+    <a href="about.html"    class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">About Us</a>
+    <a href="contact.html"  class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Contact</a>
+  </nav>
+  <div class="mt-auto p-4 border-t border-slate-100 flex flex-col gap-2">
+    <a href="contact.html" class="btn-primary w-full">Get in Touch</a>
+  </div>
+</aside>
+
+<!-- ==================== JOB DETAIL ==================== -->
+<main id="jobDetailRoot" class="pb-20">
+
+  <!-- Placeholder while JS loads -->
+  <div id="loadingState" class="max-w-7xl mx-auto px-6 pt-12">
+    <div class="bg-white border border-slate-200 rounded-2xl p-10 text-center text-slate-500">Loading job details…</div>
+  </div>
+
+  <!-- Not found state -->
+  <div id="notFoundState" class="hidden max-w-3xl mx-auto px-6 pt-20 pb-32 text-center">
+    <div class="w-20 h-20 mx-auto rounded-full bg-brand-50 flex items-center justify-center mb-5">
+      <svg class="w-10 h-10 text-brand-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    </div>
+    <h1 class="text-3xl font-extrabold text-brand-900">Job not found</h1>
+    <p class="mt-3 text-slate-600">This posting may have closed or the link is incorrect.</p>
+    <a href="jobs.html" class="btn-primary mt-6">Browse all jobs</a>
+  </div>
+
+  <!-- Actual content (rendered by JS) -->
+  <div id="jobContent" class="hidden">
+    <!-- Breadcrumbs + job header -->
+    <section class="bg-white border-b border-slate-100">
+      <div class="max-w-7xl mx-auto px-6 pt-6 pb-10">
+        <nav class="text-sm text-slate-500 mb-6 flex items-center gap-2">
+          <a href="index.html" class="hover:text-brand-600">Home</a>
+          <span>/</span>
+          <a href="jobs.html" class="hover:text-brand-600">Browse Jobs</a>
+          <span>/</span>
+          <span id="crumbTitle" class="text-brand-700 font-medium">…</span>
+        </nav>
+
+        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+          <div class="flex items-start gap-5">
+            <div id="jobLogo" class="job-logo-big w-20 h-20 rounded-2xl flex items-center justify-center text-white font-extrabold text-3xl shrink-0">MO</div>
+            <div class="min-w-0">
+              <div class="flex flex-wrap gap-2 mb-2" id="jobBadges"></div>
+              <h1 id="jobTitle" class="text-3xl md:text-4xl font-extrabold text-brand-900 leading-tight">Front Office Manager</h1>
+              <div class="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm text-slate-600">
+                <span id="jobCompany" class="font-semibold text-brand-700">Mandarin Oriental</span>
+                <span class="inline-flex items-center gap-1">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                  <span id="jobLocation">Bali, Indonesia</span>
+                </span>
+                <span class="inline-flex items-center gap-1">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  Posted <span id="jobPosted">2 days ago</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-2 shrink-0">
+            <button id="saveBtn" class="inline-flex items-center gap-2 border border-slate-200 text-slate-700 hover:border-brand-600 hover:text-brand-600 font-semibold px-4 py-2.5 rounded-lg">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-3-5 3V4z"/></svg>
+              Save
+            </button>
+            <button id="shareBtn" class="inline-flex items-center gap-2 border border-slate-200 text-slate-700 hover:border-brand-600 hover:text-brand-600 font-semibold px-4 py-2.5 rounded-lg">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m9.032 4.026A3 3 0 1115 12a3 3 0 012.716-1.658M12 6.342V5a2 2 0 012-2h0a2 2 0 012 2v.35"/></svg>
+              Share
+            </button>
+            <a href="#applyBox" class="btn-primary">Apply now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main 2-col layout -->
+    <section class="max-w-7xl mx-auto px-6 py-10 grid lg:grid-cols-[1fr_340px] gap-8">
+
+      <!-- Left: description -->
+      <div class="space-y-8">
+        <!-- Fact cards -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div class="fact-card">
+            <div class="fact-label">Salary</div>
+            <div class="fact-value" id="factSalary">$3,800 – $4,500</div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-label">Type</div>
+            <div class="fact-value" id="factType">Full-time</div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-label">Department</div>
+            <div class="fact-value" id="factDept">Front Office</div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-label">Experience</div>
+            <div class="fact-value" id="factExp">Senior</div>
+          </div>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-2xl p-7">
+          <h2 class="text-xl font-extrabold text-brand-900 mb-3">About the role</h2>
+          <p id="jobShortDesc" class="text-slate-700 leading-relaxed">…</p>
+
+          <h2 class="text-xl font-extrabold text-brand-900 mt-8 mb-3">What you'll do</h2>
+          <ul id="jobResponsibilities" class="section-list"></ul>
+
+          <h2 class="text-xl font-extrabold text-brand-900 mt-8 mb-3">What we're looking for</h2>
+          <ul id="jobRequirements" class="section-list"></ul>
+
+          <h2 class="text-xl font-extrabold text-brand-900 mt-8 mb-3">What you'll get</h2>
+          <ul id="jobBenefits" class="section-list"></ul>
+
+          <h2 class="text-xl font-extrabold text-brand-900 mt-8 mb-3">Skills &amp; tools</h2>
+          <div id="jobTags" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <!-- Apply form -->
+        <div id="applyBox" class="bg-white border border-slate-200 rounded-2xl p-7">
+          <h2 class="text-xl font-extrabold text-brand-900">Ready to apply?</h2>
+          <p class="mt-2 text-slate-600 text-sm">Verified candidates with a ProConnect Skill Passport are prioritized. No cover letter required.</p>
+
+          <form id="applyForm" class="mt-5 grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-semibold text-brand-900 mb-1">Full name</label>
+              <input required type="text" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:border-brand-600 outline-none" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-brand-900 mb-1">Email</label>
+              <input required type="email" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:border-brand-600 outline-none" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-brand-900 mb-1">WhatsApp number</label>
+              <input required type="tel" placeholder="+62 ..." class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:border-brand-600 outline-none" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-brand-900 mb-1">Years of experience</label>
+              <select class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:border-brand-600 outline-none bg-white">
+                <option>0–2 years</option><option>3–5 years</option><option>6–10 years</option><option>10+ years</option>
+              </select>
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-sm font-semibold text-brand-900 mb-1">Short note (optional)</label>
+              <textarea rows="3" placeholder="Anything you'd like us to know?" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:border-brand-600 outline-none"></textarea>
+            </div>
+            <div class="md:col-span-2 flex flex-col sm:flex-row gap-3 items-center">
+              <button type="submit" class="btn-primary w-full sm:w-auto">Submit application</button>
+              <span class="text-xs text-slate-500">By submitting you agree to the ProConnect <a href="#" class="text-brand-600 hover:underline">privacy policy</a>.</span>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Right sidebar: company + similar jobs -->
+      <aside class="space-y-6 lg:sticky lg:top-20 self-start">
+        <div class="bg-white border border-slate-200 rounded-2xl p-6">
+          <div class="flex items-center gap-3">
+            <div id="sideLogo" class="job-logo-big w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold shrink-0">MO</div>
+            <div class="min-w-0">
+              <div id="sideCompany" class="font-bold text-brand-900">Mandarin Oriental</div>
+              <div class="text-xs text-slate-500">Verified employer</div>
+            </div>
+          </div>
+          <div class="mt-4 text-sm text-slate-600 leading-relaxed">A ProConnect-verified employer. All details on this posting have been reviewed against company records to protect candidates from scams.</div>
+          <div class="mt-4 grid grid-cols-3 gap-2 text-center">
+            <div class="bg-brand-50 rounded-lg p-2">
+              <div class="text-xs text-slate-500">Rating</div>
+              <div class="font-bold text-brand-900 text-sm">4.8★</div>
+            </div>
+            <div class="bg-brand-50 rounded-lg p-2">
+              <div class="text-xs text-slate-500">Open roles</div>
+              <div class="font-bold text-brand-900 text-sm" id="sideOpenRoles">12</div>
+            </div>
+            <div class="bg-brand-50 rounded-lg p-2">
+              <div class="text-xs text-slate-500">Response</div>
+              <div class="font-bold text-brand-900 text-sm">48h</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-2xl p-6">
+          <h3 class="font-extrabold text-brand-900 mb-4">Similar jobs</h3>
+          <div id="similarJobs" class="space-y-3"></div>
+          <a href="jobs.html" class="mt-4 block text-center text-sm font-semibold text-brand-600 hover:text-brand-800">Browse all jobs →</a>
+        </div>
+
+        <div class="bg-gradient-to-br from-brand-600 to-brand-800 rounded-2xl p-6 text-white">
+          <h3 class="font-extrabold text-lg">Stand out from the crowd</h3>
+          <p class="mt-2 text-brand-100 text-sm">Verified applicants get 3× more responses. Create your free Skill Passport in 5 minutes.</p>
+          <a href="contact.html" class="mt-4 block bg-white text-brand-700 font-semibold px-4 py-2.5 rounded-lg hover:bg-brand-50 text-center text-sm">Create Skill Passport</a>
+        </div>
+      </aside>
+    </section>
+  </div>
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="bg-brand-900 text-brand-100 pt-16 pb-8">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-10">
+    <div>
+      <div class="flex items-center bg-white/95 px-3 py-2 rounded-lg inline-flex w-fit">
+        <img src="assets/logo.png" alt="ProConnect" class="h-7 w-auto" />
+      </div>
+      <p class="mt-4 text-sm text-brand-100/80 max-w-xs">Hospitality hiring, built for ASEAN. A Mereka initiative.</p>
+      <div class="mt-5 flex gap-3">
+        <a href="#" aria-label="App Store" class="block">
+          <div class="flex items-center gap-2 bg-black/30 border border-white/15 rounded-lg px-3 py-2">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+            <div class="leading-tight text-left">
+              <div class="text-[9px] uppercase tracking-wide text-white/70">Download on the</div>
+              <div class="text-sm font-semibold">App Store</div>
+            </div>
+          </div>
+        </a>
+        <a href="#" aria-label="Google Play" class="block">
+          <div class="flex items-center gap-2 bg-black/30 border border-white/15 rounded-lg px-3 py-2">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 20.82L13.23 12 3.18 3.18c-.12.25-.18.53-.18.82v16c0 .29.06.57.18.82zm10.77-8.12l2.52-2.52-10.32-5.82 7.8 8.34zm0-1.4L6.15 3 16.47 8.82l-2.52 2.48zm0 2.8l2.52 2.52-10.32 5.82 7.8-8.34zM17.52 13.02l3.3-1.86c.52-.3.52-1.02 0-1.32l-3.3-1.86-2.7 2.7 2.7 2.34z"/></svg>
+            <div class="leading-tight text-left">
+              <div class="text-[9px] uppercase tracking-wide text-white/70">Get it on</div>
+              <div class="text-sm font-semibold">Google Play</div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <div class="text-sm font-bold text-white mb-4">Product</div>
+      <ul class="space-y-2 text-sm">
+        <li><a href="features.html" class="hover:text-white">Features</a></li>
+        <li><a href="pricing.html" class="hover:text-white">Pricing</a></li>
+        <li><a href="jobs.html" class="hover:text-white">Browse Jobs</a></li>
+        <li><a href="contact.html" class="hover:text-white">Get in Touch</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="text-sm font-bold text-white mb-4">Company</div>
+      <ul class="space-y-2 text-sm">
+        <li><a href="about.html" class="hover:text-white">About Us</a></li>
+        <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+        <li><a href="#" class="hover:text-white">Privacy</a></li>
+        <li><a href="#" class="hover:text-white">Terms</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="text-sm font-bold text-white mb-4">Get in touch</div>
+      <ul class="space-y-2 text-sm">
+        <li>partnership@proconnectcareer.com</li>
+        <li>Kuala Lumpur · Jakarta · Singapore</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-brand-100/70">
+    <div>© 2026 ProConnect — a Mereka initiative. All rights reserved.</div>
+    <div class="flex gap-4">
+      <a href="#" class="hover:text-white">Privacy Policy</a>
+      <a href="#" class="hover:text-white">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/jobs-data.js"></script>
+<script src="assets/script.js"></script>
+<script>
+  function renderJob(job) {
+    document.getElementById('loadingState').classList.add('hidden');
+    document.getElementById('notFoundState').classList.add('hidden');
+    document.getElementById('jobContent').classList.remove('hidden');
+
+    // Title/meta
+    document.getElementById('pageTitle').textContent = `${job.title} — ${job.company} · ProConnect`;
+    document.getElementById('crumbTitle').textContent = job.title;
+
+    // Header
+    const logo = document.getElementById('jobLogo');
+    logo.textContent = job.initials;
+    logo.style.setProperty('--c1', job.c1);
+    logo.style.setProperty('--c2', job.c2);
+
+    document.getElementById('jobTitle').textContent = job.title;
+    document.getElementById('jobCompany').textContent = job.company;
+    document.getElementById('jobLocation').textContent = job.location;
+    document.getElementById('jobPosted').textContent = job.posted;
+
+    const badgeBox = document.getElementById('jobBadges');
+    badgeBox.innerHTML = '';
+    const badgeMap = { new:['badge-new','New'], urgent:['badge-urgent','Urgent'], verified:['badge-verified','Verified'], remote:['badge-remote','Remote OK'] };
+    job.badges.forEach(b => {
+      if (!badgeMap[b]) return;
+      const [cls,label] = badgeMap[b];
+      const s = document.createElement('span');
+      s.className = `badge ${cls}`;
+      s.textContent = label;
+      badgeBox.appendChild(s);
+    });
+
+    // Fact cards
+    document.getElementById('factSalary').textContent = job.salary;
+    document.getElementById('factType').textContent = job.type;
+    document.getElementById('factDept').textContent = job.department;
+    document.getElementById('factExp').textContent = job.experience;
+
+    // Description
+    document.getElementById('jobShortDesc').textContent = job.shortDesc;
+
+    const fillList = (id, arr) => {
+      const el = document.getElementById(id);
+      el.innerHTML = arr.map(x => `<li>${x}</li>`).join('');
+    };
+    fillList('jobResponsibilities', job.responsibilities);
+    fillList('jobRequirements', job.requirements);
+    fillList('jobBenefits', job.benefits);
+
+    // Tags
+    document.getElementById('jobTags').innerHTML =
+      job.tags.map(t => `<span class="bg-brand-50 text-brand-700 px-3 py-1.5 rounded-lg text-sm font-medium">${t}</span>`).join(' ');
+
+    // Sidebar
+    const sideLogo = document.getElementById('sideLogo');
+    sideLogo.textContent = job.initials;
+    sideLogo.style.setProperty('--c1', job.c1);
+    sideLogo.style.setProperty('--c2', job.c2);
+    document.getElementById('sideCompany').textContent = job.company;
+    document.getElementById('sideOpenRoles').textContent = Math.floor(Math.random() * 18) + 4;
+
+    // Similar jobs
+    const sim = JOBS.filter(j => j.slug !== job.slug)
+                    .filter(j => j.department === job.department || j.country === job.country)
+                    .slice(0, 3);
+    const fallback = JOBS.filter(j => j.slug !== job.slug).slice(0, 3);
+    const shown = sim.length ? sim : fallback;
+    document.getElementById('similarJobs').innerHTML = shown.map(j => `
+      <a href="job-detail.html#${j.slug}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-brand-50 transition">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-sm shrink-0" style="background:linear-gradient(135deg, ${j.c1}, ${j.c2});">${j.initials}</div>
+        <div class="min-w-0">
+          <div class="font-semibold text-brand-900 text-sm truncate">${j.title}</div>
+          <div class="text-xs text-slate-500 truncate">${j.company} · ${j.location}</div>
+        </div>
+      </a>
+    `).join('');
+
+    // Save button
+    document.getElementById('saveBtn').addEventListener('click', function(){
+      this.classList.toggle('text-brand-600');
+      this.classList.toggle('border-brand-600');
+      const svg = this.querySelector('svg');
+      if (this.classList.contains('text-brand-600')) {
+        this.innerHTML = this.innerHTML.replace('Save','Saved');
+      } else {
+        this.innerHTML = this.innerHTML.replace('Saved','Save');
+      }
+    });
+
+    // Share button
+    document.getElementById('shareBtn').addEventListener('click', async function(){
+      const url = window.location.href;
+      if (navigator.share) {
+        try { await navigator.share({ title: job.title + ' — ' + job.company, url }); } catch(e){}
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(url);
+        this.innerHTML = this.innerHTML.replace('Share','Copied!');
+        setTimeout(() => { this.innerHTML = this.innerHTML.replace('Copied!','Share'); }, 2000);
+      }
+    });
+
+    // Apply form
+    document.getElementById('applyForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type="submit"]');
+      btn.textContent = 'Application sent ✓';
+      btn.disabled = true;
+      btn.classList.add('opacity-70');
+    });
+  }
+
+  function showNotFound() {
+    document.getElementById('loadingState').classList.add('hidden');
+    document.getElementById('notFoundState').classList.remove('hidden');
+  }
+
+  function loadFromHash() {
+    const slug = (window.location.hash || '').replace('#','').trim();
+    if (!slug) { showNotFound(); return; }
+    const job = JOBS.find(j => j.slug === slug);
+    if (!job) { showNotFound(); return; }
+    renderJob(job);
+    window.scrollTo({top:0, behavior:'instant'});
+  }
+
+  document.addEventListener('DOMContentLoaded', loadFromHash);
+  window.addEventListener('hashchange', loadFromHash);
+</script>
+</body>
+</html>
