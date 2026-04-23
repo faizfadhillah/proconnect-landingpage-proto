@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Features — ProConnect</title>
+<meta name="description" content="ATS, AI matching, and Skill Passport — everything hospitality employers need, built for ASEAN." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = { theme: { extend: {
+    colors: {
+      brand:  { 50:'#EFF4FF', 100:'#DCE6FF', 500:'#3A66D1', 600:'#1E4BA8', 700:'#1E3A8A', 800:'#172F6E', 900:'#0F2352' },
+      accent: { 500:'#F97316', 600:'#EA580C' },
+      mint:   { 500:'#22C55E', 600:'#16A34A' }
+    },
+    fontFamily: { sans: ['Inter','system-ui','sans-serif'] }
+  } } }
+</script>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body class="bg-white antialiased">
+
+<!-- ==================== NAVBAR ==================== -->
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-100">
+  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center" aria-label="ProConnect home">
+      <img src="assets/logo.svg" alt="ProConnect" class="h-8 w-auto" />
+    </a>
+    <nav class="hidden lg:flex items-center gap-8 text-[14px] font-medium">
+      <a href="index.html"    class="nav-link" data-nav-link="index.html">Home</a>
+      <a href="features.html" class="nav-link" data-nav-link="features.html">Features</a>
+      <a href="pricing.html"  class="nav-link" data-nav-link="pricing.html">Pricing</a>
+      <a href="jobs.html"     class="nav-link" data-nav-link="jobs.html">Browse Jobs</a>
+      <a href="about.html"    class="nav-link" data-nav-link="about.html">About Us</a>
+      <a href="contact.html"  class="nav-link" data-nav-link="contact.html">Contact</a>
+    </nav>
+    <div class="flex items-center gap-2">
+      <a href="contact.html" class="hidden sm:inline-flex btn-secondary text-sm">Request Demo</a>
+      <a href="contact.html" class="inline-flex btn-primary text-sm">Sign Up Free</a>
+      <button id="navToggle" class="lg:hidden ml-1 p-2 rounded-md text-brand-700 hover:bg-brand-50" aria-label="Open menu" aria-expanded="false">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div id="mobileBackdrop" class="mobile-backdrop fixed inset-0 bg-black/40 z-40 lg:hidden"></div>
+<aside id="mobileDrawer" class="mobile-drawer fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white shadow-2xl z-50 lg:hidden flex flex-col">
+  <div class="flex items-center justify-between px-5 h-16 border-b border-slate-100">
+    <img src="assets/logo.svg" alt="ProConnect" class="h-7 w-auto" />
+    <button id="navClose" class="p-2 rounded-md text-slate-500 hover:bg-slate-100" aria-label="Close menu">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <nav class="flex flex-col p-4 gap-1 text-[15px]">
+    <a href="index.html"    class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Home</a>
+    <a href="features.html" class="px-3 py-3 rounded-lg bg-brand-50 text-brand-700 font-semibold">Features</a>
+    <a href="pricing.html"  class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Pricing</a>
+    <a href="jobs.html"     class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Browse Jobs</a>
+    <a href="about.html"    class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">About Us</a>
+    <a href="contact.html"  class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Contact</a>
+  </nav>
+  <div class="mt-auto p-4 border-t border-slate-100 flex flex-col gap-2">
+    <a href="contact.html" class="btn-secondary w-full">Request Demo</a>
+    <a href="contact.html" class="btn-primary w-full">Sign Up Free</a>
+  </div>
+</aside>
+
+<!-- ==================== HERO ==================== -->
+<section class="pt-20 pb-10 page-fade">
+  <div class="max-w-7xl mx-auto px-6 text-center">
+    <span class="inline-block bg-accent-500/10 text-accent-600 text-xs font-bold tracking-wide px-3 py-1 rounded-full">FEATURES</span>
+    <h1 class="mt-4 text-[40px] md:text-[56px] leading-[1.05] font-extrabold tracking-tight text-brand-900">
+      All the Tools You Need.<br/>None of the Bloat.
+    </h1>
+    <p class="mt-6 text-slate-500 text-base md:text-lg max-w-2xl mx-auto">
+      ProConnect combines an ATS, job board, AI matching, and credential verification in one hospitality-focused platform.
+    </p>
+    <div class="mt-8"><a href="contact.html" class="btn-primary">Request Demo</a></div>
+  </div>
+</section>
+
+<!-- ==================== 3 FEATURE SHOWCASES ==================== -->
+<section class="py-12">
+  <div class="max-w-6xl mx-auto px-6 space-y-24">
+
+    <!-- 1. ATS -->
+    <div id="ats" class="grid lg:grid-cols-2 gap-10 items-center scroll-mt-24">
+      <div>
+        <span class="inline-block bg-orange-50 text-accent-600 text-[11px] font-bold tracking-wide px-3 py-1 rounded">CORE</span>
+        <h2 class="mt-4 text-3xl md:text-[34px] font-extrabold text-brand-900 leading-tight">Applicant Tracking System (ATS)</h2>
+        <p class="mt-3 text-slate-500 leading-relaxed">Manage your entire hiring pipeline without a separate tool. Custom workflows for every hospitality role, from executive chefs to housekeeping.</p>
+        <ul class="mt-6 space-y-3 text-slate-700 text-[14.5px]">
+          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Custom hiring stages per department</li>
+          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Team collaboration with notes and ratings</li>
+          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Automated candidate status notifications</li>
+          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Bulk actions for high-volume hiring</li>
+          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Interview scheduling with calendar sync</li>
+        </ul>
+      </div>
+      <div class="bg-slate-50 rounded-[28px] p-10 lg:p-14 flex items-center justify-center aspect-[4/3]">
+        <svg viewBox="0 0 360 280" class="w-full h-full max-w-[420px]">
+          <rect x="30" y="30" width="300" height="220" rx="14" fill="#fff" stroke="#E2E8F0"/>
+          <rect x="50" y="48" width="90" height="10" rx="2" fill="#1E4BA8"/>
+          <rect x="260" y="48" width="50" height="10" rx="5" fill="#F97316"/>
+          <g>
+            <rect x="50" y="72" width="80" height="160" rx="8" fill="#EFF4FF"/>
+            <rect x="60" y="82" width="60" height="8" rx="2" fill="#1E4BA8"/>
+            <rect x="60" y="100" width="60" height="38" rx="4" fill="#fff"/><rect x="66" y="108" width="34" height="5" rx="2" fill="#1E4BA8"/><rect x="66" y="118" width="28" height="4" rx="2" fill="#CBD5E1"/><circle cx="70" cy="130" r="3" fill="#F97316"/>
+            <rect x="60" y="146" width="60" height="38" rx="4" fill="#fff"/><rect x="66" y="154" width="40" height="5" rx="2" fill="#1E4BA8"/><rect x="66" y="164" width="24" height="4" rx="2" fill="#CBD5E1"/><circle cx="70" cy="176" r="3" fill="#22C55E"/>
+          </g>
+          <g>
+            <rect x="140" y="72" width="80" height="160" rx="8" fill="#FFF7ED"/>
+            <rect x="150" y="82" width="60" height="8" rx="2" fill="#F97316"/>
+            <rect x="150" y="100" width="60" height="38" rx="4" fill="#fff"/><rect x="156" y="108" width="38" height="5" rx="2" fill="#1E4BA8"/><rect x="156" y="118" width="30" height="4" rx="2" fill="#CBD5E1"/><circle cx="160" cy="130" r="3" fill="#F97316"/>
+            <rect x="150" y="146" width="60" height="38" rx="4" fill="#fff"/><rect x="156" y="154" width="32" height="5" rx="2" fill="#1E4BA8"/><rect x="156" y="164" width="26" height="4" rx="2" fill="#CBD5E1"/>
+          </g>
+          <g>
+            <rect x="230" y="72" width="80" height="160" rx="8" fill="#ECFDF5"/>
+            <rect x="240" y="82" width="60" height="8" rx="2" fill="#22C55E"/>
+            <rect x="240" y="100" width="60" height="38" rx="4" fill="#fff"/><rect x="246" y="108" width="36" height="5" rx="2" fill="#1E4BA8"/><rect x="246" y="118" width="22" height="4" rx="2" fill="#CBD5E1"/><circle cx="250" cy="130" r="3" fill="#22C55E"/>
+          </g>
+          <g transform="translate(275,175)">
+            <rect x="0" y="0" width="70" height="26" rx="13" fill="#1E4BA8"/>
+            <circle cx="13" cy="13" r="4" fill="#F97316"/>
+            <rect x="22" y="9" width="40" height="4" rx="2" fill="#fff"/>
+            <rect x="22" y="16" width="26" height="3" rx="1.5" fill="#fff" opacity="0.7"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 2. AI Matching -->
+    <div id="ai" class="grid lg:grid-cols-2 gap-10 items-center scroll-mt-24">
+      <div class="bg-slate-50 rounded-[28px] p-10 lg:p-14 flex items-center justify-center aspect-[4/3] lg:order-first order-last">
+        <svg viewBox="0 0 360 280" class="w-full h-full max-w-[420px]">
+          <rect x="30" y="60" width="110" height="36" rx="8" fill="#fff" stroke="#E2E8F0"/>
+          <circle cx="48" cy="78" r="10" fill="#1E4BA8"/><rect x="62" y="71" width="60" height="5" rx="2" fill="#1E4BA8"/><rect x="62" y="80" width="40" height="4" rx="2" fill="#CBD5E1"/>
+          <rect x="30" y="110" width="110" height="36" rx="8" fill="#fff" stroke="#E2E8F0"/>
+          <circle cx="48" cy="128" r="10" fill="#F97316"/><rect x="62" y="121" width="60" height="5" rx="2" fill="#1E4BA8"/><rect x="62" y="130" width="50" height="4" rx="2" fill="#CBD5E1"/>
+          <rect x="30" y="160" width="110" height="36" rx="8" fill="#fff" stroke="#E2E8F0"/>
+          <circle cx="48" cy="178" r="10" fill="#22C55E"/><rect x="62" y="171" width="60" height="5" rx="2" fill="#1E4BA8"/><rect x="62" y="180" width="44" height="4" rx="2" fill="#CBD5E1"/>
+          <circle cx="200" cy="140" r="44" fill="#1E4BA8"/>
+          <path d="M178 140 Q185 122 200 122 Q215 122 222 140 Q215 158 200 158 Q185 158 178 140 Z" fill="#F97316"/>
+          <circle cx="200" cy="140" r="6" fill="#fff"/>
+          <path d="M186 126 L180 118 M214 126 L220 118 M186 154 L180 162 M214 154 L220 162" stroke="#fff" stroke-width="2"/>
+          <line x1="140" y1="78" x2="160" y2="128" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <line x1="140" y1="128" x2="158" y2="138" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <line x1="140" y1="178" x2="160" y2="152" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <rect x="250" y="90" width="100" height="100" rx="10" fill="#F97316"/>
+          <rect x="262" y="104" width="60" height="5" rx="2" fill="#fff"/>
+          <rect x="262" y="116" width="76" height="4" rx="2" fill="#fff" opacity="0.6"/>
+          <rect x="262" y="126" width="50" height="4" rx="2" fill="#fff" opacity="0.6"/>
+          <rect x="262" y="152" width="76" height="22" rx="11" fill="#fff"/>
+          <text x="300" y="166" text-anchor="middle" fill="#F97316" font-size="9" font-weight="700">95% MATCH</text>
+          <line x1="244" y1="140" x2="260" y2="140" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="3 3"/>
+        </svg>
+      </div>
+      <div>
+        <span class="inline-block bg-green-50 text-mint-600 text-[11px] font-bold tracking-wide px-3 py-1 rounded">AI-POWERED</span>
+        <h2 class="mt-4 text-3xl md:text-[34px] font-extrabold text-brand-900 leading-tight">Smart Candidate Matching</h2>
+        <p class="mt-3 text-slate-500 leading-relaxed">Our AI understands hospitality-specific skills, certifications, and career paths to surface the best candidates automatically.</p>
+        <ul class="mt-6 space-y-3 text-slate-700 text-[14.5px]">
+          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Match score based on skills, experience, and certifications</li>
+          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>ASEAN-MRA-TP competency framework alignment</li>
+          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Cross-border qualification matching</li>
+          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Reduce time-to-hire by 60%</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 3. Skill Passport -->
+    <div id="passport" class="grid lg:grid-cols-2 gap-10 items-center scroll-mt-24">
+      <div>
+        <span class="inline-block bg-orange-50 text-accent-600 text-[11px] font-bold tracking-wide px-3 py-1 rounded">VERIFIED</span>
+        <h2 class="mt-4 text-3xl md:text-[34px] font-extrabold text-brand-900 leading-tight">Skill Passport &amp; Credential Verification</h2>
+        <p class="mt-3 text-slate-500 leading-relaxed">The first and only ASEAN-wide portable credential system for hospitality. Verified by schools, trusted by employers, carried by professionals.</p>
+        <ul class="mt-6 space-y-3 text-slate-700 text-[14.5px]">
+          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>ASEAN-MRA-TP standard compliance</li>
+          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>School-verified diplomas and certifications</li>
+          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Skills assessment with proficiency levels</li>
+          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Portable across all 10 ASEAN countries</li>
+          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Employer trust rating: 3–5× higher than unverified</li>
+        </ul>
+      </div>
+      <div class="bg-slate-50 rounded-[28px] p-10 lg:p-14 flex items-center justify-center aspect-[4/3]">
+        <svg viewBox="0 0 360 280" class="w-full h-full max-w-[420px]">
+          <rect x="80" y="60" width="200" height="170" rx="10" fill="#1E4BA8"/>
+          <rect x="92" y="72" width="176" height="146" rx="4" fill="#EFF4FF"/>
+          <circle cx="180" cy="120" r="22" fill="#1E4BA8"/>
+          <path d="M156 170 Q156 148 180 148 Q204 148 204 170 Z" fill="#1E4BA8"/>
+          <rect x="115" y="182" width="130" height="5" rx="2" fill="#1E4BA8"/>
+          <rect x="125" y="193" width="110" height="4" rx="2" fill="#94A3B8"/>
+          <rect x="135" y="203" width="90" height="4" rx="2" fill="#94A3B8"/>
+          <g transform="translate(240,70)">
+            <circle cx="0" cy="0" r="28" fill="#F97316"/>
+            <path d="M-12 0 L-4 8 L12 -8" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <path d="M60 90 L66 100 L77 102 L69 110 L71 122 L60 116 L49 122 L51 110 L43 102 L54 100 Z" fill="#F97316" opacity="0.9"/>
+          <path d="M60 170 L64 178 L72 179 L66 185 L67 193 L60 189 L53 193 L54 185 L48 179 L56 178 Z" fill="#1E4BA8" opacity="0.35"/>
+        </svg>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================== MORE FEATURES ==================== -->
+<section class="py-24 bg-slate-50">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="text-center text-3xl md:text-4xl font-extrabold text-brand-900">More Powerful Features</h2>
+    <div class="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div class="bg-white rounded-2xl p-6 shadow-soft">
+        <h3 class="font-bold text-brand-900">Resume Parsing</h3>
+        <p class="mt-2 text-sm text-slate-500">Auto-extract candidate data from any resume. Multi-language support for ASEAN markets.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-soft">
+        <h3 class="font-bold text-brand-900">Communication Tools</h3>
+        <p class="mt-2 text-sm text-slate-500">In-app messaging, bulk email templates, and WhatsApp integration — all candidate conversations in one place.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-soft">
+        <h3 class="font-bold text-brand-900">Freelancing Module</h3>
+        <p class="mt-2 text-sm text-slate-500">Hire verified hospitality freelancers for short-term gigs. Integrated payments + protection.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-soft">
+        <h3 class="font-bold text-brand-900">Analytics &amp; Reporting</h3>
+        <p class="mt-2 text-sm text-slate-500">Track time-to-hire, source effectiveness, and pipeline health. Export reports for leadership.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-soft">
+        <h3 class="font-bold text-brand-900">Employee Directory</h3>
+        <p class="mt-2 text-sm text-slate-500">Free profiles for all employees. Internal transfers, org charts, and team management at no extra cost.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-soft">
+        <h3 class="font-bold text-brand-900">Compliance &amp; Reporting</h3>
+        <p class="mt-2 text-sm text-slate-500">Built-in local compliance for Indonesia, Malaysia, Thailand &amp; more. Audit-ready exports.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CTA ==================== -->
+<section class="py-20">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <h2 class="text-[32px] md:text-[44px] font-extrabold tracking-tight text-brand-900">See it in action.</h2>
+    <p class="mt-4 text-slate-600">Book a 20-minute live walkthrough — no strings, no slide decks.</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a href="contact.html" class="btn-primary">Request Demo</a>
+      <a href="pricing.html" class="btn-secondary">See Pricing</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="bg-brand-900 text-brand-100 pt-16 pb-8">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-10">
+    <div>
+      <div class="bg-white/95 px-3 py-2 rounded-lg inline-flex w-fit">
+        <img src="assets/logo.svg" alt="ProConnect" class="h-7 w-auto" />
+      </div>
+      <p class="mt-4 text-sm text-brand-100/80 max-w-xs">Hospitality hiring, built for ASEAN. A Mereka initiative.</p>
+    </div>
+    <div>
+      <div class="text-sm font-bold text-white mb-4">Product</div>
+      <ul class="space-y-2 text-sm">
+        <li><a href="features.html" class="hover:text-white">Features</a></li>
+        <li><a href="pricing.html" class="hover:text-white">Pricing</a></li>
+        <li><a href="jobs.html" class="hover:text-white">Browse Jobs</a></li>
+        <li><a href="contact.html" class="hover:text-white">Request Demo</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="text-sm font-bold text-white mb-4">Company</div>
+      <ul class="space-y-2 text-sm">
+        <li><a href="about.html" class="hover:text-white">About Us</a></li>
+        <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+        <li><a href="#" class="hover:text-white">Privacy</a></li>
+        <li><a href="#" class="hover:text-white">Terms</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="text-sm font-bold text-white mb-4">Get in touch</div>
+      <ul class="space-y-2 text-sm">
+        <li>hello@proconnect.work</li>
+        <li>Kuala Lumpur · Jakarta · Singapore</li>
+      </ul>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-6 mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-brand-100/70">
+    <div>© 2026 ProConnect — a Mereka initiative. All rights reserved.</div>
+    <div class="flex gap-4"><a href="#" class="hover:text-white">Privacy Policy</a><a href="#" class="hover:text-white">Terms of Service</a></div>
+  </div>
+</footer>
+
+<script src="assets/script.js"></script>
+</body>
+</html>

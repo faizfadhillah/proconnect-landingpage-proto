@@ -4,6 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ProConnect — Hospitality Hiring for ASEAN</title>
+<meta name="description" content="ProConnect is the hospitality-focused hiring platform for ASEAN: ATS, AI matching, verified Skill Passports, and a regional job board in one place." />
+
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <script>
@@ -11,1220 +13,275 @@
     theme: {
       extend: {
         colors: {
-          brand: { 50:'#EFF4FF', 100:'#DCE6FF', 500:'#3A66D1', 600:'#1E4BA8', 700:'#1E3A8A', 800:'#172F6E', 900:'#0F2352' },
+          brand:  { 50:'#EFF4FF', 100:'#DCE6FF', 500:'#3A66D1', 600:'#1E4BA8', 700:'#1E3A8A', 800:'#172F6E', 900:'#0F2352' },
           accent: { 500:'#F97316', 600:'#EA580C' },
-          mint:  { 500:'#22C55E', 600:'#16A34A' }
+          mint:   { 500:'#22C55E', 600:'#16A34A' }
         },
-        fontFamily: { sans: ['Inter','system-ui','sans-serif'] },
-        boxShadow: {
-          'soft': '0 2px 8px -2px rgba(15,35,82,0.08)',
-          'soft-lg': '0 8px 24px -8px rgba(15,35,82,0.12)'
-        }
+        fontFamily: { sans: ['Inter','system-ui','sans-serif'] }
       }
     }
   }
 </script>
-<style>
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Inter', system-ui, sans-serif; color: #0F172A; -webkit-font-smoothing: antialiased; }
-  details > summary { list-style:none; cursor:pointer; }
-  details > summary::-webkit-details-marker { display:none; }
-  details[open] .chev { transform: rotate(180deg); }
-  .chev { transition: transform .2s; }
-  .dotted-map {
-    background-image: radial-gradient(rgba(255,255,255,0.22) 1.2px, transparent 1.2px);
-    background-size: 14px 14px;
-  }
-  .grid-dots {
-    background-image: radial-gradient(#CBD5E1 1px, transparent 1px);
-    background-size: 22px 22px;
-  }
-  .wave-bg {
-    background:
-      radial-gradient(1200px 600px at 20% 110%, rgba(255,255,255,0.08), transparent 60%),
-      radial-gradient(900px 500px at 80% -20%, rgba(255,255,255,0.1), transparent 60%);
-  }
-  .flag { width:24px; height:16px; border-radius:3px; display:inline-block; flex-shrink:0; overflow:hidden; border:1px solid rgba(15,23,42,0.08); }
-</style>
+<link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body class="bg-white antialiased">
 
-<!-- ======================================================================
-  NAV
-====================================================================== -->
+<!-- ==================== NAVBAR ==================== -->
 <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-100">
   <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-    <a href="#" class="flex items-center gap-2 font-extrabold text-base">
-      <svg viewBox="0 0 32 32" class="w-7 h-7">
-        <ellipse cx="16" cy="16" rx="13.5" ry="7.5" fill="none" stroke="#1E4BA8" stroke-width="2.5"/>
-        <circle cx="16" cy="16" r="4.2" fill="#F97316"/>
-      </svg>
-      <span class="text-slate-900 tracking-tight">proconnect</span>
+    <a href="index.html" class="flex items-center" aria-label="ProConnect home">
+      <img src="assets/logo.svg" alt="ProConnect" class="h-8 w-auto" />
     </a>
-    <nav class="hidden lg:flex items-center gap-8 text-[13.5px] text-slate-700 font-medium">
-      <a href="#features" class="hover:text-brand-600">Features</a>
-      <a href="#pricing" class="hover:text-brand-600">Pricing</a>
-      <a href="#jobs" class="hover:text-brand-600">Browse Jobs</a>
-      <a href="#features" class="hover:text-brand-600 flex items-center gap-1">Solution
-        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-      </a>
-      <a href="#about" class="hover:text-brand-600">About us</a>
-      <a href="#contact" class="hover:text-brand-600">Contact Us</a>
+
+    <nav class="hidden lg:flex items-center gap-8 text-[14px] font-medium">
+      <a href="index.html"   class="nav-link" data-nav-link="index.html">Home</a>
+      <a href="features.html" class="nav-link" data-nav-link="features.html">Features</a>
+      <a href="pricing.html"  class="nav-link" data-nav-link="pricing.html">Pricing</a>
+      <a href="jobs.html"     class="nav-link" data-nav-link="jobs.html">Browse Jobs</a>
+      <a href="about.html"    class="nav-link" data-nav-link="about.html">About Us</a>
+      <a href="contact.html"  class="nav-link" data-nav-link="contact.html">Contact</a>
     </nav>
+
     <div class="flex items-center gap-2">
-      <a href="#request-demo" class="hidden sm:inline-flex px-4 py-2 rounded-md border border-brand-600 text-brand-600 text-sm font-semibold hover:bg-brand-50">Request Demo</a>
-      <a href="#signup" class="inline-flex px-4 py-2 rounded-md bg-brand-600 text-white text-sm font-semibold hover:bg-brand-700 shadow-soft">Sign Up Free</a>
+      <a href="contact.html" class="hidden sm:inline-flex btn-secondary text-sm">Request Demo</a>
+      <a href="contact.html" class="inline-flex btn-primary text-sm">Sign Up Free</a>
+
+      <!-- Hamburger (mobile only) -->
+      <button id="navToggle" class="lg:hidden ml-1 p-2 rounded-md text-brand-700 hover:bg-brand-50" aria-label="Open menu" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
     </div>
   </div>
 </header>
 
-<!-- ======================================================================
-  FEATURES · HERO
-====================================================================== -->
-<section id="features" class="pt-20 pb-10">
-  <div class="max-w-7xl mx-auto px-6 text-center">
-    <h1 class="text-[40px] md:text-[56px] leading-[1.05] font-extrabold tracking-tight text-slate-900">
-      All the Tools You Need.<br/>None of the Bloat.
-    </h1>
-    <p class="mt-6 text-slate-500 text-base md:text-lg max-w-2xl mx-auto">
-      ProConnect combines an ATS, job board, AI matching, and credential verification in one hospitality-focused platform.
-    </p>
-    <div class="mt-8">
-      <a href="#request-demo" class="inline-flex items-center px-6 py-3 rounded-md bg-brand-600 text-white font-semibold hover:bg-brand-700 shadow-soft">Request Demo</a>
-    </div>
-  </div>
-</section>
-
-<!-- ======================================================================
-  FEATURES · 3 SHOWCASES (alternating)
-====================================================================== -->
-<section class="py-12">
-  <div class="max-w-6xl mx-auto px-6 space-y-24">
-
-    <!-- 1. ATS -->
-    <div class="grid lg:grid-cols-2 gap-10 items-center">
-      <div>
-        <span class="inline-block bg-orange-50 text-accent-600 text-[11px] font-bold tracking-wide px-3 py-1 rounded">CORE</span>
-        <h2 class="mt-4 text-3xl md:text-[34px] font-extrabold text-slate-900 leading-tight">Applicant Tracking System (ATS)</h2>
-        <p class="mt-3 text-slate-500 leading-relaxed">Manage your entire hiring pipeline without a separate tool. Custom workflows for every hospitality role, from executive chefs to housekeeping.</p>
-        <ul class="mt-6 space-y-3 text-slate-700 text-[14.5px]">
-          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Custom hiring stages per department</li>
-          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Team collaboration with notes and ratings</li>
-          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Automated candidate status notifications</li>
-          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Bulk actions for high-volume hiring</li>
-          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Interview scheduling with calendar sync</li>
-        </ul>
-      </div>
-      <div class="bg-slate-50 rounded-[28px] p-10 lg:p-14 flex items-center justify-center aspect-[4/3]">
-        <!-- ATS kanban illustration -->
-        <svg viewBox="0 0 360 280" class="w-full h-full max-w-[420px]">
-          <!-- Shadow card -->
-          <rect x="30" y="30" width="300" height="220" rx="14" fill="#fff" stroke="#E2E8F0"/>
-          <!-- Header -->
-          <rect x="50" y="48" width="90" height="10" rx="2" fill="#1E4BA8"/>
-          <rect x="260" y="48" width="50" height="10" rx="5" fill="#F97316"/>
-          <!-- 3 Columns -->
-          <g>
-            <rect x="50" y="72" width="80" height="160" rx="8" fill="#EFF4FF"/>
-            <rect x="60" y="82" width="60" height="8" rx="2" fill="#1E4BA8"/>
-            <rect x="60" y="100" width="60" height="38" rx="4" fill="#fff"/><rect x="66" y="108" width="34" height="5" rx="2" fill="#1E4BA8"/><rect x="66" y="118" width="28" height="4" rx="2" fill="#CBD5E1"/><circle cx="70" cy="130" r="3" fill="#F97316"/>
-            <rect x="60" y="146" width="60" height="38" rx="4" fill="#fff"/><rect x="66" y="154" width="40" height="5" rx="2" fill="#1E4BA8"/><rect x="66" y="164" width="24" height="4" rx="2" fill="#CBD5E1"/><circle cx="70" cy="176" r="3" fill="#22C55E"/>
-          </g>
-          <g>
-            <rect x="140" y="72" width="80" height="160" rx="8" fill="#FFF7ED"/>
-            <rect x="150" y="82" width="60" height="8" rx="2" fill="#F97316"/>
-            <rect x="150" y="100" width="60" height="38" rx="4" fill="#fff"/><rect x="156" y="108" width="38" height="5" rx="2" fill="#1E4BA8"/><rect x="156" y="118" width="30" height="4" rx="2" fill="#CBD5E1"/><circle cx="160" cy="130" r="3" fill="#F97316"/>
-            <rect x="150" y="146" width="60" height="38" rx="4" fill="#fff"/><rect x="156" y="154" width="32" height="5" rx="2" fill="#1E4BA8"/><rect x="156" y="164" width="26" height="4" rx="2" fill="#CBD5E1"/>
-          </g>
-          <g>
-            <rect x="230" y="72" width="80" height="160" rx="8" fill="#ECFDF5"/>
-            <rect x="240" y="82" width="60" height="8" rx="2" fill="#22C55E"/>
-            <rect x="240" y="100" width="60" height="38" rx="4" fill="#fff"/><rect x="246" y="108" width="36" height="5" rx="2" fill="#1E4BA8"/><rect x="246" y="118" width="22" height="4" rx="2" fill="#CBD5E1"/><circle cx="250" cy="130" r="3" fill="#22C55E"/>
-          </g>
-          <!-- Floating badge -->
-          <g transform="translate(275,175)">
-            <rect x="0" y="0" width="70" height="26" rx="13" fill="#1E4BA8"/>
-            <circle cx="13" cy="13" r="4" fill="#F97316"/>
-            <rect x="22" y="9" width="40" height="4" rx="2" fill="#fff"/>
-            <rect x="22" y="16" width="26" height="3" rx="1.5" fill="#fff" opacity="0.7"/>
-          </g>
-        </svg>
-      </div>
-    </div>
-
-    <!-- 2. Smart Matching -->
-    <div class="grid lg:grid-cols-2 gap-10 items-center">
-      <div class="bg-slate-50 rounded-[28px] p-10 lg:p-14 flex items-center justify-center aspect-[4/3] lg:order-first order-last">
-        <svg viewBox="0 0 360 280" class="w-full h-full max-w-[420px]">
-          <!-- Candidate cards left -->
-          <rect x="30" y="60" width="110" height="36" rx="8" fill="#fff" stroke="#E2E8F0"/>
-          <circle cx="48" cy="78" r="10" fill="#1E4BA8"/><rect x="62" y="71" width="60" height="5" rx="2" fill="#1E4BA8"/><rect x="62" y="80" width="40" height="4" rx="2" fill="#CBD5E1"/>
-          <rect x="30" y="110" width="110" height="36" rx="8" fill="#fff" stroke="#E2E8F0"/>
-          <circle cx="48" cy="128" r="10" fill="#F97316"/><rect x="62" y="121" width="60" height="5" rx="2" fill="#1E4BA8"/><rect x="62" y="130" width="50" height="4" rx="2" fill="#CBD5E1"/>
-          <rect x="30" y="160" width="110" height="36" rx="8" fill="#fff" stroke="#E2E8F0"/>
-          <circle cx="48" cy="178" r="10" fill="#22C55E"/><rect x="62" y="171" width="60" height="5" rx="2" fill="#1E4BA8"/><rect x="62" y="180" width="44" height="4" rx="2" fill="#CBD5E1"/>
-          <!-- Central AI brain -->
-          <circle cx="200" cy="140" r="44" fill="#1E4BA8"/>
-          <path d="M178 140 Q185 122 200 122 Q215 122 222 140 Q215 158 200 158 Q185 158 178 140 Z" fill="#F97316"/>
-          <circle cx="200" cy="140" r="6" fill="#fff"/>
-          <path d="M186 126 L180 118 M214 126 L220 118 M186 154 L180 162 M214 154 L220 162" stroke="#fff" stroke-width="2"/>
-          <!-- Connection lines -->
-          <line x1="140" y1="78" x2="160" y2="128" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="3 3"/>
-          <line x1="140" y1="128" x2="158" y2="138" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="3 3"/>
-          <line x1="140" y1="178" x2="160" y2="152" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="3 3"/>
-          <!-- Job match card right -->
-          <rect x="250" y="90" width="100" height="100" rx="10" fill="#F97316"/>
-          <rect x="262" y="104" width="60" height="5" rx="2" fill="#fff"/>
-          <rect x="262" y="116" width="76" height="4" rx="2" fill="#fff" opacity="0.6"/>
-          <rect x="262" y="126" width="50" height="4" rx="2" fill="#fff" opacity="0.6"/>
-          <rect x="262" y="152" width="76" height="22" rx="11" fill="#fff"/>
-          <text x="300" y="166" text-anchor="middle" fill="#F97316" font-size="9" font-weight="700">95% MATCH</text>
-          <!-- Arrow AI → Job -->
-          <line x1="244" y1="140" x2="260" y2="140" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="3 3"/>
-        </svg>
-      </div>
-      <div>
-        <span class="inline-block bg-green-50 text-mint-600 text-[11px] font-bold tracking-wide px-3 py-1 rounded">AI-POWERED</span>
-        <h2 class="mt-4 text-3xl md:text-[34px] font-extrabold text-slate-900 leading-tight">Smart Candidate Matching</h2>
-        <p class="mt-3 text-slate-500 leading-relaxed">Our AI understands hospitality-specific skills, certifications, and career paths to surface the best candidates automatically.</p>
-        <ul class="mt-6 space-y-3 text-slate-700 text-[14.5px]">
-          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Match score based on skills, experience, and certifications</li>
-          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>ASEAN-MRA-TP competency framework alignment</li>
-          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Cross-border qualification matching</li>
-          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Reduce time-to-hire by 60%</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- 3. Skill Passport -->
-    <div class="grid lg:grid-cols-2 gap-10 items-center">
-      <div>
-        <span class="inline-block bg-orange-50 text-accent-600 text-[11px] font-bold tracking-wide px-3 py-1 rounded">VERIFIED</span>
-        <h2 class="mt-4 text-3xl md:text-[34px] font-extrabold text-slate-900 leading-tight">Skill Passport & Credential Verification</h2>
-        <p class="mt-3 text-slate-500 leading-relaxed">The first and only ASEAN-wide portable credential system for hospitality. Verified by schools, trusted by employers, carried by professionals.</p>
-        <ul class="mt-6 space-y-3 text-slate-700 text-[14.5px]">
-          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>ASEAN-MRA-TP standard compliance</li>
-          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>School-verified diplomas and certifications</li>
-          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Skills assessment with proficiency levels</li>
-          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Portable across all 10 ASEAN countries</li>
-          <li class="flex gap-3 items-start"><svg class="w-5 h-5 text-mint-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Employer trust rating: 3–5× higher than unverified</li>
-        </ul>
-      </div>
-      <div class="bg-slate-50 rounded-[28px] p-10 lg:p-14 flex items-center justify-center aspect-[4/3]">
-        <svg viewBox="0 0 360 280" class="w-full h-full max-w-[420px]">
-          <!-- Passport book -->
-          <rect x="80" y="60" width="200" height="170" rx="10" fill="#1E4BA8"/>
-          <rect x="92" y="72" width="176" height="146" rx="4" fill="#EFF4FF"/>
-          <!-- Avatar -->
-          <circle cx="180" cy="120" r="22" fill="#1E4BA8"/>
-          <path d="M156 170 Q156 148 180 148 Q204 148 204 170 Z" fill="#1E4BA8"/>
-          <!-- Text lines -->
-          <rect x="115" y="182" width="130" height="5" rx="2" fill="#1E4BA8"/>
-          <rect x="125" y="193" width="110" height="4" rx="2" fill="#94A3B8"/>
-          <rect x="135" y="203" width="90" height="4" rx="2" fill="#94A3B8"/>
-          <!-- Verified badge -->
-          <g transform="translate(240,70)">
-            <circle cx="0" cy="0" r="28" fill="#F97316"/>
-            <path d="M-12 0 L-4 8 L12 -8" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          </g>
-          <!-- Stars -->
-          <path d="M60 90 L66 100 L77 102 L69 110 L71 122 L60 116 L49 122 L51 110 L43 102 L54 100 Z" fill="#F97316" opacity="0.9"/>
-          <path d="M60 170 L64 178 L72 179 L66 185 L67 193 L60 189 L53 193 L54 185 L48 179 L56 178 Z" fill="#1E4BA8" opacity="0.35"/>
-        </svg>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ======================================================================
-  MORE POWERFUL FEATURES · 6-card grid
-====================================================================== -->
-<section class="py-24 bg-slate-50">
-  <div class="max-w-6xl mx-auto px-6">
-    <h2 class="text-center text-3xl md:text-4xl font-extrabold text-slate-900">More Powerful Features</h2>
-    <div class="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-      <!-- Resume Parsing -->
-      <div class="bg-white rounded-2xl p-6 shadow-soft">
-        <h3 class="font-bold text-slate-900">Resume Parsing</h3>
-        <p class="mt-2 text-sm text-slate-500">Auto-extract candidate data from any resume. Multi-language support for ASEAN markets.</p>
-        <div class="mt-8 bg-slate-50 rounded-xl h-40 flex items-center justify-center">
-          <svg viewBox="0 0 140 140" class="w-24 h-24">
-            <rect x="40" y="20" width="70" height="90" rx="6" fill="#1E4BA8"/>
-            <circle cx="75" cy="45" r="10" fill="#F97316"/>
-            <rect x="50" y="62" width="50" height="4" rx="2" fill="#fff" opacity="0.8"/>
-            <rect x="50" y="72" width="40" height="4" rx="2" fill="#fff" opacity="0.55"/>
-            <rect x="50" y="82" width="46" height="4" rx="2" fill="#fff" opacity="0.55"/>
-            <rect x="50" y="92" width="30" height="4" rx="2" fill="#fff" opacity="0.55"/>
-            <g transform="translate(96,96)">
-              <circle r="14" fill="#F97316"/>
-              <path d="M-5 0 L-1 4 L6 -4" stroke="#fff" stroke-width="2.5" fill="none"/>
-            </g>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Communication -->
-      <div class="bg-white rounded-2xl p-6 shadow-soft">
-        <h3 class="font-bold text-slate-900">Communication Tools</h3>
-        <p class="mt-2 text-sm text-slate-500">In-app messaging, bulk email templates, and WhatsApp integration — all candidate conversations in one place.</p>
-        <div class="mt-8 bg-slate-50 rounded-xl h-40 flex items-center justify-center">
-          <svg viewBox="0 0 140 140" class="w-24 h-24">
-            <rect x="20" y="30" width="64" height="50" rx="8" fill="#1E4BA8"/>
-            <path d="M30 80 L40 95 L44 80 Z" fill="#1E4BA8"/>
-            <text x="52" y="62" text-anchor="middle" fill="#fff" font-size="22" font-weight="800">文</text>
-            <rect x="60" y="56" width="64" height="50" rx="8" fill="#F97316"/>
-            <path d="M110 106 L100 121 L96 106 Z" fill="#F97316"/>
-            <text x="92" y="88" text-anchor="middle" fill="#fff" font-size="22" font-weight="800">A</text>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Freelancing Module -->
-      <div class="bg-white rounded-2xl p-6 shadow-soft">
-        <h3 class="font-bold text-slate-900">Freelancing Module</h3>
-        <p class="mt-2 text-sm text-slate-500">Hire verified hospitality freelancers for short-term gigs. Integrated payments + protection.</p>
-        <div class="mt-8 bg-slate-50 rounded-xl h-40 flex items-center justify-center">
-          <svg viewBox="0 0 140 140" class="w-24 h-24">
-            <circle cx="50" cy="52" r="18" fill="#1E4BA8"/>
-            <path d="M26 100 Q26 76 50 76 Q74 76 74 100 Z" fill="#1E4BA8"/>
-            <path d="M82 60 A 20 20 0 0 1 82 100" stroke="#F97316" stroke-width="3" fill="none" stroke-dasharray="4 3"/>
-            <circle cx="100" cy="80" r="18" fill="#F97316"/>
-            <text x="100" y="87" text-anchor="middle" fill="#fff" font-size="22" font-weight="800">$</text>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Analytics & Reporting -->
-      <div class="bg-white rounded-2xl p-6 shadow-soft">
-        <h3 class="font-bold text-slate-900">Analytics & Reporting</h3>
-        <p class="mt-2 text-sm text-slate-500">Track time-to-hire, source effectiveness, and pipeline health. Export reports for leadership.</p>
-        <div class="mt-8 bg-slate-50 rounded-xl h-40 flex items-center justify-center">
-          <svg viewBox="0 0 140 140" class="w-24 h-24">
-            <path d="M70 20 A 50 50 0 1 1 20 70 L70 70 Z" fill="#1E4BA8"/>
-            <path d="M70 20 A 50 50 0 0 1 120 70 L70 70 Z" fill="#F97316"/>
-            <path d="M70 70 L120 70 A 50 50 0 0 1 98 112 Z" fill="#1E4BA8" opacity="0.55"/>
-            <circle cx="70" cy="70" r="18" fill="#fff"/>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Employee Directory -->
-      <div class="bg-white rounded-2xl p-6 shadow-soft">
-        <h3 class="font-bold text-slate-900">Employee Directory</h3>
-        <p class="mt-2 text-sm text-slate-500">Free profiles for all employees. Internal transfers, org charts, and team management at no extra cost.</p>
-        <div class="mt-8 bg-slate-50 rounded-xl h-40 flex items-center justify-center">
-          <svg viewBox="0 0 140 140" class="w-24 h-24">
-            <rect x="40" y="22" width="70" height="96" rx="6" fill="#F97316"/>
-            <circle cx="70" cy="52" r="12" fill="#fff"/>
-            <path d="M52 86 Q52 68 70 68 Q88 68 88 86 Z" fill="#fff"/>
-            <rect x="52" y="96" width="36" height="4" rx="2" fill="#fff" opacity="0.7"/>
-            <rect x="56" y="104" width="28" height="3" rx="1.5" fill="#fff" opacity="0.5"/>
-            <rect x="22" y="32" width="18" height="76" rx="4" fill="#1E4BA8"/>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Integrations -->
-      <div class="bg-white rounded-2xl p-6 shadow-soft">
-        <h3 class="font-bold text-slate-900">Integrations</h3>
-        <p class="mt-2 text-sm text-slate-500">Connect to Canvas, Blackboard, Moodle (education), and major HR systems. API access for enterprise.</p>
-        <div class="mt-8 bg-slate-50 rounded-xl h-40 flex items-center justify-center">
-          <svg viewBox="0 0 140 140" class="w-24 h-24">
-            <line x1="70" y1="70" x2="30" y2="40" stroke="#1E4BA8" stroke-width="2"/>
-            <line x1="70" y1="70" x2="30" y2="100" stroke="#1E4BA8" stroke-width="2"/>
-            <line x1="70" y1="70" x2="110" y2="40" stroke="#1E4BA8" stroke-width="2"/>
-            <line x1="70" y1="70" x2="110" y2="100" stroke="#1E4BA8" stroke-width="2"/>
-            <circle cx="30" cy="40" r="10" fill="#1E4BA8"/>
-            <circle cx="30" cy="100" r="10" fill="#1E4BA8"/>
-            <circle cx="110" cy="40" r="10" fill="#1E4BA8"/>
-            <circle cx="110" cy="100" r="10" fill="#1E4BA8"/>
-            <circle cx="70" cy="70" r="14" fill="#F97316"/>
-          </svg>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ======================================================================
-  SEE PROCONNECT IN ACTION · CTA
-====================================================================== -->
-<section class="py-16 bg-white">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="bg-brand-600 wave-bg rounded-[32px] py-16 px-8 text-center text-white relative overflow-hidden">
-      <svg class="absolute inset-0 w-full h-full opacity-10" viewBox="0 0 800 300" preserveAspectRatio="none">
-        <path d="M0 180 Q200 80 400 180 T800 180 L800 300 L0 300 Z" fill="white"/>
+<!-- Mobile drawer -->
+<div id="mobileBackdrop" class="mobile-backdrop fixed inset-0 bg-black/40 z-40 lg:hidden"></div>
+<aside id="mobileDrawer" class="mobile-drawer fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white shadow-2xl z-50 lg:hidden flex flex-col">
+  <div class="flex items-center justify-between px-5 h-16 border-b border-slate-100">
+    <img src="assets/logo.svg" alt="ProConnect" class="h-7 w-auto" />
+    <button id="navClose" class="p-2 rounded-md text-slate-500 hover:bg-slate-100" aria-label="Close menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
       </svg>
-      <h2 class="relative text-3xl md:text-[40px] font-extrabold leading-tight">See ProConnect in Action</h2>
-      <p class="relative mt-3 text-white/85">Get a personalized demo of the platform for your team.</p>
-      <a href="#request-demo" class="relative mt-7 inline-flex px-6 py-3 rounded-md bg-white text-brand-600 font-semibold hover:bg-slate-50">Request Demo</a>
-    </div>
+    </button>
   </div>
-</section>
-
-<!-- ======================================================================
-  PRICING · HERO
-====================================================================== -->
-<section id="pricing" class="pt-24 pb-10 bg-white">
-  <div class="max-w-7xl mx-auto px-6 text-center">
-    <h2 class="text-4xl md:text-[48px] font-extrabold text-slate-900 leading-tight">Simple, Seat-Based Pricing.</h2>
-    <p class="mt-5 text-slate-500 max-w-xl mx-auto">Only hiring managers pay. Regular employees get free profiles. Unlimited job postings on every plan.</p>
-    <div class="mt-7 flex flex-wrap justify-center gap-3">
-      <a href="#calc" class="px-5 py-2.5 rounded-md border border-slate-300 text-slate-700 font-semibold hover:border-brand-600 hover:text-brand-600">Calculate your cost</a>
-      <a href="#request-demo" class="px-5 py-2.5 rounded-md bg-brand-600 text-white font-semibold hover:bg-brand-700">Find a Different</a>
-    </div>
+  <nav class="flex flex-col p-4 gap-1 text-[15px]">
+    <a href="index.html"    class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Home</a>
+    <a href="features.html" class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Features</a>
+    <a href="pricing.html"  class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Pricing</a>
+    <a href="jobs.html"     class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Browse Jobs</a>
+    <a href="about.html"    class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">About Us</a>
+    <a href="contact.html"  class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Contact</a>
+  </nav>
+  <div class="mt-auto p-4 border-t border-slate-100 flex flex-col gap-2">
+    <a href="contact.html" class="btn-secondary w-full">Request Demo</a>
+    <a href="contact.html" class="btn-primary w-full">Sign Up Free</a>
   </div>
-</section>
+</aside>
 
-<!-- ======================================================================
-  PRICING · Blue band with 2 seat cards
-====================================================================== -->
-<section class="bg-brand-600 py-14">
-  <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-6">
-    <!-- Full Recruiter -->
-    <div class="bg-white rounded-2xl p-8">
-      <div class="w-14 h-14 rounded-xl bg-brand-600 flex items-center justify-center">
-        <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 2 2 7v2h20V7l-10-5zm-8 9v9h3v-6h2v6h3v-6h2v6h3v-6h2v6h3v-9H4zm-2 10v2h20v-2H2z"/>
-        </svg>
+<!-- ==================== HERO ==================== -->
+<section class="relative overflow-hidden wave-bg">
+  <div class="max-w-7xl mx-auto px-6 pt-16 md:pt-24 pb-16 md:pb-24 grid lg:grid-cols-2 gap-12 items-center page-fade">
+    <div>
+      <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 text-brand-700 text-xs font-semibold">
+        <span class="w-2 h-2 bg-accent-500 rounded-full"></span>
+        Hospitality hiring, built for ASEAN
+      </span>
+      <h1 class="mt-4 text-[40px] md:text-[56px] leading-[1.05] font-extrabold tracking-tight text-brand-900">
+        Hire faster. <span class="text-brand-600">Hire smarter.</span><br/> Hire hospitality.
+      </h1>
+      <p class="mt-5 text-slate-600 text-base md:text-lg max-w-xl">
+        ProConnect combines an ATS, AI candidate matching, verified Skill Passports, and a regional job board — purpose-built for hotels, F&amp;B, and travel employers across Southeast Asia.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="contact.html" class="btn-primary">Sign Up Free</a>
+        <a href="features.html" class="btn-secondary">See Features</a>
       </div>
-      <h3 class="mt-5 text-xl font-extrabold text-slate-900">Full Recruiter Seat</h3>
-      <p class="mt-2 text-sm text-slate-500"><span class="font-semibold text-slate-700">Role for:</span> HR Directors, PIC Branch, HRD Branch.</p>
-      <ul class="mt-5 space-y-2.5 text-sm text-slate-700">
-        <li class="flex gap-2.5"><svg class="w-5 h-5 text-mint-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Post jobs for all departments</li>
-        <li class="flex gap-2.5"><svg class="w-5 h-5 text-mint-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Full candidate database access</li>
-        <li class="flex gap-2.5"><svg class="w-5 h-5 text-mint-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Multi-branch management</li>
-      </ul>
-    </div>
-
-    <!-- Dept Head -->
-    <div class="bg-white rounded-2xl p-8">
-      <div class="w-14 h-14 rounded-xl bg-mint-500 flex items-center justify-center">
-        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-          <circle cx="8" cy="8" r="4"/><circle cx="16" cy="8" r="4"/><circle cx="12" cy="16" r="4"/>
-        </svg>
-      </div>
-      <h3 class="mt-5 text-xl font-extrabold text-slate-900">Department Head Seat</h3>
-      <p class="mt-2 text-sm text-slate-500"><span class="font-semibold text-slate-700">Role for:</span> Dept Head HQ, Dept Head Branch.</p>
-      <ul class="mt-5 space-y-2.5 text-sm text-slate-700">
-        <li class="flex gap-2.5"><svg class="w-5 h-5 text-mint-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Post for own department only</li>
-        <li class="flex gap-2.5"><svg class="w-5 h-5 text-mint-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>View department applicants</li>
-        <li class="flex gap-2.5"><svg class="w-5 h-5 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="8" y1="8" x2="16" y2="16"/><line x1="16" y1="8" x2="8" y2="16"/></svg>No branch-management</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- ======================================================================
-  PRICING · Feature comparison table
-====================================================================== -->
-<section class="py-14 bg-white">
-  <div class="max-w-6xl mx-auto px-6">
-    <div class="rounded-2xl border border-slate-200 overflow-hidden">
-      <table class="w-full text-sm">
-        <thead class="bg-slate-50 text-slate-600">
-          <tr>
-            <th class="py-4 px-6 text-left font-semibold">Feature</th>
-            <th class="py-4 px-4 font-semibold">
-              <span class="inline-flex items-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 22c0-4 4-6 8-6s8 2 8 6"/></svg>
-                Free Seats
-              </span>
-            </th>
-            <th class="py-4 px-4 font-semibold">
-              <span class="inline-flex items-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="9" r="4"/><circle cx="15" cy="9" r="4"/><circle cx="12" cy="15" r="4"/></svg>
-                Dept Seat
-              </span>
-            </th>
-            <th class="py-4 px-4 font-semibold">
-              <span class="inline-flex items-center gap-2">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2 2 7v2h20V7l-10-5zm-8 9v9h3v-6h2v6h3v-6h2v6h3v-6h2v6h3v-9H4z"/></svg>
-                Full Seat
-              </span>
-            </th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-slate-100 text-slate-700">
-          <tr><td class="py-4 px-6">Business Profile</td><td class="text-center text-slate-300">—</td><td class="text-center text-slate-300">—</td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td></tr>
-          <tr><td class="py-4 px-6">Comp Rep</td><td class="text-center text-slate-300">—</td><td class="text-center text-slate-300">—</td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td></tr>
-          <tr><td class="py-4 px-6">HQ & Branch Management</td><td class="text-center text-slate-300">—</td><td class="text-center text-slate-300">—</td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td></tr>
-          <tr><td class="py-4 px-6">Team Management</td><td class="text-center">Self</td><td class="text-center">Same Department Only</td><td class="text-center">All Departments</td></tr>
-          <tr><td class="py-4 px-6">Manage Jobs</td><td class="text-center text-slate-300">—</td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td></tr>
-          <tr><td class="py-4 px-6">Find Candidate</td><td class="text-center text-slate-300">—</td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td></tr>
-          <tr><td class="py-4 px-6">Manage Profile</td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td></tr>
-          <tr><td class="py-4 px-6">Job Posting</td><td class="text-center text-slate-300">—</td><td class="text-center">Unlimited</td><td class="text-center">Unlimited</td></tr>
-          <tr><td class="py-4 px-6">Type Profile</td><td class="text-center text-slate-300">—</td><td class="text-center">Department Profile</td><td class="text-center">All Profile</td></tr>
-          <tr><td class="py-4 px-6">Type Branch</td><td class="text-center text-slate-300">—</td><td class="text-center">Dept List</td><td class="text-center">HQ & Branch List</td></tr>
-          <tr><td class="py-4 px-6">Support Level</td><td class="text-center">Email</td><td class="text-center">Email</td><td class="text-center">Priority 24/7</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- ======================================================================
-  PRICING · Calculate Monthly Cost
-====================================================================== -->
-<section id="calc" class="py-20 bg-white">
-  <div class="max-w-6xl mx-auto px-6">
-    <h2 class="text-center text-3xl md:text-[40px] font-extrabold text-slate-900 leading-tight">Calculate Your Monthly Cost</h2>
-    <p class="mt-3 text-center text-sm text-slate-500">Select country first to apply seats, it's to effect to price</p>
-
-    <div class="mt-10 grid md:grid-cols-2 gap-6">
-      <!-- Left: inputs -->
-      <div class="space-y-3">
-        <div class="rounded-xl border border-slate-200 p-4 flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <span class="text-xl leading-none">🇮🇩</span>
-            <select class="text-sm font-semibold bg-transparent focus:outline-none">
-              <option>Indonesia</option><option>Malaysia</option><option>Singapore</option>
-              <option>Thailand</option><option>Vietnam</option><option>Philippines</option>
-            </select>
-          </div>
-          <div class="w-5 h-5 rounded-full bg-slate-100 text-slate-500 grid place-items-center text-[10px] font-bold">i</div>
+      <div class="mt-8 flex items-center gap-6 text-xs text-slate-500">
+        <div class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-mint-500" viewBox="0 0 20 20" fill="currentColor"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3l-4 4a1 1 0 01-1.4 0l-2-2a1 1 0 111.4-1.4L9 10.6l3.3-3.3a1 1 0 011.4 1.4z"/></svg>
+          No card required
         </div>
-
-        <div class="rounded-xl border border-slate-200 p-4 flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-md bg-brand-50 flex items-center justify-center">
-              <svg class="w-5 h-5 text-brand-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2 2 7v2h20V7l-10-5zm-8 9v9h3v-6h2v6h3v-6h2v6h3v-6h2v6h3v-9H4z"/></svg>
-            </div>
-            <div>
-              <div class="font-semibold text-slate-900 text-sm">Full Recruiter Seats</div>
-              <div class="text-xs text-slate-500">Rp 350.000 <span class="ml-1 text-slate-400">Per user/mo</span></div>
-            </div>
-          </div>
-          <button class="w-9 h-9 rounded-md border border-slate-200 text-xl leading-none text-slate-500 hover:bg-slate-50">+</button>
-        </div>
-
-        <div class="rounded-xl border border-slate-200 p-4 flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-md bg-green-50 flex items-center justify-center">
-              <svg class="w-5 h-5 text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="9" cy="9" r="4"/><circle cx="15" cy="9" r="4"/><circle cx="12" cy="15" r="4"/></svg>
-            </div>
-            <div>
-              <div class="font-semibold text-slate-900 text-sm">Department Seats</div>
-              <div class="text-xs text-slate-500">Rp 150.000 <span class="ml-1 text-slate-400">Per user/mo</span></div>
-            </div>
-          </div>
-          <button class="w-9 h-9 rounded-md border border-slate-200 text-xl leading-none text-slate-500 hover:bg-slate-50">+</button>
-        </div>
-
-        <div class="rounded-xl border border-slate-200 p-4 flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-md bg-slate-100 flex items-center justify-center">
-              <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 22c0-4 4-6 8-6s8 2 8 6"/></svg>
-            </div>
-            <div>
-              <div class="font-semibold text-slate-900 text-sm">Member Seats</div>
-              <div class="text-xs text-slate-500">FREE</div>
-            </div>
-          </div>
-          <div class="text-sm text-slate-500 font-semibold">Unlimited</div>
+        <div class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-mint-500" viewBox="0 0 20 20" fill="currentColor"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3l-4 4a1 1 0 01-1.4 0l-2-2a1 1 0 111.4-1.4L9 10.6l3.3-3.3a1 1 0 011.4 1.4z"/></svg>
+          ASEANTA endorsed
         </div>
       </div>
+    </div>
 
-      <!-- Right: summary card -->
-      <div class="rounded-2xl bg-slate-900 text-white p-7 flex flex-col">
-        <h3 class="font-bold">Calculation Summary</h3>
-        <p class="mt-1 text-xs text-slate-400">This calculation works on all type seats</p>
-        <div class="mt-6 grid grid-cols-2 gap-4 text-sm">
-          <div><div class="font-semibold">Full seats</div><div class="text-slate-400 text-xs mt-1">0 seats</div></div>
-          <div><div class="font-semibold">Dept seats</div><div class="text-slate-400 text-xs mt-1">0 seats</div></div>
-        </div>
-        <div class="mt-auto pt-8">
-          <div class="flex items-baseline gap-1">
-            <span class="text-sm text-slate-300">Rp</span>
-            <span class="text-[56px] leading-none font-extrabold tracking-tight">0</span>
-            <span class="text-sm text-slate-400 ml-1">/mo</span>
-          </div>
-          <div class="mt-4 flex items-center justify-between text-xs">
-            <span class="text-slate-400">Annual</span>
-            <div class="w-10 h-5 bg-slate-700 rounded-full p-0.5 flex items-center">
-              <div class="w-4 h-4 bg-slate-400 rounded-full"></div>
+    <!-- Hero illustration -->
+    <div class="relative">
+      <div class="aspect-[4/3] rounded-2xl bg-gradient-to-br from-brand-600 to-brand-800 shadow-soft-lg overflow-hidden relative">
+        <div class="absolute inset-0 dotted-map opacity-60"></div>
+        <!-- Floating UI cards -->
+        <div class="absolute top-6 left-6 right-6 bg-white rounded-xl shadow-soft-lg p-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-accent-500 flex items-center justify-center text-white font-bold">SC</div>
+            <div class="flex-1">
+              <div class="font-semibold text-sm text-brand-900">Sarah Chen</div>
+              <div class="text-xs text-slate-500">Front Office Manager · Bali</div>
             </div>
+            <div class="text-xs font-bold text-mint-600 bg-mint-500/10 px-2 py-1 rounded">95% MATCH</div>
           </div>
-          <button class="mt-5 w-full py-3 rounded-md bg-brand-600 hover:bg-brand-700 font-semibold text-white">Upgrade Now</button>
+          <div class="mt-3 flex gap-1.5">
+            <span class="text-[10px] bg-brand-50 text-brand-700 px-2 py-0.5 rounded">Opera PMS</span>
+            <span class="text-[10px] bg-brand-50 text-brand-700 px-2 py-0.5 rounded">5★ Experience</span>
+            <span class="text-[10px] bg-brand-50 text-brand-700 px-2 py-0.5 rounded">ID+EN</span>
+          </div>
         </div>
+        <div class="absolute bottom-6 left-6 right-20 bg-white rounded-xl shadow-soft-lg p-3 flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-brand-50 flex items-center justify-center">
+            <svg class="w-4 h-4 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <div class="text-xs text-slate-600"><span class="font-semibold text-brand-900">Skill Passport verified</span> · IHTP 2024</div>
+        </div>
+        <div class="absolute bottom-4 right-4 w-14 h-14 rounded-full bg-accent-500 shadow-soft-lg flex items-center justify-center text-white font-bold text-xl">+12</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ======================================================================
-  FAQ
-====================================================================== -->
-<section class="py-16 bg-white">
-  <div class="max-w-3xl mx-auto px-6">
-    <h2 class="text-center text-3xl md:text-[40px] font-extrabold text-slate-900">Frequently Asked Questions</h2>
-    <div class="mt-10 space-y-3">
-      <details class="rounded-xl border border-slate-200 p-5" open>
-        <summary class="flex items-center justify-between font-semibold text-slate-900">
-          What exactly is a "seat"?
-          <svg class="chev w-4 h-4 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-        </summary>
-        <p class="mt-3 text-sm text-slate-500 leading-relaxed">A seat is a paid license for one person who needs to post jobs and manage hiring. Everyone else in your company can be invited as a Member Profile for FREE to view the directory and apply for internal jobs.</p>
-      </details>
-      <details class="rounded-xl border border-slate-200 p-5">
-        <summary class="flex items-center justify-between font-semibold text-slate-900">
-          Can I mix Full Recruiter and Department Head seats?
-          <svg class="chev w-4 h-4 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-        </summary>
-        <p class="mt-3 text-sm text-slate-500 leading-relaxed">Yes — most enterprise customers mix both. Full seats for HR leadership, Department seats for hiring managers who only need their own team's pipeline.</p>
-      </details>
-      <details class="rounded-xl border border-slate-200 p-5">
-        <summary class="flex items-center justify-between font-semibold text-slate-900">
-          Why are prices different in each country?
-          <svg class="chev w-4 h-4 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-        </summary>
-        <p class="mt-3 text-sm text-slate-500 leading-relaxed">We price in local currency and adjust to local purchasing power so operators in every ASEAN market have equal access.</p>
-      </details>
-      <details class="rounded-xl border border-slate-200 p-5">
-        <summary class="flex items-center justify-between font-semibold text-slate-900">
-          Do I get charged per branch or location?
-          <svg class="chev w-4 h-4 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-        </summary>
-        <p class="mt-3 text-sm text-slate-500 leading-relaxed">No. Pricing is strictly per seat — not per branch, location, or job posting.</p>
-      </details>
-    </div>
-  </div>
-</section>
-
-<!-- ======================================================================
-  SAVE 95% CTA
-====================================================================== -->
-<section class="py-16 bg-white">
+<!-- ==================== VALUE PROPS ==================== -->
+<section class="py-20 bg-slate-50">
   <div class="max-w-7xl mx-auto px-6">
-    <div class="bg-brand-600 wave-bg rounded-[32px] py-16 px-8 text-center text-white relative overflow-hidden">
-      <svg class="absolute inset-0 w-full h-full opacity-10" viewBox="0 0 800 300" preserveAspectRatio="none"><path d="M0 180 Q200 80 400 180 T800 180 L800 300 L0 300 Z" fill="white"/></svg>
-      <h2 class="relative text-3xl md:text-[40px] font-extrabold leading-tight">Ready to Save 95% on Recruitment?</h2>
-      <p class="relative mt-3 text-white/85">Start your free trial today. No credit card required.</p>
-      <div class="relative mt-7 flex flex-wrap justify-center gap-3">
-        <a href="#contact" class="px-6 py-3 rounded-md border-2 border-white text-white font-semibold hover:bg-white/10">Contact Us</a>
-        <a href="#signup" class="px-6 py-3 rounded-md bg-white text-brand-600 font-semibold hover:bg-slate-50">Start Free Trial</a>
-      </div>
+    <div class="text-center max-w-2xl mx-auto">
+      <h2 class="text-[36px] md:text-[44px] font-extrabold tracking-tight text-brand-900">One platform. Four superpowers.</h2>
+      <p class="mt-4 text-slate-600">Everything you need to hire the best hospitality talent in ASEAN — without juggling five different tools.</p>
     </div>
-  </div>
-</section>
 
-<!-- ======================================================================
-  ABOUT · HERO
-====================================================================== -->
-<section id="about" class="pt-24 pb-8 bg-white">
-  <div class="max-w-7xl mx-auto px-6 text-center">
-    <h2 class="text-4xl md:text-[52px] font-extrabold text-slate-900 leading-[1.08]">Building the Future of<br/>Hospitality Hiring in ASEAN</h2>
-    <p class="mt-6 text-slate-500 max-w-2xl mx-auto">In partnership with ASEANTA and the Indonesian Ministry of Tourism, we're standardizing and simplifying how hospitality talent connects with opportunity across Southeast Asia.</p>
-  </div>
-</section>
-
-<!-- ======================================================================
-  ABOUT · MISSION + FLAGS
-====================================================================== -->
-<section class="py-10 bg-white">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="rounded-[32px] bg-slate-50 p-6 md:p-10">
-      <div class="grid lg:grid-cols-2 gap-8 items-center">
-        <!-- SEA map card -->
-        <div class="rounded-2xl overflow-hidden aspect-[4/3] bg-gradient-to-br from-[#2F6FD6] to-[#1E4BA8] relative">
-          <!-- dots overlay -->
-          <div class="absolute inset-0 dotted-map"></div>
-          <!-- SEA outline -->
-          <svg viewBox="0 0 400 300" class="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid slice">
-            <g fill="#F97316">
-              <!-- Myanmar -->
-              <path d="M95 75 Q105 68 112 78 L118 95 L120 115 L125 135 L120 150 L110 145 L102 130 L98 110 L92 95 Z" opacity="0.9"/>
-              <!-- Thailand -->
-              <path d="M125 110 Q140 105 148 115 L155 130 L160 150 L158 168 L152 178 L148 195 L142 205 L135 195 L130 175 L128 155 L125 135 Z" opacity="0.9"/>
-              <!-- Laos -->
-              <path d="M155 105 L168 102 L173 118 L170 135 L165 145 L158 135 Z" opacity="0.9"/>
-              <!-- Cambodia -->
-              <path d="M155 155 L172 150 L180 165 L175 180 L162 178 L156 168 Z" opacity="0.9"/>
-              <!-- Vietnam -->
-              <path d="M175 100 Q188 98 192 110 L195 130 L193 150 L188 170 L183 180 L180 165 L178 145 L176 125 Z" opacity="0.9"/>
-              <!-- Philippines (islands) -->
-              <circle cx="295" cy="140" r="10" opacity="0.85"/>
-              <circle cx="305" cy="160" r="8" opacity="0.85"/>
-              <circle cx="298" cy="175" r="6" opacity="0.85"/>
-              <circle cx="315" cy="172" r="5" opacity="0.85"/>
-              <!-- Malaysia (peninsula + Borneo) -->
-              <path d="M142 205 Q148 200 155 210 L162 220 L158 230 L148 225 Z" opacity="0.9"/>
-              <path d="M245 200 Q262 195 275 200 L282 210 L270 218 L250 215 Z" opacity="0.9"/>
-              <!-- Singapore -->
-              <circle cx="155" cy="238" r="3" opacity="1"/>
-              <!-- Brunei -->
-              <circle cx="268" cy="205" r="3" opacity="0.9"/>
-              <!-- Indonesia (archipelago) -->
-              <path d="M155 250 Q180 245 210 250 L225 255 L205 262 L175 260 L150 258 Z" opacity="0.9"/>
-              <path d="M225 252 Q245 248 265 252 L280 258 L260 265 L235 262 Z" opacity="0.9"/>
-              <path d="M215 225 Q240 220 260 228 L275 235 L255 242 L225 238 Z" opacity="0.9"/>
-              <path d="M285 245 Q305 242 320 248 L315 258 L295 255 Z" opacity="0.9"/>
-              <!-- Papua -->
-              <path d="M325 240 Q350 235 370 245 L375 255 L355 258 L330 252 Z" opacity="0.9"/>
-            </g>
-            <!-- Connection pulses -->
-            <circle cx="200" cy="180" r="4" fill="#fff"/>
-            <circle cx="200" cy="180" r="12" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.6"/>
-          </svg>
-        </div>
-
-        <!-- Mission text -->
-        <div>
-          <span class="inline-block text-[11px] font-bold tracking-wide text-slate-600 bg-white border border-slate-200 rounded px-2.5 py-1">MISSION</span>
-          <h3 class="mt-4 text-3xl md:text-4xl font-extrabold text-slate-900">Our Mission</h3>
-          <p class="mt-4 text-slate-600 text-[15px] leading-relaxed">To improve workforce mobility and hiring quality in the hospitality sector by providing verified, skill-based job matching tools that benefit candidates, employers, and education institutions.</p>
-          <p class="mt-3 text-slate-600 text-[15px] leading-relaxed">Across ASEAN, the hospitality sector employs 15 million+ people. Yet hiring remains fragmented, expensive, and riddled with credential fraud. Recruiting agents charge $7,000–$12,000 per hire while schools spend up to $2.5M annually on placement services. ProConnect was built to fix this.</p>
-        </div>
-      </div>
-
-      <!-- Country flags: row 1 = 7 · row 2 = 3 (centered) -->
-      <div class="mt-10 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3">
-        <div class="bg-white rounded-lg px-3 py-2.5 flex items-center gap-3 border border-slate-100"><span class="flag"><svg viewBox="0 0 60 40" class="w-full h-full"><rect width="60" height="40" fill="#FFD520"/><circle cx="30" cy="20" r="10" fill="#fff"/></svg></span><span class="text-sm text-slate-700 font-medium">Brunei</span></div>
-        <div class="bg-white rounded-lg px-3 py-2.5 flex items-center gap-3 border border-slate-100"><span class="flag"><svg viewBox="0 0 60 40" class="w-full h-full"><rect width="60" height="13.3" fill="#FFD52A"/><rect y="13.3" width="60" height="13.3" fill="#34B233"/><rect y="26.7" width="60" height="13.3" fill="#FE0000"/><rect x="22" y="12" width="16" height="16" fill="#fff"/></svg></span><span class="text-sm text-slate-700 font-medium">Myanmar</span></div>
-        <div class="bg-white rounded-lg px-3 py-2.5 flex items-center gap-3 border border-slate-100"><span class="flag"><svg viewBox="0 0 60 40" class="w-full h-full"><rect width="60" height="10" fill="#CE1126"/><rect y="10" width="60" height="20" fill="#002868"/><rect y="30" width="60" height="10" fill="#CE1126"/><circle cx="30" cy="20" r="6" fill="#fff"/></svg></span><span class="text-sm text-slate-700 font-medium">Laos</span></div>
-        <div class="bg-white rounded-lg px-3 py-2.5 flex items-center gap-3 border border-slate-100"><span class="flag"><svg viewBox="0 0 60 40" class="w-full h-full"><rect width="60" height="10" fill="#032EA1"/><rect y="10" width="60" height="20" fill="#E00025"/><rect y="30" width="60" height="10" fill="#032EA1"/><rect x="22" y="14" width="16" height="12" fill="#fff"/></svg></span><span class="text-sm text-slate-700 font-medium">Cambodia</span></div>
-        <div class="bg-white rounded-lg px-3 py-2.5 flex items-center gap-3 border border-slate-100"><span class="flag"><svg viewBox="0 0 60 40" class="w-full h-full"><rect width="60" height="40" fill="#DA251D"/><polygon points="30,10 33,19 42,19 35,24 38,33 30,28 22,33 25,24 18,19 27,19" fill="#FFFF00"/></svg></span><span class="text-sm text-slate-700 font-medium">Vietnam</span></div>
-        <div class="bg-white rounded-lg px-3 py-2.5 flex items-center gap-3 border border-slate-100"><span class="flag"><svg viewBox="0 0 60 40" class="w-full h-full"><rect width="60" height="20" fill="#0038A8"/><rect y="20" width="60" height="20" fill="#CE1126"/><polygon points="0,0 30,20 0,40" fill="#fff"/><polygon points="5,18 7,18 8,16 9,18 11,18 9.5,20 10,22 8,21 6,22 6.5,20" fill="#FCD116"/></svg></span><span class="text-sm text-slate-700 font-medium">Philippines</span></div>
-        <div class="bg-white rounded-lg px-3 py-2.5 flex items-center gap-3 border border-slate-100"><span class="flag"><svg viewBox="0 0 60 40" class="w-full h-full"><rect width="60" height="40" fill="#EF3340"/><rect y="11" width="60" height="18" fill="#fff"/><rect y="14" width="60" height="12" fill="#00247D"/></svg></span><span class="text-sm text-slate-700 font-medium">Thailand</span></div>
-      </div>
-
-      <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 max-w-2xl mx-auto gap-3">
-        <div class="bg-white rounded-lg px-3 py-2.5 flex items-center gap-3 border border-slate-100"><span class="flag"><svg viewBox="0 0 60 40" class="w-full h-full"><rect width="60" height="40" fill="#FFCC00"/><rect x="0" y="0" width="60" height="13.3" fill="#0033A0"/><rect x="0" y="26.7" width="60" height="13.3" fill="#CC0001"/><polygon points="8,20 10,16 12,20 16,21 12,23 13,27 10,25 7,27 8,23 4,21" fill="#FFCC00"/></svg></span><span class="text-sm text-slate-700 font-medium">Malaysia</span></div>
-        <div class="bg-white rounded-lg px-3 py-2.5 flex items-center gap-3 border border-slate-100"><span class="flag"><svg viewBox="0 0 60 40" class="w-full h-full"><rect width="60" height="20" fill="#EF3340"/><rect y="20" width="60" height="20" fill="#fff"/><circle cx="18" cy="12" r="6" fill="#fff"/><circle cx="20" cy="12" r="5" fill="#EF3340"/></svg></span><span class="text-sm text-slate-700 font-medium">Singapore</span></div>
-        <div class="bg-white rounded-lg px-3 py-2.5 flex items-center gap-3 border border-slate-100"><span class="flag"><svg viewBox="0 0 60 40" class="w-full h-full"><rect width="60" height="20" fill="#FF0000"/><rect y="20" width="60" height="20" fill="#fff"/></svg></span><span class="text-sm text-slate-700 font-medium">Indonesia</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ======================================================================
-  ABOUT · Partners & Backers
-====================================================================== -->
-<section class="py-20 bg-white">
-  <div class="max-w-7xl mx-auto px-6">
-    <h3 class="text-center text-3xl md:text-4xl font-extrabold text-slate-900">Our Partners & Backers</h3>
     <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-      <!-- ASEANTA -->
-      <div class="rounded-2xl border border-slate-100 shadow-soft p-7 text-center">
-        <div class="mx-auto w-20 h-20 rounded-2xl bg-slate-50 flex items-center justify-center">
-          <svg viewBox="0 0 60 60" class="w-14 h-14">
-            <g stroke-width="5" stroke-linecap="round" fill="none" transform="rotate(-30 30 30)">
-              <path d="M30 8 A 22 22 0 0 1 48 20" stroke="#E11D48"/>
-              <path d="M48 20 A 22 22 0 0 1 52 38" stroke="#F59E0B"/>
-              <path d="M52 38 A 22 22 0 0 1 38 52" stroke="#10B981"/>
-              <path d="M38 52 A 22 22 0 0 1 18 48" stroke="#3B82F6"/>
-              <path d="M18 48 A 22 22 0 0 1 10 30" stroke="#8B5CF6"/>
-              <path d="M10 30 A 22 22 0 0 1 30 8" stroke="#EC4899"/>
-            </g>
-          </svg>
+      <!-- ATS -->
+      <a href="features.html#ats" class="group bg-white rounded-2xl p-6 shadow-soft hover:shadow-soft-lg transition">
+        <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center">
+          <svg class="w-6 h-6 text-brand-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
         </div>
-        <h4 class="mt-5 font-extrabold text-slate-900">ASEANTA</h4>
-        <p class="mt-2 text-sm text-slate-500">ASEAN Tourism Association official partner</p>
-      </div>
+        <h3 class="mt-4 font-bold text-brand-900 text-lg">Applicant Tracking</h3>
+        <p class="mt-2 text-sm text-slate-600">Kanban pipelines, bulk actions, and collaborative notes — designed for hotel HR teams.</p>
+      </a>
 
-      <!-- Min of Tourism -->
-      <div class="rounded-2xl border border-slate-100 shadow-soft p-7 text-center">
-        <div class="mx-auto w-20 h-20 rounded-2xl bg-slate-50 flex items-center justify-center">
-          <svg viewBox="0 0 60 60" class="w-14 h-14">
-            <polygon points="30,8 8,22 52,22" fill="#1E4BA8"/>
-            <rect x="14" y="24" width="6" height="22" fill="#F97316"/>
-            <rect x="27" y="24" width="6" height="22" fill="#1E4BA8"/>
-            <rect x="40" y="24" width="6" height="22" fill="#F97316"/>
-            <rect x="8" y="46" width="44" height="5" fill="#1E4BA8"/>
-          </svg>
+      <!-- AI Matching -->
+      <a href="features.html#ai" class="group bg-white rounded-2xl p-6 shadow-soft hover:shadow-soft-lg transition">
+        <div class="w-12 h-12 rounded-xl bg-accent-500/10 flex items-center justify-center">
+          <svg class="w-6 h-6 text-accent-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
         </div>
-        <h4 class="mt-5 font-extrabold text-slate-900">Min. of Tourism</h4>
-        <p class="mt-2 text-sm text-slate-500">Indonesian Ministry of Tourism backing</p>
-      </div>
+        <h3 class="mt-4 font-bold text-brand-900 text-lg">AI Matching</h3>
+        <p class="mt-2 text-sm text-slate-600">Surface the best candidates in seconds — scored on skills, language, and property fit.</p>
+      </a>
 
-      <!-- 250+ Schools -->
-      <div class="rounded-2xl border border-slate-100 shadow-soft p-7 text-center">
-        <div class="mx-auto w-20 h-20 rounded-2xl bg-slate-50 flex items-center justify-center">
-          <svg viewBox="0 0 60 60" class="w-14 h-14">
-            <path d="M30 10 L6 22 L30 34 L54 22 Z" fill="#1E4BA8"/>
-            <path d="M14 28 L14 42 Q30 50 46 42 L46 28" stroke="#1E4BA8" stroke-width="3" fill="none"/>
-            <rect x="50" y="22" width="2" height="16" fill="#F97316"/>
-            <circle cx="51" cy="40" r="3" fill="#F97316"/>
-          </svg>
+      <!-- Skill Passport -->
+      <a href="features.html#passport" class="group bg-white rounded-2xl p-6 shadow-soft hover:shadow-soft-lg transition">
+        <div class="w-12 h-12 rounded-xl bg-mint-500/10 flex items-center justify-center">
+          <svg class="w-6 h-6 text-mint-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
         </div>
-        <h4 class="mt-5 font-extrabold text-slate-900">250+ Schools</h4>
-        <p class="mt-2 text-sm text-slate-500">Hospitality schools across ASEAN</p>
-      </div>
+        <h3 class="mt-4 font-bold text-brand-900 text-lg">Skill Passport</h3>
+        <p class="mt-2 text-sm text-slate-600">Verified credentials, experience, and references — portable across ASEAN employers.</p>
+      </a>
 
-      <!-- 85K+ SMEs -->
-      <div class="rounded-2xl border border-slate-100 shadow-soft p-7 text-center">
-        <div class="mx-auto w-20 h-20 rounded-2xl bg-slate-50 flex items-center justify-center">
-          <svg viewBox="0 0 60 60" class="w-14 h-14">
-            <path d="M8 22 L12 12 L48 12 L52 22 Z" fill="#F97316"/>
-            <rect x="10" y="22" width="40" height="30" fill="#1E4BA8"/>
-            <rect x="24" y="32" width="12" height="20" fill="#F97316"/>
-            <rect x="14" y="26" width="7" height="5" fill="#fff" opacity="0.5"/>
-            <rect x="39" y="26" width="7" height="5" fill="#fff" opacity="0.5"/>
-          </svg>
+      <!-- Regional Reach -->
+      <a href="about.html" class="group bg-white rounded-2xl p-6 shadow-soft hover:shadow-soft-lg transition">
+        <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center">
+          <svg class="w-6 h-6 text-brand-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
-        <h4 class="mt-5 font-extrabold text-slate-900">85K+ SMEs</h4>
-        <p class="mt-2 text-sm text-slate-500">Target for hospitality business</p>
-      </div>
-
+        <h3 class="mt-4 font-bold text-brand-900 text-lg">ASEAN Reach</h3>
+        <p class="mt-2 text-sm text-slate-600">10 countries, one talent pool. Post once, reach verified candidates across the region.</p>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ======================================================================
-  ABOUT · Our Principles
-====================================================================== -->
-<section class="py-20 bg-white">
-  <div class="max-w-7xl mx-auto px-6">
-    <h3 class="text-center text-3xl md:text-4xl font-extrabold text-slate-900">Our Principles</h3>
-    <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-10">
-      <div>
-        <div class="text-[11px] font-extrabold tracking-[0.15em] text-brand-600">FIRST PRINCIPLES</div>
-        <h4 class="mt-3 text-xl font-extrabold text-slate-900">No Problem is Too Hard</h4>
-        <p class="mt-3 text-sm text-slate-500 leading-relaxed">We take on tough challenges and solve them with clear, logical thinking.</p>
-      </div>
-      <div>
-        <div class="text-[11px] font-extrabold tracking-[0.15em] text-brand-600">FOCUS</div>
-        <h4 class="mt-3 text-xl font-extrabold text-slate-900">People First</h4>
-        <p class="mt-3 text-sm text-slate-500 leading-relaxed">We focus on what matters most and make intentional decisions to move forward.</p>
-      </div>
-      <div>
-        <div class="text-[11px] font-extrabold tracking-[0.15em] text-brand-600">COMMITMENT</div>
-        <h4 class="mt-3 text-xl font-extrabold text-slate-900">Design with Purpose</h4>
-        <p class="mt-3 text-sm text-slate-500 leading-relaxed">We stay committed to our mission and build solutions that create real impact.</p>
-      </div>
-      <div>
-        <div class="text-[11px] font-extrabold tracking-[0.15em] text-brand-600">FEEDBACK</div>
-        <h4 class="mt-3 text-xl font-extrabold text-slate-900">Fast Frequent Feedback</h4>
-        <p class="mt-3 text-sm text-slate-500 leading-relaxed">We share honest feedback openly to learn faster and improve together.</p>
-      </div>
+<!-- ==================== STATS ==================== -->
+<section class="py-16 bg-gradient-to-br from-brand-600 to-brand-800 text-white relative overflow-hidden">
+  <div class="absolute inset-0 dotted-map opacity-30"></div>
+  <div class="max-w-7xl mx-auto px-6 relative grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+    <div><div class="text-4xl font-extrabold">10</div><div class="mt-1 text-brand-100 text-sm">ASEAN Countries</div></div>
+    <div><div class="text-4xl font-extrabold">25K+</div><div class="mt-1 text-brand-100 text-sm">Verified Candidates</div></div>
+    <div><div class="text-4xl font-extrabold">1.2K</div><div class="mt-1 text-brand-100 text-sm">Hotel &amp; F&amp;B Partners</div></div>
+    <div><div class="text-4xl font-extrabold">48h</div><div class="mt-1 text-brand-100 text-sm">Avg. Time to Shortlist</div></div>
+  </div>
+</section>
+
+<!-- ==================== CTA ==================== -->
+<section class="py-20">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <h2 class="text-[32px] md:text-[44px] font-extrabold tracking-tight text-brand-900">Ready to hire in half the time?</h2>
+    <p class="mt-4 text-slate-600">Start free. No credit card. Post your first role in under 5 minutes.</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a href="contact.html" class="btn-primary">Sign Up Free</a>
+      <a href="contact.html" class="btn-secondary">Request a Demo</a>
     </div>
   </div>
 </section>
 
-<!-- ======================================================================
-  JOIN THE MOVEMENT · CTA
-====================================================================== -->
-<section class="py-10 bg-white">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="bg-brand-600 wave-bg rounded-[32px] py-16 px-8 text-center text-white relative overflow-hidden">
-      <svg class="absolute inset-0 w-full h-full opacity-10" viewBox="0 0 800 300" preserveAspectRatio="none"><path d="M0 180 Q200 80 400 180 T800 180 L800 300 L0 300 Z" fill="white"/></svg>
-      <h2 class="relative text-3xl md:text-[40px] font-extrabold leading-tight">Join the Movement</h2>
-      <p class="relative mt-3 text-white/85">Help us transform hospitality hiring across Southeast Asia.</p>
-      <div class="relative mt-7 flex flex-wrap justify-center gap-3">
-        <a href="#contact" class="px-6 py-3 rounded-md border-2 border-white text-white font-semibold hover:bg-white/10">Contact Us</a>
-        <a href="#signup" class="px-6 py-3 rounded-md bg-white text-brand-600 font-semibold hover:bg-slate-50">Start Free Trial</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ======================================================================
-  BROWSE JOBS
-====================================================================== -->
-<section id="jobs">
-  <!-- Blue search header -->
-  <div class="bg-brand-700 py-10">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid md:grid-cols-[1fr_280px_130px] gap-4 items-end">
-        <div>
-          <label class="text-white text-[13px] font-semibold">Search jobs</label>
-          <div class="mt-2 relative">
-            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-            <input class="w-full rounded-md pl-10 pr-3 py-3 text-slate-900 placeholder-slate-400 focus:outline-none" placeholder="Search what you're looking for" />
-          </div>
-        </div>
-        <div>
-          <label class="text-white text-[13px] font-semibold">Country</label>
-          <select class="mt-2 w-full rounded-md px-3 py-3 bg-white text-slate-500 text-sm">
-            <option>Select country</option><option>Indonesia</option><option>Malaysia</option>
-            <option>Singapore</option><option>Thailand</option>
-          </select>
-        </div>
-        <div>
-          <label class="text-transparent text-[13px]">.</label>
-          <button class="mt-2 w-full rounded-md bg-accent-500 hover:bg-accent-600 text-white font-semibold py-3">Search</button>
-        </div>
-      </div>
-      <div class="mt-5 flex flex-wrap gap-2">
-        <button class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white px-4 py-2 rounded-full text-sm border border-white/20">Category
-          <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-        </button>
-        <button class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white px-4 py-2 rounded-full text-sm border border-white/20">Work type
-          <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-        </button>
-        <button class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white px-4 py-2 rounded-full text-sm border border-white/20">Work Arrangement
-          <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-        </button>
-        <button class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white px-4 py-2 rounded-full text-sm border border-white/20">Sort by
-          <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Split view -->
-  <div class="max-w-7xl mx-auto px-6 py-12 grid lg:grid-cols-[380px_1fr] gap-8">
-    <!-- LEFT list -->
+<!-- ==================== FOOTER ==================== -->
+<footer class="bg-brand-900 text-brand-100 pt-16 pb-8">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-10">
     <div>
-      <h3 class="text-2xl font-extrabold text-slate-900">Recommended</h3>
-      <p class="text-xs text-slate-500 mt-1">Showing 200 jobs</p>
-
-      <div class="mt-5 space-y-2.5">
-        <!-- Active -->
-        <div class="rounded-xl bg-brand-50 border border-brand-100 p-4 flex items-start gap-3 cursor-pointer">
-          <div class="flex-1 min-w-0">
-            <h4 class="font-bold text-slate-900 text-[14px]">Operation Training Manager - (F&B)</h4>
-            <p class="mt-1 text-xs text-brand-600 font-semibold">Amaris Hotel Kupang <span class="text-slate-400 font-normal">· Bandung</span></p>
-            <p class="mt-1 text-xs text-slate-700 font-semibold">IDR 9.000.000 - IDR 13.000.000 <span class="font-normal text-slate-500">per month</span></p>
-            <p class="text-[11px] text-slate-400 mt-1">1 month ago</p>
-          </div>
-          <div class="w-10 h-10 rounded-md bg-[#1a0b3a] grid place-items-center text-[9px] font-bold text-white leading-tight text-center px-1">artotel<br/>group</div>
-        </div>
-
-        <!-- Other -->
-        <div class="rounded-xl bg-white border border-slate-100 p-4 flex items-start gap-3 hover:border-brand-200 cursor-pointer">
-          <div class="flex-1 min-w-0">
-            <h4 class="font-bold text-slate-900 text-[14px]">Manager Operational Hospitality</h4>
-            <p class="mt-1 text-xs text-brand-600 font-semibold">Amaris Hotel Kupang <span class="text-slate-400 font-normal">· Kota Kupang</span></p>
-            <p class="mt-1 text-xs text-slate-700 font-semibold">IDR 2.500.000 - IDR 4.000.000 <span class="font-normal text-slate-500">per month</span></p>
-            <p class="text-[11px] text-slate-400 mt-1">3 days ago</p>
-          </div>
-          <div class="w-10 h-10 rounded-md bg-[#1a0b3a] grid place-items-center text-[9px] font-bold text-white leading-tight text-center px-1">artotel<br/>group</div>
-        </div>
-
-        <div class="rounded-xl bg-white border border-slate-100 p-4 flex items-start gap-3 hover:border-brand-200 cursor-pointer">
-          <div class="flex-1 min-w-0">
-            <h4 class="font-bold text-slate-900 text-[14px]">Manager Operational Hospitality</h4>
-            <p class="mt-1 text-xs text-brand-600 font-semibold">Amaris Hotel Kupang <span class="text-slate-400 font-normal">· Kota Kupang</span></p>
-            <p class="text-[11px] text-slate-400 mt-1">1 month ago</p>
-          </div>
-          <div class="w-10 h-10 rounded-md bg-[#1a0b3a] grid place-items-center text-[9px] font-bold text-white leading-tight text-center px-1">artotel<br/>group</div>
-        </div>
-
-        <div class="rounded-xl bg-white border border-slate-100 p-4 flex items-start gap-3 hover:border-brand-200 cursor-pointer">
-          <div class="flex-1 min-w-0">
-            <h4 class="font-bold text-slate-900 text-[14px]">Manager Operational Hospitality</h4>
-            <p class="mt-1 text-xs text-brand-600 font-semibold">Amaris Hotel Kupang <span class="text-slate-400 font-normal">· Kota Kupang</span></p>
-            <p class="mt-1 text-xs text-slate-700 font-semibold">IDR 2.500.000 - IDR 4.000.000 <span class="font-normal text-slate-500">per month</span></p>
-            <p class="text-[11px] text-slate-400 mt-1">3 days ago</p>
-          </div>
-          <div class="w-10 h-10 rounded-md bg-[#1a0b3a] grid place-items-center text-[9px] font-bold text-white leading-tight text-center px-1">artotel<br/>group</div>
-        </div>
+      <div class="flex items-center bg-white/95 px-3 py-2 rounded-lg inline-flex w-fit">
+        <img src="assets/logo.svg" alt="ProConnect" class="h-7 w-auto" />
       </div>
-
-      <!-- Pagination -->
-      <div class="mt-6 flex items-center justify-center gap-1.5 text-sm">
-        <button class="w-8 h-8 rounded-md border border-slate-200 text-slate-400">«</button>
-        <button class="w-8 h-8 rounded-md border border-slate-200 text-slate-400">‹</button>
-        <button class="w-8 h-8 rounded-md bg-brand-600 text-white font-semibold">1</button>
-        <button class="w-8 h-8 rounded-md border border-slate-200 text-slate-700">2</button>
-        <span class="w-8 h-8 grid place-items-center text-slate-400">…</span>
-        <button class="w-8 h-8 rounded-md border border-slate-200 text-slate-700">99</button>
-        <button class="w-8 h-8 rounded-md border border-slate-200 text-slate-700">›</button>
-        <button class="w-8 h-8 rounded-md border border-slate-200 text-slate-700">»</button>
-      </div>
-    </div>
-
-    <!-- RIGHT detail -->
-    <div class="rounded-2xl border border-slate-100 shadow-soft p-7">
-      <div class="flex items-start justify-between gap-4">
-        <div class="flex-1">
-          <div class="flex items-center gap-2">
-            <h3 class="text-[22px] font-extrabold text-slate-900">Operation Training Manager - (F&B)</h3>
-            <svg class="w-5 h-5 text-mint-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 4 9 8 10 4-1 8-5 8-10V6l-8-4zm-1 14-4-4 1.4-1.4L11 13.2l5.6-5.6L18 9l-7 7z"/></svg>
+      <p class="mt-4 text-sm text-brand-100/80 max-w-xs">Hospitality hiring, built for ASEAN. A Mereka initiative.</p>
+      <div class="mt-5 flex gap-3">
+        <a href="#" aria-label="App Store" class="block">
+          <div class="flex items-center gap-2 bg-black/30 border border-white/15 rounded-lg px-3 py-2">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+            <div class="leading-tight text-left">
+              <div class="text-[9px] uppercase tracking-wide text-white/70">Download on the</div>
+              <div class="text-sm font-semibold">App Store</div>
+            </div>
           </div>
-          <p class="mt-1 text-sm text-brand-600 font-semibold">PT Company Full Name <span class="text-slate-400 font-normal">· Bandung</span></p>
-          <p class="mt-1 text-sm text-slate-800 font-semibold">IDR 9.000.000 - IDR 13.000.000 <span class="text-slate-500 font-normal">per month</span></p>
-          <p class="mt-1 text-xs text-slate-400">2 days ago</p>
-          <div class="mt-3 flex flex-wrap gap-2">
-            <span class="bg-slate-100 text-slate-700 text-xs rounded-md px-3 py-1">Onsite</span>
-            <span class="bg-slate-100 text-slate-700 text-xs rounded-md px-3 py-1">Full-Time</span>
-          </div>
-        </div>
-        <div class="w-12 h-12 rounded-md bg-[#1a0b3a] grid place-items-center text-[11px] font-bold text-white leading-tight text-center px-1">artotel<br/>group</div>
-      </div>
-      <button class="mt-6 w-full py-3 rounded-md bg-brand-600 text-white font-semibold hover:bg-brand-700">Apply</button>
-
-      <div class="mt-8 space-y-6">
-        <div>
-          <h4 class="font-bold text-slate-900">Job description</h4>
-          <p class="mt-3 font-semibold text-sm text-slate-900">Ringkasan pekerjaan :</p>
-          <ul class="mt-2 list-disc pl-5 text-sm text-slate-600 space-y-1.5 leading-relaxed">
-            <li>Menyelesaikan tugas-tugas yang diberikan meliputi pekerjaan redaksi, sales, dan divisi lainnya, khususnya terkait desain grafis.</li>
-            <li>Mengimplementasikan setiap brief desain menjadi visual dengan standar kualitas yang ditetapkan.</li>
-            <li>Menghasilkan desain dengan kreativitas original masing-masing talenta.</li>
-            <li>Menyelesaikan pekerjaan dengan tepat waktu sesuai deadline yang ditentukan.</li>
-            <li>Menjaga kualitas desain dan konsistensi yang ditetapkan oleh Manajer Desain.</li>
-          </ul>
-
-          <p class="mt-4 font-semibold text-sm text-slate-900">Keahlian khusus :</p>
-          <ul class="mt-2 list-disc pl-5 text-sm text-slate-600 space-y-1.5 leading-relaxed">
-            <li>Minimal lulusan S1 DKV dari universitas terkemuka.</li>
-            <li>Minimal 1 tahun pengalaman dalam desain grafis.</li>
-            <li>Mahir menggunakan Adobe Photoshop & Adobe Illustrator.</li>
-            <li>Memiliki komunikasi, pemikiran konseptual, keterampilan tipografi, dan keterampilan desain yang baik.</li>
-            <li>Mampu bekerja individu & tim.</li>
-            <li>Wajib memiliki portofolio dari pekerjaan sebelumnya.</li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="font-bold text-slate-900">Right To Work</h4>
-          <ul class="mt-2 list-disc pl-5 text-sm text-slate-600 space-y-1.5">
-            <li>Indonesia - Require Indonesian Sponsorship or A Job Offer to Work for A New Employer</li>
-            <li>Indonesia - Indonesian ABTC (APEC Business Travel Card)</li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="font-bold text-slate-900">Location</h4>
-          <p class="mt-2 text-sm text-slate-600">20-22 National Circuit, Entrance via, Fitzroy St, Forrest ACT 2603, Australia</p>
-        </div>
-
-        <div>
-          <h4 class="font-bold text-slate-900">Job Skills</h4>
-          <div class="mt-3 flex flex-wrap gap-2">
-            <span class="bg-slate-100 text-slate-700 text-xs rounded-md px-3 py-1.5">Photoshop</span>
-            <span class="bg-slate-100 text-slate-700 text-xs rounded-md px-3 py-1.5">Illustrator</span>
-            <span class="bg-slate-100 text-slate-700 text-xs rounded-md px-3 py-1.5">Figma</span>
-            <span class="bg-slate-100 text-slate-700 text-xs rounded-md px-3 py-1.5">Adobe XD</span>
-          </div>
-        </div>
-
-        <div>
-          <h4 class="font-bold text-slate-900">Interest</h4>
-          <div class="mt-3 flex flex-wrap gap-2">
-            <span class="bg-slate-100 text-slate-700 text-xs rounded-md px-3 py-1.5">3D Art</span>
-            <span class="bg-slate-100 text-slate-700 text-xs rounded-md px-3 py-1.5">HTML</span>
-            <span class="bg-slate-100 text-slate-700 text-xs rounded-md px-3 py-1.5">CSS</span>
-          </div>
-        </div>
-
-        <div>
-          <h4 class="font-bold text-slate-900">Language</h4>
-          <div class="mt-3 flex flex-wrap gap-2">
-            <span class="bg-slate-100 text-slate-700 text-xs rounded-md px-3 py-1.5">Bahasa</span>
-            <span class="bg-slate-100 text-slate-700 text-xs rounded-md px-3 py-1.5">English</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ======================================================================
-  CONTACT
-====================================================================== -->
-<section id="contact" class="py-20 bg-white">
-  <div class="max-w-7xl mx-auto px-6 text-center">
-    <h2 class="text-4xl md:text-[52px] font-extrabold text-slate-900 leading-tight">Let's Talk</h2>
-    <p class="mt-5 text-slate-500 max-w-xl mx-auto">Whether you're an employer, school, or just curious — we'd love to hear from you.</p>
-    <div class="mt-7"><a href="#request-demo" class="inline-flex px-6 py-3 rounded-md bg-brand-600 text-white font-semibold hover:bg-brand-700 shadow-soft">Request Demo</a></div>
-  </div>
-
-  <!-- Email + WhatsApp -->
-  <div class="max-w-5xl mx-auto px-6 mt-12 grid md:grid-cols-2 gap-6">
-    <div class="rounded-2xl border border-slate-100 shadow-soft p-7 flex items-center gap-5">
-      <div class="w-14 h-14 rounded-xl bg-brand-600 grid place-items-center flex-shrink-0">
-        <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-      </div>
-      <div class="flex-1">
-        <h3 class="font-extrabold text-slate-900">Email</h3>
-        <p class="text-sm text-slate-500 mt-1">Submit your questions via email</p>
-      </div>
-      <a href="mailto:hello@proconnect.id" class="px-4 py-2 rounded-md border border-brand-600 text-brand-600 text-sm font-semibold hover:bg-brand-50">Ask</a>
-    </div>
-    <div class="rounded-2xl border border-slate-100 shadow-soft p-7 flex items-center gap-5">
-      <div class="w-14 h-14 rounded-xl bg-brand-600 grid place-items-center flex-shrink-0">
-        <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.588-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.555-5.338 11.89-11.893 11.89a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-      </div>
-      <div class="flex-1">
-        <h3 class="font-extrabold text-slate-900">WhatsApp (chat)</h3>
-        <p class="text-sm text-slate-500 mt-1">Submit your questions via WhatsApp</p>
-      </div>
-      <a href="https://wa.me/" class="px-4 py-2 rounded-md border border-brand-600 text-brand-600 text-sm font-semibold hover:bg-brand-50">Ask</a>
-    </div>
-  </div>
-
-  <!-- Request Demo form -->
-  <div id="request-demo" class="max-w-5xl mx-auto px-6 mt-10">
-    <div class="rounded-2xl border border-slate-100 shadow-soft p-8 grid md:grid-cols-2 gap-10 items-start">
-      <div>
-        <h3 class="text-xl font-extrabold text-slate-900">Request a Demo</h3>
-        <div class="mt-6 rounded-2xl bg-blue-50 aspect-[4/3] grid place-items-center overflow-hidden relative">
-          <svg viewBox="0 0 300 240" class="w-full h-full max-w-[320px]" preserveAspectRatio="xMidYMid meet">
-            <!-- Laptop -->
-            <rect x="50" y="70" width="200" height="130" rx="8" fill="#1E4BA8"/>
-            <rect x="60" y="80" width="180" height="110" rx="4" fill="#fff"/>
-            <!-- Screen content -->
-            <rect x="75" y="95" width="80" height="8" rx="2" fill="#1E4BA8"/>
-            <rect x="75" y="110" width="150" height="5" rx="2" fill="#CBD5E1"/>
-            <rect x="75" y="120" width="130" height="5" rx="2" fill="#CBD5E1"/>
-            <rect x="75" y="130" width="140" height="5" rx="2" fill="#CBD5E1"/>
-            <rect x="75" y="150" width="60" height="22" rx="4" fill="#F97316"/>
-            <text x="105" y="166" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">DEMO</text>
-            <circle cx="180" cy="161" r="10" fill="#22C55E"/>
-            <path d="M176 161 L179 164 L185 158" stroke="#fff" stroke-width="2" fill="none"/>
-            <!-- Base -->
-            <rect x="35" y="200" width="230" height="10" rx="3" fill="#172F6E"/>
-            <!-- People around -->
-            <circle cx="40" cy="40" r="10" fill="#F97316"/>
-            <path d="M28 65 Q28 51 40 51 Q52 51 52 65" fill="#F97316"/>
-            <circle cx="260" cy="50" r="10" fill="#22C55E"/>
-            <path d="M248 75 Q248 61 260 61 Q272 61 272 75" fill="#22C55E"/>
-            <!-- Chat bubbles -->
-            <g transform="translate(0,0)">
-              <rect x="10" y="110" width="40" height="22" rx="11" fill="#1E4BA8"/>
-              <path d="M22 132 L20 140 L32 132 Z" fill="#1E4BA8"/>
-              <circle cx="20" cy="121" r="2" fill="#fff"/>
-              <circle cx="30" cy="121" r="2" fill="#fff"/>
-              <circle cx="40" cy="121" r="2" fill="#fff"/>
-            </g>
-            <g transform="translate(240,140)">
-              <rect x="0" y="0" width="40" height="22" rx="11" fill="#F97316"/>
-              <path d="M14 22 L16 30 L26 22 Z" fill="#F97316"/>
-              <circle cx="10" cy="11" r="2" fill="#fff"/>
-              <circle cx="20" cy="11" r="2" fill="#fff"/>
-              <circle cx="30" cy="11" r="2" fill="#fff"/>
-            </g>
-          </svg>
-        </div>
-      </div>
-
-      <form class="space-y-4" onsubmit="event.preventDefault(); alert('Thanks! Our team will be in touch within 1 business day.');">
-        <div class="grid grid-cols-2 gap-4">
-          <div>
-            <label class="text-xs font-semibold text-slate-600">First Name</label>
-            <input class="mt-1.5 w-full rounded-md border border-slate-200 px-3 py-2.5 text-sm focus:border-brand-600 focus:outline-none" placeholder="Input first name" required/>
-          </div>
-          <div>
-            <label class="text-xs font-semibold text-slate-600">Last Name</label>
-            <input class="mt-1.5 w-full rounded-md border border-slate-200 px-3 py-2.5 text-sm focus:border-brand-600 focus:outline-none" placeholder="Input last name" required/>
-          </div>
-        </div>
-        <div>
-          <label class="text-xs font-semibold text-slate-600">Work Email</label>
-          <input type="email" class="mt-1.5 w-full rounded-md border border-slate-200 px-3 py-2.5 text-sm focus:border-brand-600 focus:outline-none" placeholder="Input email" required/>
-        </div>
-        <div>
-          <label class="text-xs font-semibold text-slate-600">Company / Institution</label>
-          <input class="mt-1.5 w-full rounded-md border border-slate-200 px-3 py-2.5 text-sm focus:border-brand-600 focus:outline-none" placeholder="Input organization name" required/>
-        </div>
-        <div>
-          <label class="text-xs font-semibold text-slate-600">I am a...</label>
-          <select class="mt-1.5 w-full rounded-md border border-slate-200 px-3 py-2.5 text-sm bg-white focus:border-brand-600 focus:outline-none">
-            <option>Select your position</option><option>Hiring manager</option>
-            <option>Job seeker</option><option>School / institution</option><option>Partner / investor</option>
-          </select>
-        </div>
-        <div>
-          <label class="text-xs font-semibold text-slate-600">Country</label>
-          <select class="mt-1.5 w-full rounded-md border border-slate-200 px-3 py-2.5 text-sm bg-white focus:border-brand-600 focus:outline-none">
-            <option>Select country</option><option>Indonesia</option><option>Malaysia</option>
-            <option>Singapore</option><option>Thailand</option><option>Vietnam</option>
-            <option>Philippines</option><option>Cambodia</option><option>Laos</option>
-            <option>Myanmar</option><option>Brunei</option>
-          </select>
-        </div>
-        <div>
-          <label class="text-xs font-semibold text-slate-600">Message (optional)</label>
-          <textarea rows="3" class="mt-1.5 w-full rounded-md border border-slate-200 px-3 py-2.5 text-sm focus:border-brand-600 focus:outline-none" placeholder="Tell us about your needs"></textarea>
-        </div>
-        <button class="w-full rounded-md bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3">Send Request</button>
-      </form>
-    </div>
-  </div>
-</section>
-
-<!-- ======================================================================
-  FOOTER
-====================================================================== -->
-<footer class="bg-black text-slate-400 mt-10">
-  <div class="max-w-7xl mx-auto px-6 py-14 grid md:grid-cols-[2fr_1fr_1fr_1fr] gap-10">
-    <div>
-      <div class="flex items-center gap-2 text-white font-extrabold text-lg">
-        <svg viewBox="0 0 32 32" class="w-7 h-7">
-          <ellipse cx="16" cy="16" rx="13.5" ry="7.5" fill="none" stroke="white" stroke-width="2.5"/>
-          <circle cx="16" cy="16" r="4.2" fill="#F97316"/>
-        </svg>
-        proconnect
-      </div>
-      <p class="mt-5 text-sm max-w-xs leading-relaxed">Connecting employers and candidates across ASEAN's hospitality & tourism industry. Backed by ASEANTA and the Indonesian Ministry of Tourism.</p>
-      <div class="mt-6 flex items-center gap-2">
-        <svg viewBox="0 0 40 40" class="w-10 h-10">
-          <g stroke-width="4" stroke-linecap="round" fill="none" transform="rotate(-30 20 20)">
-            <path d="M20 4 A 16 16 0 0 1 33 12" stroke="#E11D48"/>
-            <path d="M33 12 A 16 16 0 0 1 36 26" stroke="#F59E0B"/>
-            <path d="M36 26 A 16 16 0 0 1 26 36" stroke="#10B981"/>
-            <path d="M26 36 A 16 16 0 0 1 12 33" stroke="#3B82F6"/>
-            <path d="M12 33 A 16 16 0 0 1 4 20" stroke="#8B5CF6"/>
-            <path d="M4 20 A 16 16 0 0 1 20 4" stroke="#EC4899"/>
-          </g>
-        </svg>
-        <div class="text-white text-xs leading-tight">
-          <div class="font-extrabold tracking-wider">ASEANTA</div>
-          <div class="text-slate-400 text-[9px]">ASEAN TOURISM ASSOCIATION</div>
-        </div>
-      </div>
-      <div class="mt-8 flex items-center gap-3">
-        <a href="#" class="w-9 h-9 rounded-full border border-slate-700 grid place-items-center hover:border-slate-400" aria-label="Facebook">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H8v-3h2.4V9.8c0-2.4 1.4-3.7 3.6-3.7 1 0 2.1.2 2.1.2v2.3h-1.2c-1.2 0-1.5.7-1.5 1.5V12h2.6l-.4 3h-2.2v7A10 10 0 0 0 22 12z"/></svg>
         </a>
-        <a href="#" class="w-9 h-9 rounded-full border border-slate-700 grid place-items-center hover:border-slate-400" aria-label="Google">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 10v4h5.5c-.2 1.2-1.5 3.6-5.5 3.6-3.3 0-6-2.7-6-6s2.7-6 6-6c1.9 0 3.1.8 3.8 1.4l2.6-2.5C16.7 2.9 14.6 2 12 2 6.5 2 2 6.5 2 12s4.5 10 10 10c5.8 0 9.6-4.1 9.6-9.8 0-.7-.1-1.2-.2-2.1H12z"/></svg>
-        </a>
-        <a href="#" class="w-9 h-9 rounded-full border border-slate-700 grid place-items-center hover:border-slate-400" aria-label="WhatsApp">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.588-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.555-5.338 11.89-11.893 11.89a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+        <a href="#" aria-label="Google Play" class="block">
+          <div class="flex items-center gap-2 bg-black/30 border border-white/15 rounded-lg px-3 py-2">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 20.82L13.23 12 3.18 3.18c-.12.25-.18.53-.18.82v16c0 .29.06.57.18.82zm10.77-8.12l2.52-2.52-10.32-5.82 7.8 8.34zm0-1.4L6.15 3 16.47 8.82l-2.52 2.48zm0 2.8l2.52 2.52-10.32 5.82 7.8-8.34zM17.52 13.02l3.3-1.86c.52-.3.52-1.02 0-1.32l-3.3-1.86-2.7 2.7 2.7 2.34z"/></svg>
+            <div class="leading-tight text-left">
+              <div class="text-[9px] uppercase tracking-wide text-white/70">Get it on</div>
+              <div class="text-sm font-semibold">Google Play</div>
+            </div>
+          </div>
         </a>
       </div>
     </div>
+
     <div>
-      <div class="text-white font-extrabold text-sm tracking-wider">COMPANY</div>
-      <ul class="mt-5 space-y-3 text-sm">
-        <li><a href="#about" class="hover:text-white">About Us</a></li>
-        <li><a href="#contact" class="hover:text-white">Contact Us</a></li>
-        <li><a href="#" class="hover:text-white">Blog</a></li>
-        <li><a href="#" class="hover:text-white">Terms of Service</a></li>
-        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+      <div class="text-sm font-bold text-white mb-4">Product</div>
+      <ul class="space-y-2 text-sm">
+        <li><a href="features.html" class="hover:text-white">Features</a></li>
+        <li><a href="pricing.html" class="hover:text-white">Pricing</a></li>
+        <li><a href="jobs.html" class="hover:text-white">Browse Jobs</a></li>
+        <li><a href="contact.html" class="hover:text-white">Request Demo</a></li>
       </ul>
     </div>
+
     <div>
-      <div class="text-white font-extrabold text-sm tracking-wider">SOLUTIONS</div>
-      <ul class="mt-5 space-y-3 text-sm">
-        <li><a href="#" class="hover:text-white">For Employers</a></li>
-        <li><a href="#" class="hover:text-white">For Schools</a></li>
-        <li><a href="#" class="hover:text-white">For Job Seekers</a></li>
-        <li><a href="#" class="hover:text-white">Freelancing Module</a></li>
+      <div class="text-sm font-bold text-white mb-4">Company</div>
+      <ul class="space-y-2 text-sm">
+        <li><a href="about.html" class="hover:text-white">About Us</a></li>
+        <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+        <li><a href="#" class="hover:text-white">Privacy</a></li>
+        <li><a href="#" class="hover:text-white">Terms</a></li>
       </ul>
     </div>
+
     <div>
-      <div class="text-white font-extrabold text-sm tracking-wider">PLATFORM</div>
-      <ul class="mt-5 space-y-3 text-sm">
-        <li><a href="#features" class="hover:text-white">Features</a></li>
-        <li><a href="#pricing" class="hover:text-white">Pricing</a></li>
-        <li><a href="#jobs" class="hover:text-white">Browse Jobs</a></li>
+      <div class="text-sm font-bold text-white mb-4">Get in touch</div>
+      <ul class="space-y-2 text-sm">
+        <li>hello@proconnect.work</li>
+        <li>Kuala Lumpur · Jakarta · Singapore</li>
       </ul>
-      <div class="mt-6">
-        <a href="#" class="inline-flex items-center gap-2 bg-white text-black rounded-md px-3 py-2 text-xs font-bold">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M3.6 2.32a1 1 0 0 0-.6.92v17.52a1 1 0 0 0 .6.92l10.18-9.68L3.6 2.32zm11.75 10.6 3.6 2.08a1.03 1.03 0 0 0 0-1.82l-3.6-2.08-3.42 3.23 3.42 3.5zM4.7 1.7l10 5.78 2.78-2.63a1.02 1.02 0 0 0-.43-1.71L5.67 1.28a1.02 1.02 0 0 0-.97.42zm0 20.6.6.02a1.02 1.02 0 0 0 .37-.04l11.38-4.86a1.02 1.02 0 0 0 .43-1.71l-2.78-2.63-10 5.78z"/>
-          </svg>
-          <div class="flex flex-col leading-none gap-0.5">
-            <span class="text-[8px] font-normal">GET IT ON</span>
-            <span class="text-[11px] font-bold">Google Play</span>
-          </div>
-        </a>
-      </div>
     </div>
   </div>
-  <div class="border-t border-slate-800">
-    <div class="max-w-7xl mx-auto px-6 py-6 text-center text-xs">© 2026 ProConnect. All rights reserved.</div>
+
+  <div class="max-w-7xl mx-auto px-6 mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-brand-100/70">
+    <div>© 2026 ProConnect — a Mereka initiative. All rights reserved.</div>
+    <div class="flex gap-4">
+      <a href="#" class="hover:text-white">Privacy Policy</a>
+      <a href="#" class="hover:text-white">Terms of Service</a>
+    </div>
   </div>
 </footer>
 
+<script src="assets/script.js"></script>
 </body>
 </html>

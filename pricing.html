@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pricing — ProConnect</title>
+<meta name="description" content="Simple, seat-based pricing. Only hiring managers pay. Employees get free profiles." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = { theme: { extend: {
+    colors: {
+      brand:  { 50:'#EFF4FF', 100:'#DCE6FF', 500:'#3A66D1', 600:'#1E4BA8', 700:'#1E3A8A', 800:'#172F6E', 900:'#0F2352' },
+      accent: { 500:'#F97316', 600:'#EA580C' },
+      mint:   { 500:'#22C55E', 600:'#16A34A' }
+    },
+    fontFamily: { sans: ['Inter','system-ui','sans-serif'] }
+  } } }
+</script>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body class="bg-white antialiased">
+
+<!-- ==================== NAVBAR ==================== -->
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-100">
+  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center" aria-label="ProConnect home">
+      <img src="assets/logo.svg" alt="ProConnect" class="h-8 w-auto" />
+    </a>
+    <nav class="hidden lg:flex items-center gap-8 text-[14px] font-medium">
+      <a href="index.html"    class="nav-link" data-nav-link="index.html">Home</a>
+      <a href="features.html" class="nav-link" data-nav-link="features.html">Features</a>
+      <a href="pricing.html"  class="nav-link" data-nav-link="pricing.html">Pricing</a>
+      <a href="jobs.html"     class="nav-link" data-nav-link="jobs.html">Browse Jobs</a>
+      <a href="about.html"    class="nav-link" data-nav-link="about.html">About Us</a>
+      <a href="contact.html"  class="nav-link" data-nav-link="contact.html">Contact</a>
+    </nav>
+    <div class="flex items-center gap-2">
+      <a href="contact.html" class="hidden sm:inline-flex btn-secondary text-sm">Request Demo</a>
+      <a href="contact.html" class="inline-flex btn-primary text-sm">Sign Up Free</a>
+      <button id="navToggle" class="lg:hidden ml-1 p-2 rounded-md text-brand-700 hover:bg-brand-50" aria-label="Open menu" aria-expanded="false">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div id="mobileBackdrop" class="mobile-backdrop fixed inset-0 bg-black/40 z-40 lg:hidden"></div>
+<aside id="mobileDrawer" class="mobile-drawer fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white shadow-2xl z-50 lg:hidden flex flex-col">
+  <div class="flex items-center justify-between px-5 h-16 border-b border-slate-100">
+    <img src="assets/logo.svg" alt="ProConnect" class="h-7 w-auto" />
+    <button id="navClose" class="p-2 rounded-md text-slate-500 hover:bg-slate-100" aria-label="Close menu">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <nav class="flex flex-col p-4 gap-1 text-[15px]">
+    <a href="index.html"    class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Home</a>
+    <a href="features.html" class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Features</a>
+    <a href="pricing.html"  class="px-3 py-3 rounded-lg bg-brand-50 text-brand-700 font-semibold">Pricing</a>
+    <a href="jobs.html"     class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Browse Jobs</a>
+    <a href="about.html"    class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">About Us</a>
+    <a href="contact.html"  class="px-3 py-3 rounded-lg hover:bg-brand-50 text-brand-900 font-medium">Contact</a>
+  </nav>
+  <div class="mt-auto p-4 border-t border-slate-100 flex flex-col gap-2">
+    <a href="contact.html" class="btn-secondary w-full">Request Demo</a>
+    <a href="contact.html" class="btn-primary w-full">Sign Up Free</a>
+  </div>
+</aside>
+
+<!-- ==================== HERO ==================== -->
+<section class="pt-24 pb-10 bg-white page-fade">
+  <div class="max-w-7xl mx-auto px-6 text-center">
+    <h1 class="text-4xl md:text-[48px] font-extrabold text-brand-900 leading-tight">Simple, Seat-Based Pricing.</h1>
+    <p class="mt-5 text-slate-500 max-w-xl mx-auto">Only hiring managers pay. Regular employees get free profiles. Unlimited job postings on every plan.</p>
+    <div class="mt-7 flex flex-wrap justify-center gap-3">
+      <a href="#calc" class="btn-secondary">Calculate your cost</a>
+      <a href="contact.html" class="btn-primary">Talk to Sales</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SEAT CARDS ==================== -->
+<section class="bg-brand-600 py-14">
+  <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-6">
+    <div class="bg-white rounded-2xl p-8">
+      <div class="w-14 h-14 rounded-xl bg-brand-600 flex items-center justify-center">
+        <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2 2 7v2h20V7l-10-5zm-8 9v9h3v-6h2v6h3v-6h2v6h3v-6h2v6h3v-9H4zm-2 10v2h20v-2H2z"/></svg>
+      </div>
+      <h3 class="mt-5 text-xl font-extrabold text-brand-900">Full Recruiter Seat</h3>
+      <p class="mt-2 text-sm text-slate-500"><span class="font-semibold text-slate-700">Role for:</span> HR Directors, PIC Branch, HRD Branch.</p>
+      <ul class="mt-5 space-y-2.5 text-sm text-slate-700">
+        <li class="flex gap-2.5"><svg class="w-5 h-5 text-mint-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Post jobs for all departments</li>
+        <li class="flex gap-2.5"><svg class="w-5 h-5 text-mint-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Full candidate database access</li>
+        <li class="flex gap-2.5"><svg class="w-5 h-5 text-mint-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Multi-branch management</li>
+      </ul>
+    </div>
+    <div class="bg-white rounded-2xl p-8">
+      <div class="w-14 h-14 rounded-xl bg-mint-500 flex items-center justify-center">
+        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="8" cy="8" r="4"/><circle cx="16" cy="8" r="4"/><circle cx="12" cy="16" r="4"/></svg>
+      </div>
+      <h3 class="mt-5 text-xl font-extrabold text-brand-900">Department Head Seat</h3>
+      <p class="mt-2 text-sm text-slate-500"><span class="font-semibold text-slate-700">Role for:</span> Dept Head HQ, Dept Head Branch.</p>
+      <ul class="mt-5 space-y-2.5 text-sm text-slate-700">
+        <li class="flex gap-2.5"><svg class="w-5 h-5 text-mint-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>Post for own department only</li>
+        <li class="flex gap-2.5"><svg class="w-5 h-5 text-mint-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>View department applicants</li>
+        <li class="flex gap-2.5"><svg class="w-5 h-5 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="8" y1="8" x2="16" y2="16"/><line x1="16" y1="8" x2="8" y2="16"/></svg>No branch-management</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== COMPARISON TABLE ==================== -->
+<section class="py-14 bg-white">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="rounded-2xl border border-slate-200 overflow-x-auto">
+      <table class="w-full text-sm min-w-[640px]">
+        <thead class="bg-slate-50 text-slate-600">
+          <tr>
+            <th class="py-4 px-6 text-left font-semibold">Feature</th>
+            <th class="py-4 px-4 font-semibold"><span class="inline-flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 22c0-4 4-6 8-6s8 2 8 6"/></svg>Free Seats</span></th>
+            <th class="py-4 px-4 font-semibold"><span class="inline-flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="9" r="4"/><circle cx="15" cy="9" r="4"/><circle cx="12" cy="15" r="4"/></svg>Dept Seat</span></th>
+            <th class="py-4 px-4 font-semibold"><span class="inline-flex items-center gap-2"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2 2 7v2h20V7l-10-5zm-8 9v9h3v-6h2v6h3v-6h2v6h3v-6h2v6h3v-9H4z"/></svg>Full Seat</span></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 text-slate-700">
+          <tr><td class="py-4 px-6">Business Profile</td><td class="text-center text-slate-300">—</td><td class="text-center text-slate-300">—</td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td></tr>
+          <tr><td class="py-4 px-6">Comp Rep</td><td class="text-center text-slate-300">—</td><td class="text-center text-slate-300">—</td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td></tr>
+          <tr><td class="py-4 px-6">HQ &amp; Branch Management</td><td class="text-center text-slate-300">—</td><td class="text-center text-slate-300">—</td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td></tr>
+          <tr><td class="py-4 px-6">Team Management</td><td class="text-center">Self</td><td class="text-center">Same Department Only</td><td class="text-center">All Departments</td></tr>
+          <tr><td class="py-4 px-6">Manage Jobs</td><td class="text-center text-slate-300">—</td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td></tr>
+          <tr><td class="py-4 px-6">Find Candidate</td><td class="text-center text-slate-300">—</td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td></tr>
+          <tr><td class="py-4 px-6">Manage Profile</td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td><td class="text-center"><svg class="w-5 h-5 inline text-mint-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></td></tr>
+          <tr><td class="py-4 px-6">Job Posting</td><td class="text-center text-slate-300">—</td><td class="text-center">Unlimited</td><td class="text-center">Unlimited</td></tr>
+          <tr><td class="py-4 px-6">Type Profile</td><td class="text-center text-slate-300">—</td><td class="text-center">Department Profile</td><td class="text-center">All Profile</td></tr>
+          <tr><td class="py-4 px-6">Type Branch</td><td class="text-center text-slate-300">—</td><td class="text-center">Dept List</td><td class="text-center">HQ &amp; Branch List</td></tr>
+          <tr><td class="py-4 px-6">Support Level</td><td class="text-center">Email</td><td class="text-center">Email</td><td class="text-center">Priority 24/7</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CALCULATOR ==================== -->
+<section id="calc" class="py-20 bg-slate-50">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="text-center text-3xl md:text-[40px] font-extrabold text-brand-900 leading-tight">Calculate Your Monthly Cost</h2>
+    <p class="mt-3 text-center text-sm text-slate-500">Slide to size your team — price updates live.</p>
+
+    <div class="mt-10 grid md:grid-cols-2 gap-6">
+      <!-- Left: Slider -->
+      <div class="rounded-2xl bg-white border border-slate-200 p-7">
+        <label class="text-sm font-semibold text-brand-900">Number of recruiter seats</label>
+        <div class="mt-4 flex items-baseline gap-2">
+          <span id="employeeCount" class="text-3xl font-extrabold text-brand-900">5 employees</span>
+        </div>
+        <input type="range" id="employeeSlider" min="1" max="100" value="5" class="range-slider w-full mt-5" />
+        <div class="flex justify-between text-xs text-slate-400 mt-2"><span>1</span><span>100</span></div>
+
+        <div class="mt-6 rounded-lg bg-brand-50 px-4 py-3 text-sm text-brand-800">
+          <div id="pricePerEmp" class="font-semibold">Rp 350.000 / employee / month</div>
+          <div class="text-xs mt-1 text-brand-700/80">Members and employees get free profiles.</div>
+        </div>
+
+        <label class="mt-6 flex items-center gap-3 text-sm text-slate-700 cursor-pointer">
+          <input type="checkbox" id="annualToggle" class="w-4 h-4 accent-brand-600" />
+          <span>Bill annually — <span class="font-semibold text-mint-600">save 18%</span></span>
+        </label>
+      </div>
+
+      <!-- Right: Summary card -->
+      <div class="rounded-2xl bg-brand-900 text-white p-7 flex flex-col">
+        <h3 class="font-bold">Calculation Summary</h3>
+        <p class="mt-1 text-xs text-brand-100/70">Total monthly cost</p>
+        <div class="mt-auto pt-8">
+          <div id="totalPrice" class="text-[56px] leading-none font-extrabold tracking-tight">Rp 1.750.000</div>
+          <div class="mt-1 text-xs text-brand-100/70">per month</div>
+          <a href="contact.html" class="mt-8 btn-primary w-full">Upgrade Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FAQ ==================== -->
+<section class="py-16 bg-white">
+  <div class="max-w-3xl mx-auto px-6">
+    <h2 class="text-center text-3xl md:text-[40px] font-extrabold text-brand-900">Frequently Asked Questions</h2>
+    <div class="mt-10 space-y-3">
+      <details class="rounded-xl border border-slate-200 p-5" open>
+        <summary class="flex items-center justify-between font-semibold text-brand-900">
+          What exactly is a "seat"?
+          <svg class="faq-chevron w-4 h-4 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <p class="mt-3 text-sm text-slate-500 leading-relaxed">A seat is a paid license for one person who needs to post jobs and manage hiring. Everyone else in your company can be invited as a Member Profile for FREE to view the directory and apply for internal jobs.</p>
+      </details>
+      <details class="rounded-xl border border-slate-200 p-5">
+        <summary class="flex items-center justify-between font-semibold text-brand-900">
+          Can I mix Full Recruiter and Department Head seats?
+          <svg class="faq-chevron w-4 h-4 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <p class="mt-3 text-sm text-slate-500 leading-relaxed">Yes — most enterprise customers mix both. Full seats for HR leadership, Department seats for hiring managers who only need their own team's pipeline.</p>
+      </details>
+      <details class="rounded-xl border border-slate-200 p-5">
+        <summary class="flex items-center justify-between font-semibold text-brand-900">
+          Why are prices different in each country?
+          <svg class="faq-chevron w-4 h-4 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <p class="mt-3 text-sm text-slate-500 leading-relaxed">We price in local currency and adjust to local purchasing power so operators in every ASEAN market have equal access.</p>
+      </details>
+      <details class="rounded-xl border border-slate-200 p-5">
+        <summary class="flex items-center justify-between font-semibold text-brand-900">
+          Do I get charged per branch or location?
+          <svg class="faq-chevron w-4 h-4 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <p class="mt-3 text-sm text-slate-500 leading-relaxed">No. Pricing is strictly per seat — not per branch, location, or job posting.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="bg-brand-900 text-brand-100 pt-16 pb-8">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-10">
+    <div>
+      <div class="bg-white/95 px-3 py-2 rounded-lg inline-flex w-fit">
+        <img src="assets/logo.svg" alt="ProConnect" class="h-7 w-auto" />
+      </div>
+      <p class="mt-4 text-sm text-brand-100/80 max-w-xs">Hospitality hiring, built for ASEAN. A Mereka initiative.</p>
+    </div>
+    <div>
+      <div class="text-sm font-bold text-white mb-4">Product</div>
+      <ul class="space-y-2 text-sm">
+        <li><a href="features.html" class="hover:text-white">Features</a></li>
+        <li><a href="pricing.html" class="hover:text-white">Pricing</a></li>
+        <li><a href="jobs.html" class="hover:text-white">Browse Jobs</a></li>
+        <li><a href="contact.html" class="hover:text-white">Request Demo</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="text-sm font-bold text-white mb-4">Company</div>
+      <ul class="space-y-2 text-sm">
+        <li><a href="about.html" class="hover:text-white">About Us</a></li>
+        <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+        <li><a href="#" class="hover:text-white">Privacy</a></li>
+        <li><a href="#" class="hover:text-white">Terms</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="text-sm font-bold text-white mb-4">Get in touch</div>
+      <ul class="space-y-2 text-sm">
+        <li>hello@proconnect.work</li>
+        <li>Kuala Lumpur · Jakarta · Singapore</li>
+      </ul>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-6 mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-brand-100/70">
+    <div>© 2026 ProConnect — a Mereka initiative. All rights reserved.</div>
+    <div class="flex gap-4"><a href="#" class="hover:text-white">Privacy Policy</a><a href="#" class="hover:text-white">Terms of Service</a></div>
+  </div>
+</footer>
+
+<script src="assets/script.js"></script>
+</body>
+</html>
