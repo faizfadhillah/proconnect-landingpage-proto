@@ -1,11 +1,13 @@
 [build]
   publish = "."
-  # Ignore the /cms Nuxt app — it deploys separately. Netlify will only publish the root HTML.
+  # /cms (Nuxt) and /api (NestJS) live in this monorepo via git subtree
+  # but deploy to their own environments — Netlify only publishes static HTML.
   ignore = "false"
 
-# Stop Netlify from trying to auto-install /cms package.json
+# Stop Netlify from trying to auto-install anything under /cms or /api
 [build.environment]
   NETLIFY_SKIP_CMS_BUILD = "true"
+  NETLIFY_SKIP_API_BUILD = "true"
 
 [[headers]]
   for = "/*"
@@ -19,8 +21,14 @@
   to = "/"
   status = 301
 
-# Do not serve /cms/* from Netlify — it's a separate app
+# Do not serve /cms/* from Netlify — it's a separate Nuxt app on its own host.
 [[redirects]]
   from = "/cms/*"
+  to = "/"
+  status = 404
+
+# Do not serve /api/* from Netlify — the NestJS backend runs at api.proconnectcareer.com.
+[[redirects]]
+  from = "/api/*"
   to = "/"
   status = 404
