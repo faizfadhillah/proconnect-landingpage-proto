@@ -1,0 +1,169 @@
+[
+  {
+    "id": "group-mainmenu",
+    "group": "Main Menu"
+  },
+  {
+    "id": "admin-dashboard",
+    "title": "Dashboard",
+    "icon": "mdi-view-dashboard-outline",
+    "to": "/admin/dashboard"
+  },
+  {
+    "id": "admin-candidate",
+    "title": "Candidate",
+    "icon": "mdi-account",
+    "to": "/admin/candidates"
+  }, 
+  {
+    "id": "admin-companies",
+    "title": "Companies",
+    "icon": "mdi-domain",
+    "to": "/admin/companies"
+  },
+  {
+    "id": "admin-jobs",
+    "title": "Jobs",
+    "icon": "mdi-briefcase-variant-outline",
+    "to": "/admin/jobs/employer",
+    "children": [
+      {
+        "id": "admin-jobs-all",
+        "title": "Find Jobs",
+        "icon": "mdi-briefcase-search-outline",
+        "to": "/admin/jobs/all"
+      },
+      {
+        "id": "admin-jobs-saved",
+        "title": "Saved Jobs",
+        "icon": "mdi-bookmark-outline",
+        "to": "/admin/jobs/saved"
+      },
+      {
+        "id": "admin-jobs-applied",
+        "title": "Applied Jobs",
+        "icon": "mdi-medal-outline",
+        "to": "/admin/jobs/applied"
+      }
+    ]
+  },
+  {
+    "id": "admin-approvals",
+    "title": "Approval",
+    "icon": "mdi-check-circle-outline",
+    "children": [
+      
+       {
+        "id": "admin-approvals-students",
+        "title": "Students",
+        "icon": "mdi-school-outline",
+        "to": "/admin/approvals/students"
+      },
+      {
+        "id": "admin-approvals-user-educations",
+        "title": "User Education",
+        "icon": "mdi-school-outline",
+        "to": "/admin/approvals/user-educations"
+      },
+      {
+        "id": "admin-approvals-license-verifivation",
+        "title": "License Verification",
+        "icon": "mdi-file-certificate-outline",
+        "to": "/admin/approvals/license-verification"
+      },
+      {
+        "id": "admin-approvals-skill-passports",
+        "title": "Skill Passport",
+        "icon": "mdi-certificate",
+        "to": "/admin/approvals/skill-passports"
+      }     
+    ]
+  },
+  {
+    "id": "admin-feedbacks",
+    "title": "Feedbacks",
+    "icon": "mdi-comment-alert-outline",
+    "to": "/admin/feedbacks"
+  },
+  {
+    "id": "admin-term-of-service",
+    "title": "Term of Service", 
+    "icon": "mdi-file-document-outline",
+    "to": "/admin/term-of-service"
+  },
+  {
+    "id": "admin-account-management",
+    "title": "Account Management",
+    "icon": "mdi-account-circle-outline",
+    "children": [
+      {
+        "id": "admin-delete-account",
+        "title": "Delete Account",
+        "icon": "mdi-delete-outline",
+        "to": "/admin/account/delete-account"
+      },
+      {
+        "id": "admin-privacy-policy",
+        "title": "Privacy Policy",
+        "icon": "mdi-shield-lock-outline",
+        "to": "/admin/privacy-policy"
+      },
+      {
+        "id": "admin-reset-password",
+        "title": "Reset Password",
+        "icon": "mdi-lock-reset",
+        "to": "/admin/account/reset-password"
+      },     
+      {
+        "id": "admin-logout",
+        "title": "Sign Out",
+        "icon": "mdi-logout-variant",
+        "to": "/admin/account/signout"
+      }
+    ]
+  },
+  
+  {
+    "id": "group-settings",
+    "group": "Settings"
+  },
+  {
+    "id": "admin-master-data",
+    "title": "Master Data",
+    "icon": "mdi-database",
+    "to": "/admin/masters"
+  },
+  {
+    "id": "admin-settings",
+    "title": "Settings",
+    "icon": "mdi-cog",
+    "children": [
+      
+      {
+        "id": "admin-settings-advanced",
+        "title": "Advanced",
+        "icon": "mdi-security",
+        "children": [
+          {
+            "id": "admin-settings-advanced-keys",
+            "title": "Keys",
+            "icon": "mdi-key",
+            "to": "/admin/settings/advanced/api-keys"
+          },
+          {
+            "id": "admin-settings-advanced-integrations",
+            "title": "Integrations",
+            "icon": "mdi-link",
+            "to": "/admin/settings/advanced/integrations"
+          }
+        ]
+      },
+      {
+        "id": "admin-settings-firebase-orphan-emails",
+        "title": "Firebase Orphan Emails",
+        "icon": "mdi-firebase",
+        "to": "/admin/settings/firebase/orphan-emails"
+      }
+    ]
+  }
+]
