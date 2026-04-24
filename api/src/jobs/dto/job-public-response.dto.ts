@@ -28,6 +28,13 @@ export class JobPublicResponseDto {
   title: string;
 
   @ApiProperty({
+    description: "URL-friendly slug (used by GET /jobs/public/slug/:slug)",
+    example: "software-engineering-konami",
+    nullable: true,
+  })
+  slug: string | null;
+
+  @ApiProperty({
     description: "Job location (region full name or other_region + other_country for outside Indonesia)",
     example: "Kota Adm. Jakarta Pusat, Dki Jakarta",
   })
