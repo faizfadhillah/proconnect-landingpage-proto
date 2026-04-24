@@ -162,6 +162,42 @@ export class JobsService {
     return paginationResult;
   }
 
+  async findPublicListAll(
+    status?: JobStatus,
+    page?: number,
+    limit?: number,
+  ): Promise<BasePagination<JobPublicResponseDto>> {
+    const DEFAULT_LIMIT = 10;
+    const MAX_LIMIT = 50;
+    const pageNum = Number(page) || 1;
+    const limitNum = Number(limit) || DEFAULT_LIMIT;
+    const safePage = pageNum < 1 ? 1 : pageNum;
+    const safeLimit =
+      limitNum < 1
+        ? DEFAULT_LIMIT
+        : limitNum > MAX_LIMIT
+          ? MAX_LIMIT
+          : limitNum;
+
+    const skip = (safePage - 1) * safeLimit;
+    const [jobs, total] = await this.jobsDao.findPublicListAll(
+      status,
+      skip,
+      safeLimit,
+    );
+
+    const paginationResult = new BasePagination<JobPublicResponseDto>();
+    paginationResult.items = jobs.map((job) => this.mapJobToPublicDto(job));
+    paginationResult.meta = {
+      total,
+      page: safePage,
+      limit: safeLimit,
+      totalPages: safeLimit > 0 ? Math.ceil(total / safeLimit) : 0,
+    };
+
+    return paginationResult;
+  }
+
   private mapJobToPublicDto(job: Job): JobPublicResponseDto {
     const location = job.is_outside_indo
       ? [job.other_region, job.other_country].filter(Boolean).join(", ") || ""

@@ -72,6 +72,30 @@ export class JobsController {
     );
   }
 
+  @Public()
+  @Get("public/all")
+  @ApiOperation({
+    summary: "Get public jobs across all companies (paginated)",
+    description:
+      "Public endpoint used by the landing-site jobs board. Returns published jobs across all companies with pagination. Default limit 10, max 50.",
+    operationId: "findPublicListAll",
+  })
+  @ApiQuery({ name: "status", required: false, enum: JobStatus })
+  @ApiQuery({ name: "page", required: false, type: Number })
+  @ApiQuery({ name: "limit", required: false, type: Number })
+  @ApiResponse({
+    status: 200,
+    description: "Public jobs list across all companies.",
+    type: BasePagination<JobPublicResponseDto>,
+  })
+  async findPublicListAll(
+    @Query("status") status?: JobStatus,
+    @Query("page") page?: number,
+    @Query("limit") limit?: number,
+  ): Promise<BasePagination<JobPublicResponseDto>> {
+    return this.jobsService.findPublicListAll(status, page, limit);
+  }
+
   @Get("search")
   @ApiBearerAuth()
   @ApiOperation({ summary: "Search with filters", operationId: "search" })
