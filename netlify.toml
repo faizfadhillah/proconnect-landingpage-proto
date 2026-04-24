@@ -1,34 +1,58 @@
+# ────────────────────────────────────────────────────────────────
+# proconnect-landingpage-proto — Netlify config
+# This repo contains the static landing site PLUS git-subtree
+# mirrors of /api (NestJS backend) and /cms (Nuxt CMS) for history
+# only. Netlify must publish ONLY the landing pages.
+# ────────────────────────────────────────────────────────────────
+
 [build]
-  publish = "."
-  # /cms (Nuxt) and /api (NestJS) live in this monorepo via git subtree
-  # but deploy to their own environments — Netlify only publishes static HTML.
-  ignore = "false"
+  # Assemble a clean static bundle into _site/ and publish THAT.
+  # This avoids Netlify framework auto-detect walking into api/ or cms/.
+  command = "bash ./scripts/netlify-build.sh"
+  publish = "_site"
 
-# Stop Netlify from trying to auto-install anything under /cms or /api
 [build.environment]
-  NETLIFY_SKIP_CMS_BUILD = "true"
-  NETLIFY_SKIP_API_BUILD = "true"
+  NODE_VERSION     = "20"
+  NPM_FLAGS        = "--version"   # no-op: skip npm install at build root
+  # Defensive flags: tell Netlify not to auto-detect Nuxt/Next/Nest
+  NETLIFY_SKIP_FRAMEWORK_DETECTION = "true"
+  NETLIFY_SKIP_CMS_BUILD           = "true"
+  NETLIFY_SKIP_API_BUILD           = "true"
 
+# ─── Security headers ──────────────────────────────────────────
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Frame-Options = "SAMEORIGIN"
+    X-Frame-Options        = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
+    Referrer-Policy        = "strict-origin-when-cross-origin"
+    Permissions-Policy     = "geolocation=(), microphone=(), camera=()"
 
+# Don't let the browser cache HTML — always get the freshest proto.
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Long-cache hashed-ish static assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+# ─── Redirects ────────────────────────────────────────────────
 [[redirects]]
   from = "/home"
-  to = "/"
+  to   = "/"
   status = 301
 
-# Do not serve /cms/* from Netlify — it's a separate Nuxt app on its own host.
+# Defensive 404s in case a stray /cms or /api path ever lands here.
 [[redirects]]
   from = "/cms/*"
-  to = "/"
+  to   = "/404.html"
   status = 404
 
-# Do not serve /api/* from Netlify — the NestJS backend runs at api.proconnectcareer.com.
 [[redirects]]
   from = "/api/*"
-  to = "/"
+  to   = "/404.html"
   status = 404
