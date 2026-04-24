@@ -311,15 +311,7 @@
         <button onclick="document.getElementById('clearFilters').click()" class="mt-5 btn-secondary">Clear filters</button>
       </div>
 
-      <div class="mt-10 flex items-center justify-center gap-2">
-        <button class="w-10 h-10 rounded-lg border border-slate-200 text-slate-400 hover:border-brand-600 hover:text-brand-600 disabled:opacity-40" disabled>‹</button>
-        <button class="w-10 h-10 rounded-lg bg-brand-600 text-white font-semibold">1</button>
-        <button class="w-10 h-10 rounded-lg border border-slate-200 text-slate-600 hover:border-brand-600 hover:text-brand-600">2</button>
-        <button class="w-10 h-10 rounded-lg border border-slate-200 text-slate-600 hover:border-brand-600 hover:text-brand-600">3</button>
-        <span class="px-2 text-slate-400">…</span>
-        <button class="w-10 h-10 rounded-lg border border-slate-200 text-slate-600 hover:border-brand-600 hover:text-brand-600">47</button>
-        <button class="w-10 h-10 rounded-lg border border-slate-200 text-slate-600 hover:border-brand-600 hover:text-brand-600">›</button>
-      </div>
+      <div id="paginationBox" class="mt-10 flex items-center justify-center gap-2 flex-wrap"></div>
     </div>
   </div>
 </section>
@@ -411,29 +403,95 @@
   </div>
 </footer>
 
-<script src="assets/jobs-data.js"></script>
+<script src="assets/api/public-api.js"></script>
 <script src="assets/script.js"></script>
 <script>
-  function renderJobs(jobs) {
-    const list = document.getElementById('jobList');
-    const empty = document.getElementById('emptyState');
-    const count = document.getElementById('resultCount');
-    count.textContent = jobs.length;
-    if (!jobs.length) { list.innerHTML=''; empty.classList.remove('hidden'); return; }
-    empty.classList.add('hidden');
+  // ============================================================
+  // jobs.html — live API-driven listing
+  // ============================================================
+  // Source:  GET /jobs/public/all?page=X&limit=Y
+  // We fetch one page at a time, but apply client-side filters
+  // within that page (keyword / location / quick chip) since
+  // the public endpoint does not support those params yet.
+  // ------------------------------------------------------------
 
-    list.innerHTML = jobs.map(j => {
-      const badges = [];
-      if (j.badges.includes('new')) badges.push('<span class="badge badge-new">New</span>');
-      if (j.badges.includes('urgent')) badges.push('<span class="badge badge-urgent">Urgent</span>');
-      if (j.badges.includes('verified')) badges.push('<span class="badge badge-verified">Verified</span>');
-      if (j.badges.includes('remote')) badges.push('<span class="badge badge-remote">Remote OK</span>');
+  const PAGE_SIZE = 12;
 
-      return `
-      <a href="job-detail.html#${j.slug}" class="job-card block bg-white border border-slate-200 rounded-2xl p-6 no-underline">
+  // In-memory state for the current view.
+  const state = {
+    page: 1,
+    totalItems: 0,
+    totalPages: 1,
+    raw: [],         // DTOs from API (current page only)
+    keyword: '',
+    location: '',
+    quick: 'all',
+    types: [], depts: [], exps: [], sals: [], perks: [],
+    sort: 'newest',
+    loading: false,
+  };
+
+  /** Turn one API DTO into a view-model for the card. */
+  function jobDtoToCardView(dto) {
+    const companyName = dto.company_name || '—';
+    const grad = PcApi.gradientForId(dto.id || dto.slug || companyName);
+    const logoUrl = PcApi.resolveMediaUrl(dto.company_logo_url);
+    const locParts = [];
+    if (dto.location) locParts.push(dto.location);
+    if (Array.isArray(dto.domicile_status) && dto.domicile_status.length) {
+      locParts.push(dto.domicile_status.join(' / '));
+    }
+
+    // Inferred badges
+    const badges = ['verified'];
+    const createdMs = dto.created_at ? new Date(dto.created_at).getTime() : 0;
+    if (createdMs && (Date.now() - createdMs) < 7 * 24 * 60 * 60 * 1000) badges.push('new');
+    if (Array.isArray(dto.domicile_status) &&
+        dto.domicile_status.some(d => /remote/i.test(d))) badges.push('remote');
+
+    return {
+      id: dto.id,
+      slug: dto.slug || '',
+      title: dto.title || 'Untitled role',
+      company: companyName,
+      companyLogoUrl: logoUrl,
+      initials: PcApi.initials(companyName),
+      c1: grad[0],
+      c2: grad[1],
+      location: locParts.join(' · ') || '—',
+      posted: PcApi.timeAgo(dto.created_at) || '',
+      createdAt: dto.created_at || null,
+      type: (Array.isArray(dto.employment_status) && dto.employment_status[0]) || '—',
+      salary: dto.salary_range || dto.salary || 'Contact employer',
+      tags: (dto.tags && Array.isArray(dto.tags) ? dto.tags : []),
+      badges,
+      _raw: dto,
+    };
+  }
+
+  function cardHtml(j) {
+    const badges = [];
+    if (j.badges.includes('new'))      badges.push('<span class="badge badge-new">New</span>');
+    if (j.badges.includes('urgent'))   badges.push('<span class="badge badge-urgent">Urgent</span>');
+    if (j.badges.includes('verified')) badges.push('<span class="badge badge-verified">Verified</span>');
+    if (j.badges.includes('remote'))   badges.push('<span class="badge badge-remote">Remote OK</span>');
+
+    // Logo block — prefer real image, fallback to initials+gradient.
+    const logoBlock = j.companyLogoUrl
+      ? `<div class="w-12 h-12 rounded-xl overflow-hidden shrink-0 bg-slate-100">
+           <img src="${j.companyLogoUrl}" alt="${j.company}" class="w-full h-full object-cover" onerror="this.onerror=null;this.parentNode.outerHTML='<div class=\\'job-logo w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0\\' style=\\'--c1:${j.c1};--c2:${j.c2};\\'>${j.initials}</div>';" />
+         </div>`
+      : `<div class="job-logo w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0" style="--c1:${j.c1};--c2:${j.c2};">${j.initials}</div>`;
+
+    const href = j.slug
+      ? `job-detail.html?slug=${encodeURIComponent(j.slug)}`
+      : `job-detail.html?id=${encodeURIComponent(j.id)}`;
+
+    return `
+      <a href="${href}" class="job-card block bg-white border border-slate-200 rounded-2xl p-6 no-underline">
         <div class="flex items-start justify-between gap-4">
           <div class="flex items-center gap-3 min-w-0">
-            <div class="job-logo w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0" style="--c1:${j.c1};--c2:${j.c2};">${j.initials}</div>
+            ${logoBlock}
             <div class="min-w-0">
               <div class="font-semibold text-brand-900 text-sm truncate">${j.company}</div>
               <div class="text-xs text-slate-500 flex items-center gap-1.5">
@@ -466,55 +524,184 @@
           </span>
         </div>
       </a>
-      `;
-    }).join('');
+    `;
   }
 
-  const state = {
-    keyword: '', location: '', quick: 'all',
-    types: [], depts: [], exps: [], sals: [], perks: [],
-    sort: 'relevance'
-  };
+  function renderCards(views) {
+    const list  = document.getElementById('jobList');
+    const empty = document.getElementById('emptyState');
+    const count = document.getElementById('resultCount');
 
+    if (!views.length) {
+      count.textContent = '0';
+      list.innerHTML = '';
+      empty.classList.remove('hidden');
+      return;
+    }
+    empty.classList.add('hidden');
+    count.textContent = state.totalItems || views.length;
+    list.innerHTML = views.map(cardHtml).join('');
+  }
+
+  function renderLoading() {
+    document.getElementById('emptyState').classList.add('hidden');
+    const list = document.getElementById('jobList');
+    list.innerHTML = Array.from({length: 6}).map(() => `
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 animate-pulse">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-slate-100"></div>
+          <div class="flex-1 space-y-2">
+            <div class="h-3 bg-slate-100 rounded w-2/3"></div>
+            <div class="h-3 bg-slate-100 rounded w-1/2"></div>
+          </div>
+        </div>
+        <div class="mt-5 h-5 bg-slate-100 rounded w-3/4"></div>
+        <div class="mt-3 h-3 bg-slate-100 rounded w-1/2"></div>
+        <div class="mt-5 h-10 bg-slate-100 rounded"></div>
+      </div>
+    `).join('');
+  }
+
+  function renderError(message) {
+    const list  = document.getElementById('jobList');
+    const empty = document.getElementById('emptyState');
+    empty.classList.add('hidden');
+    list.innerHTML = `
+      <div class="md:col-span-2 bg-white border border-red-200 rounded-2xl p-8 text-center">
+        <div class="text-lg font-bold text-brand-900">We couldn\u2019t load jobs right now</div>
+        <p class="mt-2 text-sm text-slate-600">${message || 'Please try again in a moment.'}</p>
+        <button id="retryLoad" class="mt-5 btn-secondary">Retry</button>
+      </div>
+    `;
+    const retryBtn = document.getElementById('retryLoad');
+    if (retryBtn) retryBtn.addEventListener('click', () => loadPage(state.page));
+  }
+
+  /** Client-side filtering over the current page's DTOs. */
   function applyFilters() {
-    let out = JOBS.slice();
-    if (state.quick !== 'all')  out = out.filter(j => j.badges.includes(state.quick));
+    let views = state.raw.map(jobDtoToCardView);
+
+    if (state.quick === 'new')      views = views.filter(v => v.badges.includes('new'));
+    if (state.quick === 'urgent')   views = views.filter(v => v.badges.includes('urgent'));
+    if (state.quick === 'verified') views = views.filter(v => v.badges.includes('verified'));
+    if (state.quick === 'remote')   views = views.filter(v => v.badges.includes('remote'));
+
     if (state.keyword) {
       const q = state.keyword.toLowerCase();
-      out = out.filter(j =>
-        j.title.toLowerCase().includes(q) ||
-        j.company.toLowerCase().includes(q) ||
-        j.tags.some(t => t.toLowerCase().includes(q))
+      views = views.filter(v =>
+        v.title.toLowerCase().includes(q) ||
+        v.company.toLowerCase().includes(q) ||
+        (v.tags || []).some(t => String(t).toLowerCase().includes(q))
       );
     }
-    if (state.location) out = out.filter(j => j.country === state.location);
-    if (state.types.length) out = out.filter(j => state.types.includes(j.type));
-    if (state.depts.length) out = out.filter(j => state.depts.includes(j.department));
-    if (state.exps.length)  out = out.filter(j => state.exps.includes(j.experience));
-    if (state.sals.length)  out = out.filter(j => state.sals.includes(j.salaryBucket));
-    if (state.perks.length) out = out.filter(j => state.perks.every(p => j.perks.includes(p)));
-    if (state.sort === 'newest') out.sort((a,b) => a.postedRank - b.postedRank);
-    if (state.sort === 'salary-high') out.sort((a,b) => b.salaryMax - a.salaryMax);
-    if (state.sort === 'salary-low')  out.sort((a,b) => a.salaryMin - b.salaryMin);
-    renderJobs(out);
+
+    if (state.location) {
+      const loc = state.location.toLowerCase();
+      views = views.filter(v => v.location.toLowerCase().includes(loc));
+    }
+
+    if (state.types.length) {
+      views = views.filter(v => state.types.some(t => String(v.type).toLowerCase().includes(t.toLowerCase())));
+    }
+
+    if (state.sort === 'newest') {
+      views.sort((a,b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+    }
+
+    renderCards(views);
+  }
+
+  function renderPagination() {
+    const host = document.getElementById('paginationBox');
+    if (!host) return;
+
+    const total = Math.max(1, state.totalPages || 1);
+    const current = state.page;
+
+    const btn = (label, page, opts) => {
+      opts = opts || {};
+      const disabled = !!opts.disabled;
+      const active   = !!opts.active;
+      const base = 'w-10 h-10 rounded-lg font-semibold';
+      const cls = active
+        ? `${base} bg-brand-600 text-white`
+        : `${base} border border-slate-200 text-slate-600 hover:border-brand-600 hover:text-brand-600`;
+      const dis = disabled ? 'opacity-40 cursor-not-allowed' : '';
+      return `<button class="${cls} ${dis}" ${disabled?'disabled':''} data-page="${page}">${label}</button>`;
+    };
+
+    // Build a compact page list: 1 ... curr-1, curr, curr+1 ... last
+    const pages = new Set([1, total, current, current-1, current+1]);
+    const shown = [...pages].filter(p => p >= 1 && p <= total).sort((a,b)=>a-b);
+    let html = btn('‹', Math.max(1, current-1), { disabled: current===1 });
+    let last = 0;
+    shown.forEach(p => {
+      if (last && p - last > 1) html += '<span class="px-2 text-slate-400">…</span>';
+      html += btn(String(p), p, { active: p === current });
+      last = p;
+    });
+    html += btn('›', Math.min(total, current+1), { disabled: current===total });
+
+    host.innerHTML = html;
+    host.querySelectorAll('button[data-page]').forEach(b => {
+      b.addEventListener('click', () => {
+        const p = parseInt(b.dataset.page, 10);
+        if (!isNaN(p) && p !== state.page) loadPage(p);
+      });
+    });
+  }
+
+  async function loadPage(page) {
+    if (state.loading) return;
+    state.loading = true;
+    state.page = page;
+
+    renderLoading();
+
+    try {
+      const res = await PcApi.fetchPublicJobs({ page, limit: PAGE_SIZE });
+      // BasePagination<T> shape: { data: [...], meta: { totalItems, currentPage, totalPages, ... } }
+      // but we also accept a plain array response defensively.
+      const items = (res && res.data) || res || [];
+      const meta  = (res && res.meta) || {};
+      state.raw = Array.isArray(items) ? items : [];
+      state.totalItems = meta.totalItems ?? state.raw.length;
+      state.totalPages = meta.totalPages ?? Math.max(1, Math.ceil(state.totalItems / PAGE_SIZE));
+      applyFilters();
+      renderPagination();
+      window.scrollTo({ top: document.querySelector('#jobList').offsetTop - 100, behavior: 'smooth' });
+    } catch (err) {
+      console.error('[jobs] fetch failed:', err);
+      renderError(PcApi.extractErrorMessage(err && err.data) || (err && err.message));
+    } finally {
+      state.loading = false;
+    }
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    renderJobs(JOBS);
-    document.getElementById('searchKeyword').addEventListener('input', e => { state.keyword = e.target.value.trim(); applyFilters(); });
-    document.getElementById('searchLocation').addEventListener('change', e => { state.location = e.target.value; applyFilters(); });
+    // Search / location inputs
+    document.getElementById('searchKeyword').addEventListener('input', e => {
+      state.keyword = e.target.value.trim();
+      applyFilters();
+    });
+    document.getElementById('searchLocation').addEventListener('change', e => {
+      state.location = e.target.value;
+      applyFilters();
+    });
     document.getElementById('searchBtn').addEventListener('click', applyFilters);
 
+    // Popular-term chips
     document.querySelectorAll('.popular-chip').forEach(btn => {
       btn.addEventListener('click', () => {
         const term = btn.dataset.term;
         document.getElementById('searchKeyword').value = term;
         state.keyword = term;
         applyFilters();
-        window.scrollTo({top: document.querySelector('#jobList').offsetTop - 100, behavior:'smooth'});
+        window.scrollTo({ top: document.querySelector('#jobList').offsetTop - 100, behavior: 'smooth' });
       });
     });
 
+    // Quick filter chips
     document.querySelectorAll('.quick-chip').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.quick-chip').forEach(b => b.classList.remove('active'));
@@ -524,6 +711,7 @@
       });
     });
 
+    // Sidebar filters
     const bindCheck = (selector, key) => {
       document.querySelectorAll(selector).forEach(cb => {
         cb.addEventListener('change', () => {
@@ -538,15 +726,22 @@
     bindCheck('.filter-sal',  'sals');
     bindCheck('.filter-perk', 'perks');
 
-    document.getElementById('sortBy').addEventListener('change', e => { state.sort = e.target.value; applyFilters(); });
+    document.getElementById('sortBy').addEventListener('change', e => {
+      state.sort = e.target.value;
+      applyFilters();
+    });
 
     document.getElementById('clearFilters').addEventListener('click', () => {
       document.querySelectorAll('aside input[type="checkbox"]').forEach(cb => cb.checked = false);
       document.getElementById('searchKeyword').value = '';
       document.getElementById('searchLocation').value = '';
-      state.keyword=''; state.location=''; state.types=[]; state.depts=[]; state.exps=[]; state.sals=[]; state.perks=[];
+      state.keyword = ''; state.location = '';
+      state.types = []; state.depts = []; state.exps = []; state.sals = []; state.perks = [];
       applyFilters();
     });
+
+    // Initial load
+    loadPage(1);
   });
 </script>
 </body>

@@ -370,35 +370,100 @@
   </div>
 </footer>
 
-<script src="assets/jobs-data.js"></script>
+<script src="assets/api/public-api.js"></script>
 <script src="assets/script.js"></script>
 <script>
-  function renderJob(job) {
+  // ============================================================
+  // job-detail.html — live-API rendering
+  // ============================================================
+  // Data source: GET /jobs/public/slug/:slug  →  JobPublicResponseDto
+  // Sidebar "Similar jobs": GET /jobs/public/all?limit=6
+  // ------------------------------------------------------------
+
+  const BADGE_MAP = {
+    new:      ['badge-new',      'New'],
+    urgent:   ['badge-urgent',   'Urgent'],
+    verified: ['badge-verified', 'Verified'],
+    remote:   ['badge-remote',   'Remote OK'],
+  };
+
+  /** Convert API DTO → renderable view-model. Safe to field-loss. */
+  function jobDtoToView(dto) {
+    if (!dto) return null;
+
+    const companyName = dto.company_name || '—';
+    const grad        = PcApi.gradientForId(dto.id || dto.slug || companyName);
+    const logoUrl     = PcApi.resolveMediaUrl(dto.company_logo_url);
+    const locParts    = [];
+    if (dto.location)  locParts.push(dto.location);
+    if (Array.isArray(dto.domicile_status) && dto.domicile_status.length) {
+      locParts.push(dto.domicile_status.join(' / '));
+    }
+
+    // Badges — we infer from DTO fields we have
+    const badges = ['verified'];
+    const createdMs = dto.created_at ? new Date(dto.created_at).getTime() : 0;
+    if (createdMs && (Date.now() - createdMs) < 7 * 24 * 60 * 60 * 1000) badges.push('new');
+    if (Array.isArray(dto.domicile_status) &&
+        dto.domicile_status.some(d => /remote/i.test(d))) badges.push('remote');
+
+    // Description — API returns rich HTML/text; we pass through as HTML.
+    const rawDesc = dto.description || '';
+
+    return {
+      id:           dto.id,
+      slug:         dto.slug || '',
+      title:        dto.title || 'Untitled role',
+      company:      companyName,
+      companyLogo:  logoUrl,
+      initials:     PcApi.initials(companyName),
+      c1:           grad[0],
+      c2:           grad[1],
+      location:     locParts.join(' · ') || '—',
+      posted:       PcApi.timeAgo(dto.created_at) || '',
+      badges,
+      type:         (Array.isArray(dto.employment_status) && dto.employment_status[0]) || '—',
+      department:   dto.department || '—',
+      experience:   dto.experience_level || dto.experience || '—',
+      salary:       dto.salary_range || dto.salary || 'Contact employer',
+      descriptionHtml: rawDesc,
+    };
+  }
+
+  function setLogoEl(el, view) {
+    if (!el) return;
+    // If the API gives us an actual image, prefer that; else fall back to initials+gradient.
+    if (view.companyLogo) {
+      el.innerHTML = `<img src="${view.companyLogo}" alt="${view.company}" class="w-full h-full object-cover rounded-2xl" onerror="this.remove();this.parentNode.textContent='${view.initials}';" />`;
+      el.style.background = 'transparent';
+    } else {
+      el.textContent = view.initials;
+      el.style.setProperty('--c1', view.c1);
+      el.style.setProperty('--c2', view.c2);
+    }
+  }
+
+  function renderJob(view, dto) {
     document.getElementById('loadingState').classList.add('hidden');
     document.getElementById('notFoundState').classList.add('hidden');
     document.getElementById('jobContent').classList.remove('hidden');
 
     // Title/meta
-    document.getElementById('pageTitle').textContent = `${job.title} — ${job.company} · ProConnect`;
-    document.getElementById('crumbTitle').textContent = job.title;
+    document.getElementById('pageTitle').textContent = `${view.title} — ${view.company} · ProConnect`;
+    document.getElementById('crumbTitle').textContent = view.title;
 
     // Header
-    const logo = document.getElementById('jobLogo');
-    logo.textContent = job.initials;
-    logo.style.setProperty('--c1', job.c1);
-    logo.style.setProperty('--c2', job.c2);
-
-    document.getElementById('jobTitle').textContent = job.title;
-    document.getElementById('jobCompany').textContent = job.company;
-    document.getElementById('jobLocation').textContent = job.location;
-    document.getElementById('jobPosted').textContent = job.posted;
+    setLogoEl(document.getElementById('jobLogo'), view);
+    document.getElementById('jobTitle').textContent    = view.title;
+    document.getElementById('jobCompany').textContent  = view.company;
+    document.getElementById('jobLocation').textContent = view.location;
+    document.getElementById('jobPosted').textContent   = view.posted;
 
     const badgeBox = document.getElementById('jobBadges');
     badgeBox.innerHTML = '';
-    const badgeMap = { new:['badge-new','New'], urgent:['badge-urgent','Urgent'], verified:['badge-verified','Verified'], remote:['badge-remote','Remote OK'] };
-    job.badges.forEach(b => {
-      if (!badgeMap[b]) return;
-      const [cls,label] = badgeMap[b];
+    view.badges.forEach(b => {
+      if (!BADGE_MAP[b]) return;
+      const [cls, label] = BADGE_MAP[b];
       const s = document.createElement('span');
       s.className = `badge ${cls}`;
       s.textContent = label;
@@ -406,55 +471,35 @@
     });
 
     // Fact cards
-    document.getElementById('factSalary').textContent = job.salary;
-    document.getElementById('factType').textContent = job.type;
-    document.getElementById('factDept').textContent = job.department;
-    document.getElementById('factExp').textContent = job.experience;
+    document.getElementById('factSalary').textContent = view.salary;
+    document.getElementById('factType').textContent   = view.type;
+    document.getElementById('factDept').textContent   = view.department;
+    document.getElementById('factExp').textContent    = view.experience;
 
-    // Description
-    document.getElementById('jobShortDesc').textContent = job.shortDesc;
+    // Description — render API HTML directly; hide the three structured
+    // sections since the API returns a single rich-text body.
+    const desc = document.getElementById('jobShortDesc');
+    desc.innerHTML = view.descriptionHtml || 'No description provided by the employer.';
+    desc.classList.add('prose', 'max-w-none');
 
-    const fillList = (id, arr) => {
+    ['jobResponsibilities', 'jobRequirements', 'jobBenefits', 'jobTags'].forEach(id => {
       const el = document.getElementById(id);
-      el.innerHTML = arr.map(x => `<li>${x}</li>`).join('');
-    };
-    fillList('jobResponsibilities', job.responsibilities);
-    fillList('jobRequirements', job.requirements);
-    fillList('jobBenefits', job.benefits);
-
-    // Tags
-    document.getElementById('jobTags').innerHTML =
-      job.tags.map(t => `<span class="bg-brand-50 text-brand-700 px-3 py-1.5 rounded-lg text-sm font-medium">${t}</span>`).join(' ');
+      if (!el) return;
+      // hide the whole <h2> that immediately precedes it, plus the list itself
+      const prevH2 = el.previousElementSibling;
+      if (prevH2 && prevH2.tagName === 'H2') prevH2.classList.add('hidden');
+      el.classList.add('hidden');
+    });
 
     // Sidebar
-    const sideLogo = document.getElementById('sideLogo');
-    sideLogo.textContent = job.initials;
-    sideLogo.style.setProperty('--c1', job.c1);
-    sideLogo.style.setProperty('--c2', job.c2);
-    document.getElementById('sideCompany').textContent = job.company;
-    document.getElementById('sideOpenRoles').textContent = Math.floor(Math.random() * 18) + 4;
-
-    // Similar jobs
-    const sim = JOBS.filter(j => j.slug !== job.slug)
-                    .filter(j => j.department === job.department || j.country === job.country)
-                    .slice(0, 3);
-    const fallback = JOBS.filter(j => j.slug !== job.slug).slice(0, 3);
-    const shown = sim.length ? sim : fallback;
-    document.getElementById('similarJobs').innerHTML = shown.map(j => `
-      <a href="job-detail.html#${j.slug}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-brand-50 transition">
-        <div class="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-sm shrink-0" style="background:linear-gradient(135deg, ${j.c1}, ${j.c2});">${j.initials}</div>
-        <div class="min-w-0">
-          <div class="font-semibold text-brand-900 text-sm truncate">${j.title}</div>
-          <div class="text-xs text-slate-500 truncate">${j.company} · ${j.location}</div>
-        </div>
-      </a>
-    `).join('');
+    setLogoEl(document.getElementById('sideLogo'), view);
+    document.getElementById('sideCompany').textContent  = view.company;
+    document.getElementById('sideOpenRoles').textContent = '—';
 
     // Save button
     document.getElementById('saveBtn').addEventListener('click', function(){
       this.classList.toggle('text-brand-600');
       this.classList.toggle('border-brand-600');
-      const svg = this.querySelector('svg');
       if (this.classList.contains('text-brand-600')) {
         this.innerHTML = this.innerHTML.replace('Save','Saved');
       } else {
@@ -466,7 +511,7 @@
     document.getElementById('shareBtn').addEventListener('click', async function(){
       const url = window.location.href;
       if (navigator.share) {
-        try { await navigator.share({ title: job.title + ' — ' + job.company, url }); } catch(e){}
+        try { await navigator.share({ title: view.title + ' — ' + view.company, url }); } catch(e){}
       } else if (navigator.clipboard) {
         await navigator.clipboard.writeText(url);
         this.innerHTML = this.innerHTML.replace('Share','Copied!');
@@ -474,7 +519,7 @@
       }
     });
 
-    // Apply form
+    // Apply form — local-only confirmation for now (no /applications endpoint yet).
     document.getElementById('applyForm').addEventListener('submit', e => {
       e.preventDefault();
       const btn = e.target.querySelector('button[type="submit"]');
@@ -482,24 +527,91 @@
       btn.disabled = true;
       btn.classList.add('opacity-70');
     });
+
+    // Similar jobs — fetch in parallel, degrade gracefully
+    loadSimilarJobs(view).catch(() => {
+      document.getElementById('similarJobs').innerHTML =
+        '<div class="text-xs text-slate-500">Browse all jobs on the main board.</div>';
+    });
   }
 
-  function showNotFound() {
+  async function loadSimilarJobs(currentView) {
+    try {
+      const res = await PcApi.fetchPublicJobs({ page: 1, limit: 6 });
+      const items = (res && res.data) || res || [];
+      const others = items.filter(j => j.slug !== currentView.slug).slice(0, 3);
+      if (!others.length) {
+        document.getElementById('similarJobs').innerHTML =
+          '<div class="text-xs text-slate-500">No other openings right now.</div>';
+        return;
+      }
+      document.getElementById('similarJobs').innerHTML = others.map(j => {
+        const grad = PcApi.gradientForId(j.id || j.slug || j.company_name);
+        const ini  = PcApi.initials(j.company_name);
+        const loc  = j.location || (j.domicile_status && j.domicile_status[0]) || '';
+        const href = j.slug ? `job-detail.html?slug=${encodeURIComponent(j.slug)}` : 'jobs.html';
+        return `
+          <a href="${href}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-brand-50 transition">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-sm shrink-0" style="background:linear-gradient(135deg, ${grad[0]}, ${grad[1]});">${ini}</div>
+            <div class="min-w-0">
+              <div class="font-semibold text-brand-900 text-sm truncate">${j.title || 'Untitled role'}</div>
+              <div class="text-xs text-slate-500 truncate">${j.company_name || '—'}${loc ? ' · ' + loc : ''}</div>
+            </div>
+          </a>
+        `;
+      }).join('');
+    } catch (e) {
+      document.getElementById('similarJobs').innerHTML =
+        '<div class="text-xs text-slate-500">Browse all jobs on the main board.</div>';
+    }
+  }
+
+  function showNotFound(msg) {
     document.getElementById('loadingState').classList.add('hidden');
-    document.getElementById('notFoundState').classList.remove('hidden');
+    const nf = document.getElementById('notFoundState');
+    nf.classList.remove('hidden');
+    if (msg) {
+      const p = nf.querySelector('p');
+      if (p) p.textContent = msg;
+    }
   }
 
-  function loadFromHash() {
-    const slug = (window.location.hash || '').replace('#','').trim();
-    if (!slug) { showNotFound(); return; }
-    const job = JOBS.find(j => j.slug === slug);
-    if (!job) { showNotFound(); return; }
-    renderJob(job);
-    window.scrollTo({top:0, behavior:'instant'});
+  /** Read slug from either ?slug=... or #slug (legacy). */
+  function readSlug() {
+    try {
+      const qp = new URL(window.location.href).searchParams.get('slug');
+      if (qp) return qp.trim();
+    } catch (e) { /* ignore */ }
+    return (window.location.hash || '').replace('#','').trim();
   }
 
-  document.addEventListener('DOMContentLoaded', loadFromHash);
-  window.addEventListener('hashchange', loadFromHash);
+  async function loadJob() {
+    const slug = readSlug();
+    document.getElementById('loadingState').classList.remove('hidden');
+    document.getElementById('notFoundState').classList.add('hidden');
+    document.getElementById('jobContent').classList.add('hidden');
+
+    if (!slug) { showNotFound('No job specified in the URL.'); return; }
+
+    try {
+      const dto = await PcApi.fetchPublicJobBySlug(slug);
+      const view = jobDtoToView(dto);
+      if (!view) { showNotFound(); return; }
+      renderJob(view, dto);
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    } catch (err) {
+      if (err && err.status === 404) {
+        showNotFound();
+      } else {
+        showNotFound('We couldn\u2019t load this job right now. Please try again shortly.');
+        console.error('[job-detail] fetch failed:', err);
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', loadJob);
+  window.addEventListener('hashchange', loadJob);
+  window.addEventListener('popstate',   loadJob);
 </script>
 </body>
 </html>

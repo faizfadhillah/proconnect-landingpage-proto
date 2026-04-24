@@ -235,19 +235,19 @@
         <form id="demoForm" class="mt-6 grid md:grid-cols-2 gap-4">
           <div>
             <label class="text-xs font-semibold text-brand-900">Full name *</label>
-            <input type="text" required class="mt-1.5 w-full px-3.5 py-2.5 border border-slate-200 rounded-lg focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none text-sm" placeholder="Sarah Chen" />
+            <input id="demoName" type="text" required class="mt-1.5 w-full px-3.5 py-2.5 border border-slate-200 rounded-lg focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none text-sm" placeholder="Sarah Chen" />
           </div>
           <div>
             <label class="text-xs font-semibold text-brand-900">Work email *</label>
-            <input type="email" required class="mt-1.5 w-full px-3.5 py-2.5 border border-slate-200 rounded-lg focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none text-sm" placeholder="sarah@hotelgroup.com" />
+            <input id="demoEmail" type="email" required class="mt-1.5 w-full px-3.5 py-2.5 border border-slate-200 rounded-lg focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none text-sm" placeholder="sarah@hotelgroup.com" />
           </div>
           <div>
             <label class="text-xs font-semibold text-brand-900">Company *</label>
-            <input type="text" required class="mt-1.5 w-full px-3.5 py-2.5 border border-slate-200 rounded-lg focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none text-sm" placeholder="Mandarin Oriental" />
+            <input id="demoCompany" type="text" required class="mt-1.5 w-full px-3.5 py-2.5 border border-slate-200 rounded-lg focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none text-sm" placeholder="Mandarin Oriental" />
           </div>
           <div>
             <label class="text-xs font-semibold text-brand-900">Country *</label>
-            <select required class="mt-1.5 w-full px-3.5 py-2.5 border border-slate-200 rounded-lg focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none text-sm bg-white">
+            <select id="demoCountry" required class="mt-1.5 w-full px-3.5 py-2.5 border border-slate-200 rounded-lg focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none text-sm bg-white">
               <option value="">Select…</option>
               <option>Indonesia</option>
               <option>Malaysia</option>
@@ -264,7 +264,7 @@
           </div>
           <div>
             <label class="text-xs font-semibold text-brand-900">Role</label>
-            <select class="mt-1.5 w-full px-3.5 py-2.5 border border-slate-200 rounded-lg focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none text-sm bg-white">
+            <select id="demoRole" class="mt-1.5 w-full px-3.5 py-2.5 border border-slate-200 rounded-lg focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none text-sm bg-white">
               <option>HR / Talent Acquisition</option>
               <option>Hotel GM / Ops</option>
               <option>Founder / Exec</option>
@@ -273,7 +273,7 @@
           </div>
           <div>
             <label class="text-xs font-semibold text-brand-900">Team size</label>
-            <select class="mt-1.5 w-full px-3.5 py-2.5 border border-slate-200 rounded-lg focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none text-sm bg-white">
+            <select id="demoTeamSize" class="mt-1.5 w-full px-3.5 py-2.5 border border-slate-200 rounded-lg focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none text-sm bg-white">
               <option>1–20 employees</option>
               <option>21–100 employees</option>
               <option>101–500 employees</option>
@@ -282,18 +282,19 @@
           </div>
           <div class="md:col-span-2">
             <label class="text-xs font-semibold text-brand-900">What are you hoping to solve?</label>
-            <textarea rows="3" class="mt-1.5 w-full px-3.5 py-2.5 border border-slate-200 rounded-lg focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none text-sm" placeholder="We're hiring 30 front office staff across 3 properties this quarter…"></textarea>
+            <textarea id="demoMessage" rows="3" class="mt-1.5 w-full px-3.5 py-2.5 border border-slate-200 rounded-lg focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none text-sm" placeholder="We're hiring 30 front office staff across 3 properties this quarter…"></textarea>
           </div>
           <div class="md:col-span-2 flex items-start gap-2">
             <input type="checkbox" id="consent" class="mt-1 rounded border-slate-300" required />
             <label for="consent" class="text-xs text-slate-600">I agree to receive emails from ProConnect about my request. You can unsubscribe anytime.</label>
           </div>
+          <div id="demoFormAlert" class="hidden md:col-span-2"></div>
           <div class="md:col-span-2 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between pt-2">
             <div class="text-xs text-slate-500 flex items-center gap-2">
               <svg class="w-4 h-4 text-mint-500" viewBox="0 0 20 20" fill="currentColor"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3l-4 4a1 1 0 01-1.4 0l-2-2a1 1 0 111.4-1.4L9 10.6l3.3-3.3a1 1 0 011.4 1.4z"/></svg>
               No commitment · No credit card
             </div>
-            <button type="submit" class="btn-primary">Get in Touch</button>
+            <button id="demoSubmit" type="submit" class="btn-primary">Get in Touch</button>
           </div>
         </form>
       </div>
@@ -345,6 +346,95 @@
   </div>
 </footer>
 
+<script src="assets/api/public-api.js"></script>
 <script src="assets/script.js"></script>
+<script>
+  // ============================================================
+  // contact.html — "Get in Touch" form → POST /feedbacks
+  // ============================================================
+  document.addEventListener('DOMContentLoaded', () => {
+    const form     = document.getElementById('demoForm');
+    const btn      = document.getElementById('demoSubmit');
+    const alertBox = document.getElementById('demoFormAlert');
+    if (!form || !btn) return;
+
+    function showAlert(kind, msg) {
+      const styles = {
+        success: 'bg-mint-500/10 border border-mint-500/30 text-mint-600',
+        error:   'bg-red-50 border border-red-200 text-red-700',
+        info:    'bg-brand-50 border border-brand-100 text-brand-700',
+      };
+      alertBox.className = `md:col-span-2 rounded-lg px-4 py-3 text-sm ${styles[kind] || styles.info}`;
+      alertBox.textContent = msg;
+      alertBox.classList.remove('hidden');
+    }
+    function clearAlert() {
+      alertBox.classList.add('hidden');
+      alertBox.textContent = '';
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearAlert();
+
+      const val = id => (document.getElementById(id)?.value || '').trim();
+      const name    = val('demoName');
+      const email   = val('demoEmail');
+      const company = val('demoCompany');
+      const country = val('demoCountry');
+      const role    = val('demoRole');
+      const team    = val('demoTeamSize');
+      const msg     = val('demoMessage');
+
+      if (!name || !email || !company || !country) {
+        showAlert('error', 'Please fill in name, email, company and country.');
+        return;
+      }
+
+      // Compose a rich message body (API's /feedbacks schema accepts:
+      // name, email, message, plus optional phone/company/country extensions).
+      const payload = {
+        name,
+        email,
+        message: [
+          `Demo request via proconnectcareer.com`,
+          `Company: ${company}`,
+          `Country: ${country}`,
+          role ? `Role: ${role}` : null,
+          team ? `Team size: ${team}` : null,
+          msg  ? `\nNotes:\n${msg}` : null,
+        ].filter(Boolean).join('\n'),
+        // Include structured fields too — backend can ignore unknown keys.
+        company,
+        country,
+        role,
+        team_size: team,
+        source: 'landing:contact',
+      };
+
+      const originalLabel = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      btn.classList.add('opacity-70');
+
+      try {
+        await PcApi.submitFeedback(payload);
+        showAlert('success', 'Thanks — we\u2019ve received your request. A team member will be in touch within 1 business day.');
+        btn.textContent = 'Sent ✓';
+        form.querySelectorAll('input, select, textarea, button').forEach(el => {
+          if (el.id !== 'demoSubmit') el.disabled = true;
+        });
+      } catch (err) {
+        console.error('[contact] submit failed:', err);
+        const msgText = (err && (PcApi.extractErrorMessage(err.data) || err.message))
+                        || 'Something went wrong. Please try again or email partnership@proconnectcareer.com.';
+        showAlert('error', msgText);
+        btn.disabled = false;
+        btn.textContent = originalLabel;
+        btn.classList.remove('opacity-70');
+      }
+    });
+  });
+</script>
 </body>
 </html>

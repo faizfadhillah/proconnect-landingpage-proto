@@ -280,6 +280,69 @@
     pw.type = pw.type === 'password' ? 'text' : 'password';
   });
 
+  // ---------------------------------------------------------
+  // Country code picker — hydrate from live /mst-country/search
+  // ---------------------------------------------------------
+  function iso2ToFlag(iso2) {
+    if (!iso2 || typeof iso2 !== 'string' || iso2.length !== 2) return '';
+    const base = 0x1F1E6; // 🇦
+    const A = 'A'.charCodeAt(0);
+    const up = iso2.toUpperCase();
+    return String.fromCodePoint(base + (up.charCodeAt(0) - A)) +
+           String.fromCodePoint(base + (up.charCodeAt(1) - A));
+  }
+
+  async function hydrateCountries() {
+    const sel = $('country');
+    if (!sel) return;
+    const previousValue = sel.value;
+    try {
+      const res  = await fetch(getApiBase() + '/mst-country/search?page=1&limit=300', {
+        headers: { Accept: 'application/json' },
+      });
+      if (!res.ok) return; // keep the hardcoded ASEAN list
+      const json = await res.json();
+      const list = (json && (json.data || json.items)) || json || [];
+      if (!Array.isArray(list) || !list.length) return;
+
+      // Normalise + filter to entries with a phone code
+      const rows = list.map(c => {
+        const iso  = (c.country_code || c.code || c.iso_code || c.alpha2 || '').toString().toUpperCase();
+        const raw  = c.phone_code ?? c.dial_code ?? c.phoneCode ?? c.dialCode;
+        if (raw == null || raw === '') return null;
+        const dial = String(raw).trim().startsWith('+') ? String(raw).trim() : '+' + String(raw).trim();
+        const name = c.country_name || c.name || iso;
+        return { iso, dial, name, flag: iso2ToFlag(iso) };
+      }).filter(Boolean);
+
+      if (!rows.length) return;
+
+      // Sort: ASEAN first, then alphabetical
+      const ASEAN = ['ID','MY','SG','TH','VN','PH','BN','KH','LA','MM'];
+      rows.sort((a, b) => {
+        const ai = ASEAN.indexOf(a.iso), bi = ASEAN.indexOf(b.iso);
+        if (ai !== -1 && bi !== -1) return ai - bi;
+        if (ai !== -1) return -1;
+        if (bi !== -1) return 1;
+        return a.name.localeCompare(b.name);
+      });
+
+      sel.innerHTML = rows.map(r =>
+        `<option value="${r.dial}" data-code="${r.iso}">${r.flag ? r.flag + ' ' : ''}${r.dial}</option>`
+      ).join('');
+
+      // Preserve user's previous choice, or default to +62 (Indonesia)
+      if (previousValue && rows.some(r => r.dial === previousValue)) {
+        sel.value = previousValue;
+      } else if (rows.some(r => r.iso === 'ID')) {
+        sel.value = '+62';
+      }
+    } catch (e) {
+      console.warn('[signup] country hydrate failed, using fallback list', e);
+    }
+  }
+  hydrateCountries();
+
   // Validation helpers (mirrors CMS signup.vue rules)
   const validateEmail = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(e).toLowerCase());
   const validatePassword = (p) => p.length >= 8 && /[A-Z]/.test(p) && /[0-9]/.test(p) && /[!@#$%^&*(),.?:{}|<>]/.test(p);
