@@ -208,6 +208,7 @@ export class JobsService {
     dto.company_id = job.company_id;
     dto.status = job.status;
     dto.title = job.title;
+    dto.slug = job.slug ?? null;
     dto.location = location;
     dto.company_name = job.company?.brand_name ?? "";
     dto.company_logo_url = job.company?.logo_url ?? "";
