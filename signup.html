@@ -245,13 +245,18 @@
 </div>
 
 <script type="module">
+  // Firebase Web SDK (modular)
   import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import {
     getAuth, setPersistence, browserLocalPersistence,
-    createUserWithEmailAndPassword, updateProfile,
-    signInWithPopup, GoogleAuthProvider,
-    RecaptchaVerifier, signInWithPhoneNumber, linkWithCredential, PhoneAuthProvider
+    signInWithPopup, GoogleAuthProvider
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  // ProConnect API client — same backend the CMS uses.
+  import {
+    publicRequestOtp, createUser, getMe,
+    deleteOrphanFirebaseUser, extractErrorMessage, getApiBase
+  } from "./assets/auth/api-client.js";
 
   async function loadConfig() {
     try {
@@ -260,8 +265,9 @@
     } catch (e) { return null; }
   }
 
-  const CMS_POST_SIGNUP_URL = "/cms/welcome";
-  const CMS_DASHBOARD_URL = "/cms/admin/dashboard";
+  const CMS_WELCOME_URL    = "/cms/welcome";            // Google SSO → role picker
+  const CMS_OTP_URL        = "/cms/signup-verify-otp";  // email/password path
+  const CMS_DASHBOARD_URL  = "/cms/admin/dashboard";
   const $ = (id) => document.getElementById(id);
 
   // Password toggles
@@ -281,9 +287,9 @@
 
   const submitBtn = $('submitBtn');
   const providerAlert = $('providerAlert');
-  const setLoading = (on) => {
+  const setLoading = (on, label = 'Sending OTP…') => {
     submitBtn.disabled = on;
-    submitBtn.innerHTML = on ? '<span class="spinner"></span>Creating account…' : 'Sign Up';
+    submitBtn.innerHTML = on ? `<span class="spinner"></span>${label}` : 'Sign Up';
   };
   const showAlert = (msg) => { providerAlert.textContent = msg; providerAlert.classList.add('show'); };
   const clearErrors = () => {
@@ -298,15 +304,13 @@
     "auth/operation-not-allowed": "This authentication method is not enabled. Contact support.",
     "auth/network-request-failed": "Network error. Please check your internet connection.",
     "auth/too-many-requests": "Too many attempts. Please try again later.",
-    "auth/popup-closed-by-user": "The sign-up popup was closed before completing.",
-    "auth/invalid-phone-number": "Invalid phone number format.",
-    "auth/invalid-verification-code": "Invalid verification code. Please try again.",
-    "auth/code-expired": "Verification code expired. Please request a new one."
+    "auth/popup-closed-by-user": "The sign-up popup was closed before completing."
   }[code] || "An unexpected error occurred. Please try again.");
+
+  console.log('[signup] API base:', getApiBase());
 
   const config = await loadConfig();
   let auth = null;
-  let recaptchaVerifier = null;
 
   if (!config) {
     $('fbNotice').classList.add('show');
@@ -314,11 +318,24 @@
     const app = getApps().length === 0 ? initializeApp(config) : getApps()[0];
     auth = getAuth(app);
     try { await setPersistence(auth, browserLocalPersistence); } catch (e) { console.warn(e); }
-    // Invisible reCAPTCHA for phone OTP
-    recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
   }
 
-  // ===== Email/password signup + OTP flow =====
+  // =========================================================================
+  // Email / password signup
+  //
+  // Mirrors /cms/app/pages/signup.vue exactly:
+  //   1. Validate inputs locally.
+  //   2. POST /users/public-request-otp  { email }  → backend sends an email OTP.
+  //   3. Stash email/phone/password in localStorage under the keys the CMS's
+  //      /cms/signup-verify-otp page reads (countdownEmail / countdownPhone /
+  //      countdownPassword).
+  //   4. Redirect to /cms/signup-verify-otp. That page creates the Firebase
+  //      user + calls POST /users with the OTP to finalize the backend row.
+  //
+  // We do NOT create the Firebase user here — the CMS OTP page does it after
+  // verifying the OTP. This matches the real CMS flow and avoids leaving
+  // Firebase orphans if the user abandons at the OTP step.
+  // =========================================================================
   $('signupForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     clearErrors();
@@ -337,37 +354,36 @@
     if (password !== passwordConfirm) { $('passwordConfirmError').textContent = 'Passwords must match.'; valid = false; }
     if (!valid) return;
 
-    if (!auth) {
-      showAlert('Firebase not configured yet. Drop firebase-config.js into assets/auth/ to enable real signup.');
+    // If an OTP countdown is already running for this email, short-circuit
+    // straight to the OTP page — matches CMS signup.vue behavior.
+    const savedEndTime = localStorage.getItem('countdownEndTime');
+    const savedEmail   = localStorage.getItem('countdownEmail');
+    if (savedEndTime && savedEmail === email) {
+      // Refresh the stashed phone/password in case the user tweaked them.
+      localStorage.setItem('countdownPhone', fullPhone);
+      localStorage.setItem('countdownPassword', password);
+      window.location.href = CMS_OTP_URL;
       return;
     }
 
-    setLoading(true);
+    setLoading(true, 'Sending OTP…');
     try {
-      // 1) Create Firebase user (email/password)
-      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      await publicRequestOtp(email);
 
-      // 2) Send OTP to phone number — matches /cms/signup-verify-otp flow
-      try {
-        const confirmationResult = await signInWithPhoneNumber(auth, fullPhone, recaptchaVerifier);
-        window.pcConfirmationResult = confirmationResult; // stash for OTP page
-        sessionStorage.setItem('pc_signup_email', email);
-        sessionStorage.setItem('pc_signup_phone', fullPhone);
-        sessionStorage.setItem('pc_signup_otpPending', '1');
-        // Hand off to OTP verification page (from CMS)
-        window.location.href = '/cms/signup-verify-otp';
-      } catch (phoneErr) {
-        console.warn('Phone OTP failed, continuing to welcome. Reason:', phoneErr.code);
-        // If phone OTP is not configured, still let the user into the CMS welcome flow
-        window.location.href = CMS_POST_SIGNUP_URL;
-      }
+      // Stash under the keys /cms/signup-verify-otp reads (see signup-verify-otp.vue).
+      localStorage.setItem('countdownEmail', email);
+      localStorage.setItem('countdownPhone', fullPhone);
+      localStorage.setItem('countdownPassword', password);
+      localStorage.removeItem('countdownEndTime'); // CMS will restart the 5-min timer
+
+      window.location.href = CMS_OTP_URL;
     } catch (err) {
-      console.error(err);
-      const msg = mapFirebaseError(err.code);
-      if (err.code === 'auth/email-already-in-use' || err.code === 'auth/invalid-email') {
+      console.error('[signup] public-request-otp failed:', err);
+      const msg = extractErrorMessage(err && err.data) || err.message || 'Could not send OTP. Please try again.';
+      // NestJS returns messages with "email" or "credentials" in them — route accordingly.
+      const lower = (msg || '').toLowerCase();
+      if (lower.includes('email') || err.status === 409 || err.status === 400) {
         $('emailError').textContent = msg;
-      } else if (err.code === 'auth/weak-password') {
-        $('passwordError').textContent = msg;
       } else {
         showAlert(msg);
       }
@@ -376,20 +392,70 @@
     }
   });
 
-  // ===== Google SSO =====
+  // =========================================================================
+  // Google SSO signup
+  //
+  // Mirrors /cms/app/pages/signup.vue providerSignin():
+  //   1. Firebase signInWithPopup(google).
+  //   2. POST /users { firebase_uid, email, phone, photo_url }.
+  //   3. On backend failure → DELETE /firebase/orphan-user/:uid to clean up,
+  //      then surface the error.
+  //   4. On success → /cms/welcome (role picker: Jobseeker / Employer / School).
+  // =========================================================================
   const googleBtn = $('googleBtn');
   const googleSignUp = async () => {
     clearErrors();
     if (!auth) { showAlert('Firebase not configured yet. Drop firebase-config.js into assets/auth/ to enable Google sign-up.'); return; }
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
+
+    let signedIn = false;
     try {
-      await signInWithPopup(auth, provider);
-      // New users go to /cms/welcome so they can pick Jobseeker / Employer / School
-      window.location.href = CMS_POST_SIGNUP_URL;
+      const result = await signInWithPopup(auth, provider);
+      signedIn = true;
+      const u = result.user;
+
+      // Check whether this user already has a backend row. If /users/me succeeds,
+      // this is a returning user — hand them to the dashboard instead of /users.
+      try {
+        await getMe(auth);
+        window.location.href = CMS_DASHBOARD_URL;
+        return;
+      } catch (meErr) {
+        if (meErr.status !== 404) {
+          // Some other error (401/5xx). Still try to create below; worst case
+          // we clean up the orphan.
+          console.warn('[signup] /users/me error before POST /users:', meErr);
+        }
+      }
+
+      // Create the backend row.
+      try {
+        await createUser(auth, {
+          firebase_uid: u.uid,
+          email: u.email,
+          phone: u.phoneNumber || undefined,
+          photo_url: u.photoURL || undefined,
+        });
+        window.location.href = CMS_WELCOME_URL;
+      } catch (createErr) {
+        console.error('[signup] POST /users failed, cleaning up orphan Firebase user:', createErr);
+        try { await deleteOrphanFirebaseUser(u.uid); } catch (delErr) {
+          console.warn('[signup] Orphan cleanup failed:', delErr);
+        }
+        try { await auth.signOut(); } catch {}
+        showAlert(extractErrorMessage(createErr && createErr.data) || createErr.message || 'Could not create your ProConnect account.');
+      }
     } catch (err) {
-      console.error(err);
-      showAlert(mapFirebaseError(err.code));
+      console.error('[signup] Google signup failed:', err);
+      if (!signedIn) {
+        showAlert(mapFirebaseError(err.code));
+      } else {
+        // Firebase succeeded but something else threw — clean up if we still have a user.
+        try { if (auth.currentUser) await deleteOrphanFirebaseUser(auth.currentUser.uid); } catch {}
+        try { await auth.signOut(); } catch {}
+        showAlert(err.message || mapFirebaseError(err.code));
+      }
     }
   };
   googleBtn.addEventListener('click', googleSignUp);

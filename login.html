@@ -203,11 +203,16 @@
 </div>
 
 <script type="module">
+  // Firebase Web SDK (modular)
   import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import {
     getAuth, setPersistence, browserLocalPersistence,
     signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  // ProConnect API client — talks to NestJS backend the CMS uses.
+  import { getMe, createUser, deleteOrphanFirebaseUser, extractErrorMessage, getApiBase }
+    from "./assets/auth/api-client.js";
 
   async function loadConfig() {
     try {
@@ -217,6 +222,7 @@
   }
 
   const CMS_POST_LOGIN_URL = "/cms/admin/dashboard";
+  const CMS_WELCOME_URL    = "/cms/welcome"; // first-time Google user (no backend row yet)
   const $ = (id) => document.getElementById(id);
 
   $('togglePw').addEventListener('click', () => {
@@ -226,12 +232,16 @@
 
   const submitBtn = $('submitBtn');
   const providerAlert = $('providerAlert');
-  const setLoading = (on) => {
+  const setLoading = (on, label = 'Signing in…') => {
     submitBtn.disabled = on;
-    submitBtn.innerHTML = on ? '<span class="spinner"></span>Signing in…' : 'Sign In';
+    submitBtn.innerHTML = on ? `<span class="spinner"></span>${label}` : 'Sign In';
   };
   const showAlert = (msg) => { providerAlert.textContent = msg; providerAlert.classList.add('show'); };
-  const clearFieldErrors = () => { $('emailError').textContent = ''; $('passwordError').textContent = ''; providerAlert.classList.remove('show'); };
+  const clearFieldErrors = () => {
+    $('emailError').textContent = '';
+    $('passwordError').textContent = '';
+    providerAlert.classList.remove('show');
+  };
 
   const mapFirebaseError = (code) => ({
     "auth/invalid-email": "Invalid email format. Please enter a valid email.",
@@ -245,6 +255,8 @@
     "auth/operation-not-allowed": "This authentication method is not enabled. Contact support."
   }[code] || "An unexpected error occurred. Please try again.");
 
+  console.log('[login] API base:', getApiBase());
+
   const config = await loadConfig();
   let auth = null;
 
@@ -257,6 +269,64 @@
     onAuthStateChanged(auth, () => {});
   }
 
+  // After Firebase auth succeeds, confirm the user has a backend row by calling
+  // GET /users/me. Mirrors what /cms/login.vue does with $apiFetch("/users/me").
+  //   - 200 → redirect to dashboard
+  //   - 404 → the Firebase user exists but there's no DB row (orphan).
+  //           For email/password: bail (they should sign up).
+  //           For Google SSO:     auto-create a row, then go to /cms/welcome.
+  //   - 401 → token rejected by backend.
+  async function afterFirebaseLogin(provider /* 'password' | 'google' */) {
+    if (!auth || !auth.currentUser) {
+      throw new Error("Auth state missing after login.");
+    }
+    try {
+      const me = await getMe(auth);
+      console.log('[login] /users/me OK:', me && me.id);
+      sessionStorage.setItem('pc_justLoggedIn', '1');
+      window.location.href = CMS_POST_LOGIN_URL;
+    } catch (err) {
+      console.warn('[login] /users/me failed:', err);
+      if (err.status === 404 && provider === 'google') {
+        // First-time Google signer — create backend row, then send to /cms/welcome.
+        try {
+          const u = auth.currentUser;
+          await createUser(auth, {
+            firebase_uid: u.uid,
+            email: u.email,
+            phone: u.phoneNumber || undefined,
+            photo_url: u.photoURL || undefined,
+          });
+          sessionStorage.setItem('pc_justLoggedIn', '1');
+          window.location.href = CMS_WELCOME_URL;
+          return;
+        } catch (createErr) {
+          console.error('[login] POST /users failed, cleaning up orphan:', createErr);
+          try { await deleteOrphanFirebaseUser(auth.currentUser.uid); } catch {}
+          try { await auth.signOut(); } catch {}
+          showAlert(extractErrorMessage(createErr && createErr.data) || createErr.message || 'Could not finalize your account. Please try again.');
+          return;
+        }
+      }
+      if (err.status === 404) {
+        // Email/password user exists in Firebase but not the DB.
+        try { await auth.signOut(); } catch {}
+        $('emailError').textContent = 'No ProConnect account found. Please sign up first.';
+        return;
+      }
+      if (err.status === 401 || err.status === 403) {
+        try { await auth.signOut(); } catch {}
+        showAlert('Access denied. Your account may have been deactivated — please contact support.');
+        return;
+      }
+      // Network / CORS / 5xx — let them through to the CMS, which can retry.
+      showAlert('Signed in, but the ProConnect API did not respond. Trying the CMS anyway…');
+      sessionStorage.setItem('pc_justLoggedIn', '1');
+      setTimeout(() => { window.location.href = CMS_POST_LOGIN_URL; }, 1200);
+    }
+  }
+
+  // ===== Email / password =====
   $('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     clearFieldErrors();
@@ -269,21 +339,24 @@
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      sessionStorage.setItem('pc_justLoggedIn', '1');
-      window.location.href = CMS_POST_LOGIN_URL;
+      setLoading(true, 'Loading profile…');
+      await afterFirebaseLogin('password');
     } catch (err) {
       console.error(err);
       const msg = mapFirebaseError(err.code);
       if (err.code === 'auth/invalid-email' || err.code === 'auth/user-not-found') {
         $('emailError').textContent = msg;
-      } else {
+      } else if (err.code) {
         $('passwordError').textContent = msg;
+      } else {
+        showAlert(err.message || msg);
       }
     } finally {
       setLoading(false);
     }
   });
 
+  // ===== Google SSO =====
   const googleBtn = $('googleBtn');
   const googleSignIn = async () => {
     clearFieldErrors();
@@ -292,8 +365,7 @@
     provider.setCustomParameters({ prompt: 'select_account' });
     try {
       await signInWithPopup(auth, provider);
-      sessionStorage.setItem('pc_justLoggedIn', '1');
-      window.location.href = CMS_POST_LOGIN_URL;
+      await afterFirebaseLogin('google');
     } catch (err) {
       console.error(err);
       showAlert(mapFirebaseError(err.code));
