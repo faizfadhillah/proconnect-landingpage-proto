@@ -55,4 +55,30 @@ export class JobsDao {
 
     return query.getManyAndCount();
   }
+
+  /**
+   * Find all publicly-listable jobs across all companies, with pagination.
+   * Used by the public landing-site jobs board.
+   * Returns [jobs, totalCount].
+   */
+  async findPublicListAll(
+    status: JobStatus | undefined,
+    skip: number,
+    take: number,
+  ): Promise<[Job[], number]> {
+    let query = this.createPublicJobQuery();
+
+    // By default, only return published jobs for public listing
+    if (status) {
+      query = query.where("job.status = :status", { status });
+    } else {
+      query = query.where("job.status = :status", {
+        status: JobStatus.PUBLISH,
+      });
+    }
+
+    query = query.orderBy("job.created_at", "DESC").skip(skip).take(take);
+
+    return query.getManyAndCount();
+  }
 }
