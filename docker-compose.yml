@@ -1,0 +1,124 @@
+name: proconnect-api
+
+services:
+  proconnect_backend:
+    image: proconnectjob/proconnect-deploy:latest
+    build:
+      context: .
+      dockerfile: data/Dockerfile
+    container_name: proconnect_backend
+    ports:
+      - "3000:3000"
+    restart: always
+    env_file:
+      - .env
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      REDIS_DB: "0"
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    volumes:
+      - ./config/firebase-admin.json:/app/config/firebase-admin.json:ro
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - proconnect-network
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    command: >
+      redis-server
+      --appendonly yes
+      --save 60 1000
+      --loglevel warning
+      --requirepass ${REDIS_PASSWORD}
+    ports:
+      - "6379:6379"
+    restart: always
+    volumes:
+      - redis-data:/data
+    networks:
+      - proconnect-network
+
+  # Observability Stack - Loki
+  loki:
+    image: grafana/loki:2.9.6
+    command: -config.file=/etc/loki/loki-config.yml
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./monitoring/loki-config.yml:/etc/loki/loki-config.yml:ro
+      - ./.observability-data/loki:/loki
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - proconnect-network
+
+  # Observability Stack - Promtail
+  promtail:
+    image: grafana/promtail:2.9.6
+    command: -config.file=/etc/promtail/config.yml
+    volumes:
+      - ./monitoring/promtail-config.yml:/etc/promtail/config.yml:ro
+      # Mount Docker socket for service discovery
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # Mount Docker container logs directory
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ./.observability-data/promtail:/tmp
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    depends_on:
+      - loki
+    networks:
+      - proconnect-network
+
+  # Observability Stack - Grafana
+  grafana:
+    image: grafana/grafana:10.4.5
+    ports:
+      - "3200:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-change_me}
+      # Root URL for links in alert notifications, emails, etc. Production: https://grafana.proconnectcareer.com
+      GF_SERVER_ROOT_URL: ${GRAFANA_ROOT_URL:-}
+      GF_LIVE_ALLOWED_ORIGINS: ""
+      # Disable Prometheus alert rules discovery to prevent 404 errors when Prometheus datasource doesn't exist
+      GF_UNIFIED_ALERTING_DISABLE_ALERT_RULES_DISCOVERY: "true"
+    volumes:
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./.observability-data/grafana:/var/lib/grafana
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    depends_on:
+      - loki
+    networks:
+      - proconnect-network
+
+networks:
+  proconnect-network:
+    name: proconnect-network
+    external: true
+
+volumes:
+  redis-data:
+    name: redis-data
+    external: true

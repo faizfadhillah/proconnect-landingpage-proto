@@ -1,0 +1,70 @@
+auth_enabled: false
+
+server:
+  http_listen_port: 3100
+  grpc_listen_port: 9095
+
+ingester:
+  lifecycler:
+    ring:
+      kvstore:
+        store: inmemory
+      replication_factor: 1
+  chunk_idle_period: 5m
+  chunk_retain_period: 30s
+  wal:
+    enabled: true
+    dir: /loki/wal
+
+schema_config:
+  configs:
+    # Legacy: existing data (before TSDB cutover) stays queryable
+    - from: "2024-01-01"
+      store: boltdb-shipper
+      object_store: filesystem
+      schema: v11
+      index:
+        prefix: index_
+        period: 24h
+    # TSDB: recommended index for Loki 2.8+, more efficient and faster (https://grafana.com/docs/loki/latest/operations/storage/tsdb/)
+    - from: "2026-02-08"
+      store: tsdb
+      object_store: filesystem
+      schema: v13
+      index:
+        prefix: index_
+        period: 24h
+
+storage_config:
+  boltdb_shipper:
+    active_index_directory: /loki/index
+    cache_location: /loki/cache
+    shared_store: filesystem
+  tsdb_shipper:
+    active_index_directory: /loki/tsdb-index
+    cache_location: /loki/tsdb-cache
+  filesystem:
+    directory: /loki/chunks
+
+limits_config:
+  retention_period: 2160h # 90 days (~3 months)
+  # Avoid "too many outstanding requests" when Grafana dashboard loads many panels at once
+  max_query_parallelism: 32
+
+# Query scheduler: TSDB dispatches more (but smaller) requests; raise limit (doc recommends 32768)
+query_scheduler:
+  max_outstanding_requests_per_tenant: 32768
+
+# Query frontend: raise outstanding limit per tenant (default 100)
+frontend:
+  max_outstanding_per_tenant: 2048
+
+# Querier: recommended for TSDB (https://grafana.com/docs/loki/latest/operations/storage/tsdb/)
+querier:
+  max_concurrent: 16
+
+compactor:
+  working_directory: /loki/compactor
+  shared_store: filesystem
+  retention_enabled: true
+  compaction_interval: 10m

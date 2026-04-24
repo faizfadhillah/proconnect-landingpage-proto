@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Pre-push hook to run build before pushing
+# This ensures the code builds successfully before allowing a push
+
+echo "Running build before push..."
+npm run build
+
+# Check if build was successful
+if [ $? -ne 0 ]; then
+  echo "❌ Build failed! Push aborted."
+  exit 1
+fi
+
+echo "✅ Build successful! Proceeding with push..."
+exit 0
+
