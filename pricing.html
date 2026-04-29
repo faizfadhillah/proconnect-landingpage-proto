@@ -203,42 +203,150 @@
 <section id="calc" class="py-20 bg-slate-50">
   <div class="max-w-6xl mx-auto px-6">
     <h2 class="text-center text-3xl md:text-[40px] font-extrabold text-brand-900 leading-tight">Calculate Your Monthly Cost</h2>
-    <p class="mt-3 text-center text-sm text-slate-500">Slide to size your team, price updates live.</p>
+    <p class="mt-3 text-center text-sm text-slate-500">Pick your country, then size your team. Pricing updates live.</p>
 
-    <div class="mt-10 grid md:grid-cols-2 gap-6">
-      <!-- Left: Slider -->
-      <div class="rounded-2xl bg-white border border-slate-200 p-7">
-        <label class="text-sm font-semibold text-brand-900">Number of recruiter seats</label>
-        <div class="mt-4 flex items-baseline gap-2">
-          <span id="employeeCount" class="text-3xl font-extrabold text-brand-900">5 employees</span>
+    <div class="mt-10 grid lg:grid-cols-5 gap-6 items-start">
+      <!-- Left: country + seat steppers -->
+      <div class="lg:col-span-3 rounded-2xl bg-white border border-slate-200 p-6 space-y-4">
+        <div class="flex items-end gap-3">
+          <div class="flex-1">
+            <label for="countrySelect" class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Country</label>
+            <div class="mt-1 relative">
+              <select id="countrySelect" class="w-full appearance-none rounded-xl border border-brand-200 px-4 py-3 pr-10 font-semibold text-brand-900 bg-white focus:border-brand-600 focus:outline-none">
+                <option value="ID">🇮🇩  Indonesia</option>
+                <option value="MY">🇲🇾  Malaysia</option>
+                <option value="SG">🇸🇬  Singapore</option>
+                <option value="PH">🇵🇭  Philippines</option>
+                <option value="TH">🇹🇭  Thailand</option>
+                <option value="VN">🇻🇳  Vietnam</option>
+              </select>
+              <svg class="w-4 h-4 text-slate-500 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+          </div>
+          <button type="button" aria-label="Country pricing info" class="w-11 h-11 rounded-full border border-brand-200 text-brand-500 flex items-center justify-center hover:bg-brand-50 shrink-0">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          </button>
         </div>
-        <input type="range" id="employeeSlider" min="1" max="100" value="5" class="range-slider w-full mt-5" />
-        <div class="flex justify-between text-xs text-slate-400 mt-2"><span>1</span><span>100</span></div>
 
-        <div class="mt-6 rounded-lg bg-brand-50 px-4 py-3 text-sm text-brand-800">
-          <div id="pricePerEmp" class="font-semibold">Rp 350.000 / employee / month</div>
-          <div class="text-xs mt-1 text-brand-700/80">Members and employees get free profiles.</div>
+        <div class="rounded-xl border border-slate-200 px-4 py-3 flex items-center gap-4">
+          <div class="w-11 h-11 rounded-lg bg-brand-600 text-white flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2 2 7v2h20V7l-10-5zm-8 9v9h3v-6h2v6h3v-6h2v6h3v-6h2v6h3v-9H4z"/></svg>
+          </div>
+          <div class="flex-1">
+            <div class="font-semibold text-brand-900">Full Recruiter Seats</div>
+            <div class="text-sm"><span class="font-semibold text-brand-900" data-price="full">Rp 350.000</span> <span class="text-slate-500">Per user/mo</span></div>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button type="button" data-stepper="full" data-step="-1" class="w-8 h-8 rounded-lg border border-slate-300 text-slate-500 hover:border-brand-600 hover:text-brand-600 leading-none">−</button>
+            <span data-count="full" class="w-6 text-center font-semibold">0</span>
+            <button type="button" data-stepper="full" data-step="1" class="w-8 h-8 rounded-lg border border-slate-300 text-slate-500 hover:border-brand-600 hover:text-brand-600 leading-none">+</button>
+          </div>
         </div>
 
-        <label class="mt-6 flex items-center gap-3 text-sm text-slate-700 cursor-pointer">
-          <input type="checkbox" id="annualToggle" class="w-4 h-4 accent-brand-600" />
-          <span>Bill annually, <span class="font-semibold text-mint-600">save 18%</span></span>
-        </label>
+        <div class="rounded-xl border border-slate-200 px-4 py-3 flex items-center gap-4">
+          <div class="w-11 h-11 rounded-lg bg-mint-500 text-white flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="8" cy="8" r="4"/><circle cx="16" cy="8" r="4"/><circle cx="12" cy="16" r="4"/></svg>
+          </div>
+          <div class="flex-1">
+            <div class="font-semibold text-brand-900">Department Seats</div>
+            <div class="text-sm"><span class="font-semibold text-brand-900" data-price="dept">Rp 150.000</span> <span class="text-slate-500">Per user/mo</span></div>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button type="button" data-stepper="dept" data-step="-1" class="w-8 h-8 rounded-lg border border-slate-300 text-slate-500 hover:border-brand-600 hover:text-brand-600 leading-none">−</button>
+            <span data-count="dept" class="w-6 text-center font-semibold">0</span>
+            <button type="button" data-stepper="dept" data-step="1" class="w-8 h-8 rounded-lg border border-slate-300 text-slate-500 hover:border-brand-600 hover:text-brand-600 leading-none">+</button>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-200 px-4 py-3 flex items-center gap-4">
+          <div class="w-11 h-11 rounded-lg bg-slate-100 text-slate-500 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="9" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+          </div>
+          <div class="flex-1">
+            <div class="font-semibold text-brand-900">Member Seats</div>
+            <div class="text-xs uppercase tracking-wider text-slate-500 font-bold">Free</div>
+          </div>
+          <span class="text-sm font-semibold text-slate-400 shrink-0">Unlimited</span>
+        </div>
       </div>
 
-      <!-- Right: Summary card -->
-      <div class="rounded-2xl bg-brand-900 text-white p-7 flex flex-col">
-        <h3 class="font-bold">Calculation Summary</h3>
-        <p class="mt-1 text-xs text-brand-100/70">Total monthly cost</p>
-        <div class="mt-auto pt-8">
-          <div id="totalPrice" class="text-[56px] leading-none font-extrabold tracking-tight">Rp 1.750.000</div>
-          <div class="mt-1 text-xs text-brand-100/70">per month</div>
-          <a href="signup.html" class="mt-8 btn-primary w-full text-center">Sign Up &amp; Upgrade</a>
+      <!-- Right: dark summary panel -->
+      <div class="lg:col-span-2 rounded-2xl bg-[#0F0F0F] text-white p-6 flex flex-col min-h-[300px]">
+        <div class="font-bold text-lg">Calculation Summary</div>
+        <p class="text-xs text-white/60 mt-1">This calculation works on all type seats</p>
+        <div class="mt-5 pb-5 border-b border-white/10 grid grid-cols-2 gap-4 text-sm">
+          <div>
+            <div class="font-semibold">Full seats</div>
+            <div class="text-white/60 mt-0.5" data-summary="full">0 seats</div>
+          </div>
+          <div>
+            <div class="font-semibold">Dept seats</div>
+            <div class="text-white/60 mt-0.5" data-summary="dept">0 seats</div>
+          </div>
         </div>
+        <div class="mt-5 flex items-end gap-2">
+          <span class="text-sm text-white/70" data-currency>Rp</span>
+          <span class="text-5xl font-extrabold leading-none" id="calcTotal">0</span>
+          <span class="text-sm text-white/70 mb-1">/mo</span>
+        </div>
+        <label class="mt-5 flex items-center justify-end gap-3 text-sm cursor-pointer select-none">
+          <input type="checkbox" id="annualToggle" class="sr-only peer" />
+          <span class="relative w-10 h-5 rounded-full bg-white/20 transition peer-checked:bg-mint-500">
+            <span class="absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition peer-checked:translate-x-5"></span>
+          </span>
+          <span>Annual</span>
+        </label>
+        <a href="signup.html" class="mt-auto pt-5">
+          <span class="block w-full text-center bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 rounded-lg transition">Upgrade Now</span>
+        </a>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+(function() {
+  const PRICES = {
+    ID: { currency: 'Rp', full: 350000, dept: 150000, fmt: function(v){ return 'Rp ' + v.toLocaleString('id-ID'); } },
+    MY: { currency: 'RM', full: 100,    dept: 45,     fmt: function(v){ return 'RM ' + v.toLocaleString('en-MY'); } },
+    SG: { currency: 'S$', full: 30,     dept: 13,     fmt: function(v){ return 'S$ ' + v.toLocaleString('en-SG'); } },
+    PH: { currency: '₱',  full: 1200,   dept: 500,    fmt: function(v){ return '₱'   + v.toLocaleString('en-PH'); } },
+    TH: { currency: '฿',  full: 750,    dept: 320,    fmt: function(v){ return '฿'   + v.toLocaleString('th-TH'); } },
+    VN: { currency: '₫',  full: 500000, dept: 220000, fmt: function(v){ return        v.toLocaleString('vi-VN') + '₫'; } }
+  };
+  const counts = { full: 0, dept: 0 };
+  let country = 'ID';
+  let annual = false;
+
+  function $(s, root) { return (root || document).querySelector(s); }
+  function $$(s) { return Array.from(document.querySelectorAll(s)); }
+
+  function update() {
+    const p = PRICES[country];
+    $('[data-price="full"]').textContent = p.fmt(p.full);
+    $('[data-price="dept"]').textContent = p.fmt(p.dept);
+    $$('[data-currency]').forEach(function(el){ el.textContent = p.currency; });
+    $('[data-count="full"]').textContent = counts.full;
+    $('[data-count="dept"]').textContent = counts.dept;
+    $('[data-summary="full"]').textContent = counts.full + ' seats';
+    $('[data-summary="dept"]').textContent = counts.dept + ' seats';
+    let total = counts.full * p.full + counts.dept * p.dept;
+    if (annual) total = Math.round(total * 0.82);
+    $('#calcTotal').textContent = total.toLocaleString();
+  }
+
+  $('#countrySelect').addEventListener('change', function(e){ country = e.target.value; update(); });
+  $$('[data-stepper]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      const k = btn.dataset.stepper;
+      counts[k] = Math.max(0, counts[k] + parseInt(btn.dataset.step, 10));
+      update();
+    });
+  });
+  $('#annualToggle').addEventListener('change', function(e){ annual = e.target.checked; update(); });
+  update();
+})();
+</script>
 
 <!-- ==================== FAQ ==================== -->
 <section class="py-16 bg-white">
@@ -273,6 +381,27 @@
         </summary>
         <p class="mt-3 text-sm text-slate-500 leading-relaxed">No. Pricing is strictly per seat, not per branch, location, or job posting.</p>
       </details>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CTA ==================== -->
+<section class="py-16 bg-white">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="relative overflow-hidden rounded-3xl bg-brand-600 px-8 py-14 md:py-16 text-center text-white">
+      <svg class="absolute inset-0 w-full h-full opacity-20 pointer-events-none" viewBox="0 0 1200 400" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 60   Q 600 -120 1200 60"  stroke="white" stroke-width="2" fill="none"/>
+        <path d="M0 130  Q 600 -50  1200 130" stroke="white" stroke-width="2" fill="none"/>
+        <path d="M0 200  Q 600 20   1200 200" stroke="white" stroke-width="2" fill="none"/>
+        <path d="M0 280  Q 600 100  1200 280" stroke="white" stroke-width="2" fill="none"/>
+        <path d="M0 360  Q 600 180  1200 360" stroke="white" stroke-width="2" fill="none"/>
+      </svg>
+      <h2 class="relative text-3xl md:text-[40px] font-extrabold leading-tight">Ready to Save 95% on Recruitment?</h2>
+      <p class="relative mt-3 text-white/85">Start your free trial today. No credit card required.</p>
+      <div class="relative mt-7 flex flex-wrap justify-center gap-3">
+        <a href="contact.html" class="inline-flex items-center px-6 py-3 rounded-lg border border-white/70 hover:bg-white/10 font-semibold text-white transition">Contact Us</a>
+        <a href="signup.html" class="inline-flex items-center px-6 py-3 rounded-lg bg-white text-brand-600 hover:bg-brand-50 font-semibold transition">Start Free Trial</a>
+      </div>
     </div>
   </div>
 </section>
