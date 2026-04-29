@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title id="pageTitle">Job Details — ProConnect</title>
+<title id="pageTitle">Job Details | ProConnect</title>
 <meta name="description" content="Verified hospitality job openings across ASEAN on ProConnect." />
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -362,7 +362,7 @@
   </div>
 
   <div class="max-w-7xl mx-auto px-6 mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-brand-100/70">
-    <div>© 2026 ProConnect — a Mereka initiative. All rights reserved.</div>
+    <div>© 2026 ProConnect, a Mereka initiative. All rights reserved.</div>
     <div class="flex gap-4">
       <a href="#" class="hover:text-white">Privacy Policy</a>
       <a href="#" class="hover:text-white">Terms of Service</a>
@@ -374,7 +374,7 @@
 <script src="assets/script.js"></script>
 <script>
   // ============================================================
-  // job-detail.html — live-API rendering
+  // job-detail.html, live-API rendering
   // ============================================================
   // Data source: GET /jobs/public/slug/:slug  →  JobPublicResponseDto
   // Sidebar "Similar jobs": GET /jobs/public/all?limit=6
@@ -391,7 +391,7 @@
   function jobDtoToView(dto) {
     if (!dto) return null;
 
-    const companyName = dto.company_name || '—';
+    const companyName = dto.company_name || '-';
     const grad        = PcApi.gradientForId(dto.id || dto.slug || companyName);
     const logoUrl     = PcApi.resolveMediaUrl(dto.company_logo_url);
     const locParts    = [];
@@ -400,14 +400,14 @@
       locParts.push(dto.domicile_status.join(' / '));
     }
 
-    // Badges — we infer from DTO fields we have
+    // Badges, we infer from DTO fields we have
     const badges = ['verified'];
     const createdMs = dto.created_at ? new Date(dto.created_at).getTime() : 0;
     if (createdMs && (Date.now() - createdMs) < 7 * 24 * 60 * 60 * 1000) badges.push('new');
     if (Array.isArray(dto.domicile_status) &&
         dto.domicile_status.some(d => /remote/i.test(d))) badges.push('remote');
 
-    // Description — API returns rich HTML/text; we pass through as HTML.
+    // Description, API returns rich HTML/text; we pass through as HTML.
     const rawDesc = dto.description || '';
 
     return {
@@ -419,12 +419,12 @@
       initials:     PcApi.initials(companyName),
       c1:           grad[0],
       c2:           grad[1],
-      location:     locParts.join(' · ') || '—',
+      location:     locParts.join(' · ') || '-',
       posted:       PcApi.timeAgo(dto.created_at) || '',
       badges,
-      type:         (Array.isArray(dto.employment_status) && dto.employment_status[0]) || '—',
-      department:   dto.department || '—',
-      experience:   dto.experience_level || dto.experience || '—',
+      type:         (Array.isArray(dto.employment_status) && dto.employment_status[0]) || '-',
+      department:   dto.department || '-',
+      experience:   dto.experience_level || dto.experience || '-',
       salary:       dto.salary_range || dto.salary || 'Contact employer',
       descriptionHtml: rawDesc,
     };
@@ -449,7 +449,7 @@
     document.getElementById('jobContent').classList.remove('hidden');
 
     // Title/meta
-    document.getElementById('pageTitle').textContent = `${view.title} — ${view.company} · ProConnect`;
+    document.getElementById('pageTitle').textContent = `${view.title}, ${view.company} · ProConnect`;
     document.getElementById('crumbTitle').textContent = view.title;
 
     // Header
@@ -476,7 +476,7 @@
     document.getElementById('factDept').textContent   = view.department;
     document.getElementById('factExp').textContent    = view.experience;
 
-    // Description — render API HTML directly; hide the three structured
+    // Description, render API HTML directly; hide the three structured
     // sections since the API returns a single rich-text body.
     const desc = document.getElementById('jobShortDesc');
     desc.innerHTML = view.descriptionHtml || 'No description provided by the employer.';
@@ -494,7 +494,7 @@
     // Sidebar
     setLogoEl(document.getElementById('sideLogo'), view);
     document.getElementById('sideCompany').textContent  = view.company;
-    document.getElementById('sideOpenRoles').textContent = '—';
+    document.getElementById('sideOpenRoles').textContent = '-';
 
     // Save button
     document.getElementById('saveBtn').addEventListener('click', function(){
@@ -511,7 +511,7 @@
     document.getElementById('shareBtn').addEventListener('click', async function(){
       const url = window.location.href;
       if (navigator.share) {
-        try { await navigator.share({ title: view.title + ' — ' + view.company, url }); } catch(e){}
+        try { await navigator.share({ title: view.title + ', ' + view.company, url }); } catch(e){}
       } else if (navigator.clipboard) {
         await navigator.clipboard.writeText(url);
         this.innerHTML = this.innerHTML.replace('Share','Copied!');
@@ -519,7 +519,7 @@
       }
     });
 
-    // Apply form — local-only confirmation for now (no /applications endpoint yet).
+    // Apply form, local-only confirmation for now (no /applications endpoint yet).
     document.getElementById('applyForm').addEventListener('submit', e => {
       e.preventDefault();
       const btn = e.target.querySelector('button[type="submit"]');
@@ -528,7 +528,7 @@
       btn.classList.add('opacity-70');
     });
 
-    // Similar jobs — fetch in parallel, degrade gracefully
+    // Similar jobs, fetch in parallel, degrade gracefully
     loadSimilarJobs(view).catch(() => {
       document.getElementById('similarJobs').innerHTML =
         '<div class="text-xs text-slate-500">Browse all jobs on the main board.</div>';
@@ -555,7 +555,7 @@
             <div class="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-sm shrink-0" style="background:linear-gradient(135deg, ${grad[0]}, ${grad[1]});">${ini}</div>
             <div class="min-w-0">
               <div class="font-semibold text-brand-900 text-sm truncate">${j.title || 'Untitled role'}</div>
-              <div class="text-xs text-slate-500 truncate">${j.company_name || '—'}${loc ? ' · ' + loc : ''}</div>
+              <div class="text-xs text-slate-500 truncate">${j.company_name || '-'}${loc ? ' · ' + loc : ''}</div>
             </div>
           </a>
         `;

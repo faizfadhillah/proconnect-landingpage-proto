@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Browse Jobs — ProConnect</title>
-<meta name="description" content="Browse verified hospitality jobs across ASEAN — hotels, resorts, F&B, and more. Find your next role with ProConnect." />
+<title>Browse Jobs | ProConnect</title>
+<meta name="description" content="Browse verified hospitality jobs across ASEAN, hotels, resorts, F&B, and more. Find your next role with ProConnect." />
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -161,7 +161,7 @@
       Find your next <span class="text-accent-500">hospitality</span> role
     </h1>
     <p class="mt-4 text-brand-100 text-base md:text-lg max-w-2xl mx-auto">
-      Verified employers. Real salaries. Skill Passport portable across ASEAN — no agency fees, no waiting on recruiters.
+      Verified employers. Real salaries. Skill Passport portable across ASEAN. No agency fees, no waiting on recruiters.
     </p>
 
     <div class="mt-10 search-box max-w-4xl mx-auto p-2 md:p-3 flex flex-col md:flex-row gap-2 text-left">
@@ -395,7 +395,7 @@
   </div>
 
   <div class="max-w-7xl mx-auto px-6 mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-brand-100/70">
-    <div>© 2026 ProConnect — a Mereka initiative. All rights reserved.</div>
+    <div>© 2026 ProConnect, a Mereka initiative. All rights reserved.</div>
     <div class="flex gap-4">
       <a href="#" class="hover:text-white">Privacy Policy</a>
       <a href="#" class="hover:text-white">Terms of Service</a>
@@ -407,7 +407,7 @@
 <script src="assets/script.js"></script>
 <script>
   // ============================================================
-  // jobs.html — live API-driven listing
+  // jobs.html, live API-driven listing
   // ============================================================
   // Source:  GET /jobs/public/all?page=X&limit=Y
   // We fetch one page at a time, but apply client-side filters
@@ -433,7 +433,7 @@
 
   /** Turn one API DTO into a view-model for the card. */
   function jobDtoToCardView(dto) {
-    const companyName = dto.company_name || '—';
+    const companyName = dto.company_name || '-';
     const grad = PcApi.gradientForId(dto.id || dto.slug || companyName);
     const logoUrl = PcApi.resolveMediaUrl(dto.company_logo_url);
     const locParts = [];
@@ -458,10 +458,10 @@
       initials: PcApi.initials(companyName),
       c1: grad[0],
       c2: grad[1],
-      location: locParts.join(' · ') || '—',
+      location: locParts.join(' · ') || '-',
       posted: PcApi.timeAgo(dto.created_at) || '',
       createdAt: dto.created_at || null,
-      type: (Array.isArray(dto.employment_status) && dto.employment_status[0]) || '—',
+      type: (Array.isArray(dto.employment_status) && dto.employment_status[0]) || '-',
       salary: dto.salary_range || dto.salary || 'Contact employer',
       tags: (dto.tags && Array.isArray(dto.tags) ? dto.tags : []),
       badges,
@@ -476,7 +476,7 @@
     if (j.badges.includes('verified')) badges.push('<span class="badge badge-verified">Verified</span>');
     if (j.badges.includes('remote'))   badges.push('<span class="badge badge-remote">Remote OK</span>');
 
-    // Logo block — prefer real image, fallback to initials+gradient.
+    // Logo block, prefer real image, fallback to initials+gradient.
     const logoBlock = j.companyLogoUrl
       ? `<div class="w-12 h-12 rounded-xl overflow-hidden shrink-0 bg-slate-100">
            <img src="${j.companyLogoUrl}" alt="${j.company}" class="w-full h-full object-cover" onerror="this.onerror=null;this.parentNode.outerHTML='<div class=\\'job-logo w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0\\' style=\\'--c1:${j.c1};--c2:${j.c2};\\'>${j.initials}</div>';" />

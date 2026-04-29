@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Sign Up — ProConnect</title>
-<meta name="description" content="Create your free ProConnect account — verified hospitality hiring for ASEAN." />
+<title>Sign Up | ProConnect</title>
+<meta name="description" content="Create your free ProConnect account, verified hospitality hiring for ASEAN." />
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css" />
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
@@ -252,7 +252,7 @@
     signInWithPopup, GoogleAuthProvider
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-  // ProConnect API client — same backend the CMS uses.
+  // ProConnect API client, same backend the CMS uses.
   import {
     publicRequestOtp, createUser, getMe,
     deleteOrphanFirebaseUser, extractErrorMessage, getApiBase
@@ -281,7 +281,7 @@
   });
 
   // ---------------------------------------------------------
-  // Country code picker — hydrate from live /mst-country/search
+  // Country code picker, hydrate from live /mst-country/search
   // ---------------------------------------------------------
   function iso2ToFlag(iso2) {
     if (!iso2 || typeof iso2 !== 'string' || iso2.length !== 2) return '';
@@ -395,7 +395,7 @@
   //   4. Redirect to /cms/signup-verify-otp. That page creates the Firebase
   //      user + calls POST /users with the OTP to finalize the backend row.
   //
-  // We do NOT create the Firebase user here — the CMS OTP page does it after
+  // We do NOT create the Firebase user here, the CMS OTP page does it after
   // verifying the OTP. This matches the real CMS flow and avoids leaving
   // Firebase orphans if the user abandons at the OTP step.
   // =========================================================================
@@ -418,7 +418,7 @@
     if (!valid) return;
 
     // If an OTP countdown is already running for this email, short-circuit
-    // straight to the OTP page — matches CMS signup.vue behavior.
+    // straight to the OTP page, matches CMS signup.vue behavior.
     const savedEndTime = localStorage.getItem('countdownEndTime');
     const savedEmail   = localStorage.getItem('countdownEmail');
     if (savedEndTime && savedEmail === email) {
@@ -443,7 +443,7 @@
     } catch (err) {
       console.error('[signup] public-request-otp failed:', err);
       const msg = extractErrorMessage(err && err.data) || err.message || 'Could not send OTP. Please try again.';
-      // NestJS returns messages with "email" or "credentials" in them — route accordingly.
+      // NestJS returns messages with "email" or "credentials" in them, route accordingly.
       const lower = (msg || '').toLowerCase();
       if (lower.includes('email') || err.status === 409 || err.status === 400) {
         $('emailError').textContent = msg;
@@ -479,7 +479,7 @@
       const u = result.user;
 
       // Check whether this user already has a backend row. If /users/me succeeds,
-      // this is a returning user — hand them to the dashboard instead of /users.
+      // this is a returning user, hand them to the dashboard instead of /users.
       try {
         await getMe(auth);
         window.location.href = CMS_DASHBOARD_URL;
@@ -514,7 +514,7 @@
       if (!signedIn) {
         showAlert(mapFirebaseError(err.code));
       } else {
-        // Firebase succeeded but something else threw — clean up if we still have a user.
+        // Firebase succeeded but something else threw, clean up if we still have a user.
         try { if (auth.currentUser) await deleteOrphanFirebaseUser(auth.currentUser.uid); } catch {}
         try { await auth.signOut(); } catch {}
         showAlert(err.message || mapFirebaseError(err.code));
