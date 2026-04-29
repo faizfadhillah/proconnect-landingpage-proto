@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Sign In — ProConnect</title>
-<meta name="description" content="Sign in to your ProConnect account — the ASEAN hospitality hiring platform." />
+<title>Sign In | ProConnect</title>
+<meta name="description" content="Sign in to your ProConnect account, the ASEAN hospitality hiring platform." />
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css" />
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
@@ -210,7 +210,7 @@
     signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-  // ProConnect API client — talks to NestJS backend the CMS uses.
+  // ProConnect API client, talks to NestJS backend the CMS uses.
   import { getMe, createUser, deleteOrphanFirebaseUser, extractErrorMessage, getApiBase }
     from "./assets/auth/api-client.js";
 
@@ -288,7 +288,7 @@
     } catch (err) {
       console.warn('[login] /users/me failed:', err);
       if (err.status === 404 && provider === 'google') {
-        // First-time Google signer — create backend row, then send to /cms/welcome.
+        // First-time Google signer, create backend row, then send to /cms/welcome.
         try {
           const u = auth.currentUser;
           await createUser(auth, {
@@ -316,10 +316,10 @@
       }
       if (err.status === 401 || err.status === 403) {
         try { await auth.signOut(); } catch {}
-        showAlert('Access denied. Your account may have been deactivated — please contact support.');
+        showAlert('Access denied. Your account may have been deactivated, please contact support.');
         return;
       }
-      // Network / CORS / 5xx — let them through to the CMS, which can retry.
+      // Network / CORS / 5xx, let them through to the CMS, which can retry.
       showAlert('Signed in, but the ProConnect API did not respond. Trying the CMS anyway…');
       sessionStorage.setItem('pc_justLoggedIn', '1');
       setTimeout(() => { window.location.href = CMS_POST_LOGIN_URL; }, 1200);

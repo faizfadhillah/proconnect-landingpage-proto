@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Contact — ProConnect</title>
+<title>Contact | ProConnect</title>
 <meta name="description" content="Book a demo, email us, or message us on WhatsApp. ProConnect support across ASEAN." />
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -141,7 +141,7 @@
       Let's hire your next great <span class="text-brand-600">team.</span>
     </h1>
     <p class="mt-5 text-slate-600 text-base md:text-lg max-w-2xl mx-auto">
-      Book a 20-minute demo, drop us an email, or ping us on WhatsApp — our regional team replies within one business day.
+      Book a 20-minute demo, drop us an email, or ping us on WhatsApp. Our regional team replies within one business day.
     </p>
   </div>
 </section>
@@ -338,7 +338,7 @@
     </div>
   </div>
   <div class="max-w-7xl mx-auto px-6 mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-brand-100/70">
-    <div>© 2026 ProConnect — a Mereka initiative. All rights reserved.</div>
+    <div>© 2026 ProConnect, a Mereka initiative. All rights reserved.</div>
     <div class="flex gap-4">
       <a href="#" class="hover:text-white">Privacy Policy</a>
       <a href="#" class="hover:text-white">Terms of Service</a>
@@ -350,7 +350,7 @@
 <script src="assets/script.js"></script>
 <script>
   // ============================================================
-  // contact.html — "Get in Touch" form → POST /feedbacks
+  // contact.html, "Get in Touch" form → POST /feedbacks
   // ============================================================
   document.addEventListener('DOMContentLoaded', () => {
     const form     = document.getElementById('demoForm');
@@ -404,7 +404,7 @@
           team ? `Team size: ${team}` : null,
           msg  ? `\nNotes:\n${msg}` : null,
         ].filter(Boolean).join('\n'),
-        // Include structured fields too — backend can ignore unknown keys.
+        // Include structured fields too, backend can ignore unknown keys.
         company,
         country,
         role,
@@ -419,7 +419,7 @@
 
       try {
         await PcApi.submitFeedback(payload);
-        showAlert('success', 'Thanks — we\u2019ve received your request. A team member will be in touch within 1 business day.');
+        showAlert('success', 'Thanks, we\u2019ve received your request. A team member will be in touch within 1 business day.');
         btn.textContent = 'Sent ✓';
         form.querySelectorAll('input, select, textarea, button').forEach(el => {
           if (el.id !== 'demoSubmit') el.disabled = true;
